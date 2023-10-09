@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     const recoverUser = localStorage.getItem("usuario");
     if (recoverUser) {
       setUser(JSON.parse(recoverUser));
+      alert("entrou no contexto");
     }
     setLoading(false);
   }, []);
