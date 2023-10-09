@@ -16,11 +16,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-
     const recoverUser = localStorage.getItem("usuario");
     if (recoverUser) {
       setUser(JSON.parse(recoverUser));
-      alert("entrou no contexto");
     }
     setLoading(false);
   }, []);

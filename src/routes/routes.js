@@ -24,15 +24,17 @@ const MyRoutes = () => {
   }
   return (
     <BrowserRouter>
+
       <AuthProvider>
       <Routes>
         <Route exact path="/" element={<Private>  <Home /> </Private>} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/teste" element={<Private>  <Teste /> </Private>} />
-        <Route exact path="/cadastro" element={<RegisterUser />} />
+        <Route exact path="/cadastro" element={<Private>  <RegisterUser /> </Private>} />
 
       </Routes>
       </AuthProvider>
+
     </BrowserRouter>
   );
 };

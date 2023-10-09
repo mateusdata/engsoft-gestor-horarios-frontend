@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../components/config/axiosInstance';
+import GlobalLayouts from '../layouts/layouts';
 
 const RegisterUser = () => {
     const [user, setUser] = useState({
@@ -32,6 +33,7 @@ const RegisterUser = () => {
     };
 
     return (
+        <GlobalLayouts>
         <div className='bg-gray-800 min-h-screen flex  flex-col items-center justify-center text-white'>
             <h2>Registrar Usuário</h2>
             <form onSubmit={handleSubmit} className="mt-4">
@@ -121,6 +123,7 @@ const RegisterUser = () => {
             </form>
             <Link className='text-red-600 mt-4 block' to={"/login"}>Fazer login</Link>
         </div>
+        </GlobalLayouts>
 
     );
 };
