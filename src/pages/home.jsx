@@ -17,7 +17,7 @@ import { AiOutlineUserSwitch } from "react-icons/ai"; function Home() {
       if (erro?.response?.status === 401) {
         openNotificationWithIcon({ message: "tokem expirado", description: "você sera desautenticado." }, "warning");
         setTimeout(() => {
-          //logout();
+          logout();
         }, 1500);
       }
       setUsers(erro?.response?.data?.message);
@@ -38,11 +38,11 @@ import { AiOutlineUserSwitch } from "react-icons/ai"; function Home() {
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => logout()}>Sair</button>
       <br />
       <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={getUsers}>Vefificar token </button>
-      {users}
+    
       <br />
       <Link className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" to={"/teste"}>Voltar</Link>
       </div>
-
+        <span className="text-green-800 text-2xl mt-8">  {users}</span>
     </div>
   );
 }

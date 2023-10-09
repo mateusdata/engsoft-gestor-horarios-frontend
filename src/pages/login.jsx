@@ -27,7 +27,7 @@ const Login = () => {
     <div className="bg-gray-800 min-h-screen flex flex-col justify-center items-center text-white">
       {contextHolder}
       <h1 className="text-4xl font-bold mb-4">Página de Login</h1>
-      <p className="text-lg">Faça login</p>
+      <p className="text-lg">Faça login para continuar</p>
       <form onSubmit={handleLogin}>
         <div className="mt-4">
           <input
