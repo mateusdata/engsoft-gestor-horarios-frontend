@@ -20,7 +20,7 @@ const GlobalLayouts = ({ children }) => {
 
                     setTimeout(() => {
                         navigate("/login");
-                    }, 5000);
+                    }, 4000);
                     localStorage.removeItem("usuario");
 
                 }
