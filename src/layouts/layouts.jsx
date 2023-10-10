@@ -16,11 +16,11 @@ const GlobalLayouts = ({ children }) => {
             axiosInstance.get("/auth/estalogado").then((response) => {
             }).catch((erro) => {
                 if (erro?.response?.status === 401) {
-                    openNotificationWithIcon({ message: "Token expirado.", description: "Voce sera deslogado.." }, "warning");
+                    openNotificationWithIcon({ message: "Token expirado.", description: "Atenção, Voce sera deslogado.." }, "warning");
 
                     setTimeout(() => {
                         navigate("/login");
-                    }, 4000);
+                    }, 5000);
                     localStorage.removeItem("usuario");
 
                 }
