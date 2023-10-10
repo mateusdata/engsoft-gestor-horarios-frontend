@@ -12,9 +12,7 @@ import GlobalLayouts from "../layouts/layouts";
 
   const getUsers = () => {
     axiosInstance.get("/user/teste").then((response) => {
-      //setUsers(response?.data);
-      alert(response.data)
-
+      setUsers(response?.data);
 
     }).catch((erro) => {
       console.log(erro?.response);
@@ -49,6 +47,7 @@ import GlobalLayouts from "../layouts/layouts";
       <br />
       <Link className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" to={"/teste"}>Voltar</Link>
       </div>
+        <span className="text-green-800 text-2xl mt-8">  {users}</span>
     </div>
     </GlobalLayouts>
 
