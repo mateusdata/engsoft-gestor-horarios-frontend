@@ -30,7 +30,7 @@ const Login = () => {
         <div className="md:pr-8 md:w-1/2 xl:pr-0 xl:w-5/12">
 
           <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200">
-            Faça login no sistema de de aulas <span className="text-green-600 dark:text-blue-500">IFBA</span>
+            Faça login no sistema  de aulas <span className="text-green-600 dark:text-blue-500">IFBA</span>
           </h1>
           <p className="mt-3 text-base text-gray-500">
 
