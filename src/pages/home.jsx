@@ -12,7 +12,7 @@ function Home() {
   const [responseToken, setResponseToken] = useState([]);
 
   useEffect(() => {
-    axiosInstance.get("/lista-usuarios").then((response) => {
+    axiosInstance.post("/lista-usuarios").then((response) => {
       setUsers(response?.data);
       console.log(response.data);
     }).catch((erro) => {
@@ -69,8 +69,8 @@ function Home() {
 
         <div className="bg-gray-800 p-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {users?.map((item) => (
-              <div key={item.email} className="bg-white p-4 rounded-lg shadow-md">
+            { users?.map((item) => (
+              <div key={item?.email} className="bg-white p-4 rounded-lg shadow-md">
                 <span className="text-blue-500 text-lg font-bold mb-2">{`${item?.nome} `}</span>
                 <div className="flex flex-row flex-nowrap gap-2">
                   
