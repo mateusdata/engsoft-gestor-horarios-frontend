@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../components/config/axiosInstance';
-
+import { Context } from '../context/authContext';
 const RegisterUser = () => {
+    const {openNotificationWithIcon, contextHolder, login} = useContext(Context);
     const [user, setUser] = useState({
         nome: '',
         email: '',
@@ -24,8 +25,14 @@ const RegisterUser = () => {
    
         e.preventDefault();
 
-        axiosInstance.post('/auth/cadastros',user).then((response)=>{
+        axiosInstance.post('/cadastro',user).then((response)=>{
             console.log(response);
+            if(true){
+                openNotificationWithIcon({ message: response.data , description: "você já pode fazer login" }, "success");
+                setTimeout(() => {
+                    login(user.email, user.senha);
+                }, 5000);
+            }
         }).catch((erro)=>{
             console.log(erro);
         })
@@ -33,6 +40,7 @@ const RegisterUser = () => {
 
     return (
         <>
+        {contextHolder}
         <div className='bg-gray-800 min-h-screen flex  flex-col items-center justify-center text-white'>
             <h2>Registrar Usuário</h2>
             <form onSubmit={handleSubmit} className="mt-4">

@@ -68,7 +68,8 @@ export const AuthProvider = ({ children }) => {
         logout,
         loading,
         contextHolder,
-        openNotificationWithIcon
+        openNotificationWithIcon,
+        navigate
       }}
     >
       {children}

@@ -13,7 +13,7 @@ const GlobalLayouts = ({ children }) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            axiosInstance.get("/auth/estalogado").then((response) => {
+            axiosInstance.get("/estalogado").then((response) => {
             }).catch((erro) => {
                 if (erro?.response?.status === 401) {
                     openNotificationWithIcon({ message: "Token expirado.", description: "Atenção, Voce sera deslogado.." }, "warning");
