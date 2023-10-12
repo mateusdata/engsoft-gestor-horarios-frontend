@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (email, password) => {
-    !email || password ? 
+    !email ? 
     openNotificationWithIcon({ message: "Informe todos os campos" }, "error")
     :
     axiosInstance.post("/auth/login", {
