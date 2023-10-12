@@ -15,12 +15,10 @@ const Login = () => {
   };
 
   const handleLogin = (e) => {
-    e.preventDefault(); // Evita o comportamento padrão de recarregar a página
-    // Aqui você pode adicionar a lógica de autenticação com os valores de email e senha
+    e.preventDefault(); 
     console.log('Email:', email);
     console.log('Senha:', password);
     login(email, password);
-
   };
 
   return (
