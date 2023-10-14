@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
       console.log(response);
       const key = 'updatable';
       if (response.status === 200) {
+        setLoading(true)
         notification.destroy(key);
         const userLocal = {
           nome: response.data.nome,
@@ -39,6 +40,9 @@ export const AuthProvider = ({ children }) => {
           token: response.data.token,
         }; localStorage.setItem("usuario", JSON.stringify(userLocal));
         setUser(userLocal);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
         navigate("/");
       }
     }).catch((erro) => {

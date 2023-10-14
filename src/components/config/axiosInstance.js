@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://apigestaohorarios.onrender.com',
+  baseURL: 'https://apigestaohorarios.vercel.app',
 });
 
 axiosInstance.interceptors.request.use((config) => {
