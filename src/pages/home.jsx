@@ -20,7 +20,7 @@ function Home() {
   useEffect(() => {
     axiosInstance.get("/lista-usuarios").then((response) => {
       setUsers(response?.data);
-      console.log(response.data);
+      console.log(response);
     }).catch((erro) => {
       console.log(erro?.response);
       if (erro?.response?.status === 401) {

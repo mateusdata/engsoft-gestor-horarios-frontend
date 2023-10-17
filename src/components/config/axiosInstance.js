@@ -1,5 +1,8 @@
 import axios from 'axios';
-
+/*apigestaohorarios.vercel.app http://localhost:3001*/
+/*
+acesse a api na rota / vai falar as rotas que existe
+*/
 const axiosInstance = axios.create({
   baseURL: 'https://apigestaohorarios.vercel.app',
 });
@@ -12,4 +15,5 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
+//esse arquivo de configuração serve pra recumepar o token do usuario
 export default axiosInstance;

@@ -74,12 +74,6 @@ const Login = () => {
       <div className="hidden md:block md:absolute md:top-0 md:left-1/2 md:right-0 h-full bg-[url('https://assets-blog.pagseguro.uol.com.br/wp-content/2021/06/como-guardar-dinheiro-pra-faculdade.jpg')] bg-no-repeat bg-center bg-cover"></div>
       {contextHolder}
     </div>
-
-
-
-
-
-
   );
 };
 
