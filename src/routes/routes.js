@@ -4,8 +4,7 @@ import Home from "../pages/home";
 import Login from "../pages/login";
 import { AuthProvider, Context } from "../context/authContext";
 import { Spin } from 'antd';
-import Teste from "../pages/teste";
-import RegisterUser from "../pages/register";
+
 
 const MyRoutes = () => {
 
@@ -17,21 +16,17 @@ const MyRoutes = () => {
           <Spin size="large" delay={0} />
          </div>
     }
-    if (!autenticado) {
+    if (!!autenticado) {
       return <Navigate to={"/login" || "/test"} />
     }
     return children
   }
   return (
     <BrowserRouter>
-
       <AuthProvider>
       <Routes>
         <Route exact path="/" element={<Private>  <Home /> </Private>} />
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/teste" element={<Private>  <Teste /> </Private>} />
-        <Route exact path="/cadastro" element={<RegisterUser />} />
-
       </Routes>
       </AuthProvider>
 
