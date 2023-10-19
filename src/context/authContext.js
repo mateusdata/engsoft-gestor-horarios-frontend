@@ -14,11 +14,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    axiosInstance.get("/").then((r)=>{
+      console.log(r.data.rotas);
+    })
     const recoverUser = localStorage.getItem("usuario");
     if (recoverUser) {
       setUser(JSON.parse(recoverUser));
     }
     setLoading(false);
+    
   }, []);
 
   const login = (email, password) => {
