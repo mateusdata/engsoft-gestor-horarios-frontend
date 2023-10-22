@@ -1,13 +1,15 @@
-import React from 'react'
-import Layouts from '../layouts/layouts'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import Layouts from '../layouts/layouts';
 
-function Home() {
+function App() {
+ 
   return (
-    <Layouts>Home
-       <Link to={"/login"}>login</Link>
+    <Layouts>
+     <div>
+      Home
+     </div>
     </Layouts>
-  )
+  );
 }
 
-export default Home
+export default App;

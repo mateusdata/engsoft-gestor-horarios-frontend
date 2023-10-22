@@ -1,9 +1,10 @@
-import Routes from "./routes/routes";
+import React from 'react'
+import MyRoutes from './routes/routes'
 
-function App() {
+const App = () => {
   return (
-   <Routes/>
-  );
+    <MyRoutes/>
+  )
 }
 
-export default App;
+export default App
