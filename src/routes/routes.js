@@ -4,6 +4,7 @@ import Home from "../pages/home";
 import Login from "../pages/login";
 import { AuthProvider, Context } from "../context/authContext";
 import { Spin } from 'antd';
+import { GlobalContext } from "../context/globalContext";
 
 
 const MyRoutes = () => {
@@ -26,13 +27,14 @@ const MyRoutes = () => {
   }
   return (
     <BrowserRouter>
+    <GlobalContext>
       <AuthProvider>
       <Routes>
         <Route exact path="/" element={<Private>  <Home /> </Private>} />
         <Route exact path="/login" element={<Login />} />
       </Routes>
       </AuthProvider>
-
+      </GlobalContext>
     </BrowserRouter>
   );
 };
