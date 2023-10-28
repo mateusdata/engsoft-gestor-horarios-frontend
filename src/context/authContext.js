@@ -1,13 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../components/config/axiosInstance";
 import { notification } from 'antd';
-import { MainContext } from "./globalContext";
 export const Context = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const {user2} = useContext(MainContext);
+ // const {user2} = useContext(MainContext);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
