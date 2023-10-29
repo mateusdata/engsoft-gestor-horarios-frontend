@@ -6,7 +6,6 @@ export const Context = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
- // const {user2} = useContext(MainContext);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();

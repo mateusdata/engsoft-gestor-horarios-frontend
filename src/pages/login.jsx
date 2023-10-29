@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom'
 import React, { useContext, useState } from 'react';
 import { Context } from '../context/authContext';
 import Lampada from '../image2/lampada.svg'
 import Logo from '../image2/logo-ifba.svg'
 
 function Login() {
-  const {user, login, contextHolder} = useContext(Context)
+  const {login, contextHolder} = useContext(Context)
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
@@ -36,7 +35,7 @@ function Login() {
                   <label for="email" className="block text-sm mb-2 dark:text-white">Email</label>
                   <div className="relative">
                     <input placeholder='Digite aqui seu email' type="email" id="email" name="email" className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" onChange={(e) => setEmail(e.target.value)} />
-                    <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                    <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                       <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                       </svg>
@@ -58,14 +57,14 @@ function Login() {
                   </div>
                   <p className="hidden text-xs text-red-600 mt-2" id="password-error">8+ characters required</p>
                   <div className="flex justify-end mt-2">
-                    <a className="text-sm text-green-600 decoration-2 hover:underline font-medium" href="#">Esqueci minha senha</a>
+                    <a className="text-sm text-green-600 decoration-2 hover:underline font-medium" href="www.teste.com">Esqueci minha senha</a>
                   </div>
                 </div>
                 <div className="flex flex-col items-center">
                   <button type="submit" className="py-3 px-4 w-60 mt-5 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">Entrar</button>
                   <p className="mt-5">
                     Ainda não tem uma conta?
-                    <a className="text-sm text-green-600 decoration-2 hover:underline font-medium" href="#">Criar conta</a>  
+                    <a className="text-sm text-green-600 decoration-2 hover:underline font-medium" href="www.teste.com">Criar conta</a>  
                   </p>
                 </div>
               </div>
