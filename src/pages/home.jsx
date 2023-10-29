@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Layouts from '../layouts/layouts';
 import { MainContext } from '../context/globalContext';
 
-function App() {
+function Home() {
   const {user2} = useContext(MainContext);
 
   return (
@@ -15,4 +15,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
