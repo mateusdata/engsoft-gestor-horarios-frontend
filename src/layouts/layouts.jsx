@@ -1,14 +1,16 @@
 import { Avatar } from 'antd';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import Footer from '../components/footer';
 import { MdDarkMode } from 'react-icons/md';
-
 import { Dropdown, Space } from 'antd';
+import { Context } from '../context/authContext';
+
 function Layouts({ children }) {
   const [showMenu, setSHowMenu] = useState(true);
   const [darkMode, setDarkMode] = useState(localStorage.theme === 'dark');
+  const {logout} = useContext(Context);
 
   useEffect(() => {
     if (darkMode) {
@@ -38,9 +40,9 @@ function Layouts({ children }) {
     },
     {
       label: (
-        <Link to={"/login"}>
-          Sair
-        </Link>
+      
+        
+       <button onClick={()=>logout()}>Sair</button>
       ),
       key: '1',
     },
