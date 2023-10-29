@@ -4,9 +4,9 @@ import Layouts from '../layouts/layouts';
 function Home() {
   return (
     <Layouts>
-     <div>
-      Home
-     </div>
+      <div>
+          Home
+      </div>
     </Layouts>
   );
 }

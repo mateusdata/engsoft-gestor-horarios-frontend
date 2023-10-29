@@ -7,6 +7,7 @@ import Password from "../pages/password"
 import { AuthProvider, Context } from "../context/authContext";
 import SendCode from "../pages/sendCode";
 import ChangePassword from "../pages/changePassword";
+import NotFound from "../components/notFound";
 
 const MyRoutes = () => {
 
@@ -35,6 +36,8 @@ const MyRoutes = () => {
         <Route exact path="/password" element={<Password />} />
         <Route exact path="/sendCode" element={<SendCode />} />
         <Route exact path="/changePassword" element={<ChangePassword />} />
+        <Route exact path="*" element={<NotFound />} />
+        
         
       </Routes>
 
