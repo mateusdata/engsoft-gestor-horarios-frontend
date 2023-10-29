@@ -5,12 +5,13 @@ import Lampada from '../image2/lampada.svg'
 import Logo from '../image2/logo-ifba.svg'
 
 function Login() {
-  const {user, login} = useContext(Context)
+  const {user, login, contextHolder} = useContext(Context)
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
   function verificyEmail(e) {
     e.preventDefault()
+    login(email, senha)
     console.log('email')
     console.log(email)
     console.log('senha')
@@ -19,6 +20,7 @@ function Login() {
 
   return (
     <>
+    {contextHolder}
       <div className="relative overflow-hidden bg-gray-100 h-screen">
         <div className="m-5">
           <img src={Logo} alt="Logo do IFBA" />
