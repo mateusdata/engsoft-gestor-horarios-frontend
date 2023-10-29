@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Spin } from 'antd';
 import Home from "../pages/home";
 import Login from "../pages/login";
+import Password from "../pages/password"
 import { AuthProvider, Context } from "../context/authContext";
 
 const MyRoutes = () => {
