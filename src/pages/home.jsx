@@ -1,18 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Layouts from '../layouts/layouts';
-import { MainContext } from '../context/globalContext';
 
-function App() {
-  const {user2} = useContext(MainContext);
-
+function Home() {
   return (
     <Layouts>
      <div>
       Home
-      {user2}
      </div>
     </Layouts>
   );
 }
 
-export default App;
+export default Home;

@@ -196,7 +196,7 @@ function Layouts({ children }) {
         </div>
         <div onClick={() => { setSHowMenu(true); }} className=" border-none pt-0  mt-5 md:mt-0 md:ml-5 px-4 sm:px-6 md:px-8 md:pl-64 break-words">
           <div className=' w-full items-center gap-4 justify-end  p-2 hidden md:flex'>
-            <button className='dark:text-black pr-1 flex flex-row flex-nowrap justify-center items-center gap-1' onClick={()=> setDarkMode(!darkMode)}>
+            <button className='dark:text-black pr-1 ronde flex flex-row flex-nowrap justify-center items-center gap-1' onClick={()=> setDarkMode(!darkMode)}>
               <span className={`${darkMode && "text-gray-800"}`}>{`Modo ${darkMode? "light": "Dark"}`}</span>
               <MdDarkMode size={26} color={`${!darkMode? 'black':'#0a5f9b'}`} />
             </button>
