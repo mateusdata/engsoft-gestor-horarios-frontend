@@ -5,6 +5,7 @@ import Login from "../pages/login";
 import { AuthProvider, Context } from "../context/authContext";
 import { Spin } from 'antd';
 import { GlobalContext } from "../context/globalContext";
+import Password from "../pages/password";
 
 
 const MyRoutes = () => {
@@ -32,6 +33,7 @@ const MyRoutes = () => {
       <Routes>
         <Route exact path="/" element={<Private>  <Home /> </Private>} />
         <Route exact path="/login" element={<Login />} />
+        <Route exact path="/password" element={<Password />} />
       </Routes>
       </AuthProvider>
       </GlobalContext>
