@@ -71,13 +71,13 @@ function Login() {
             </form>
           </div>
         </div>
-        <div className="md:flex md:absolute md:top-0 md:left-1/2 md:right-0 bg-green-300 flex justify-center items-center text-2xl h-screen">
+        <div className="md:flex md:absolute md:top-0 md:left-1/2 md:right-0 bg-[#8fc681] flex justify-center items-center text-2xl h-screen">
           <div className="text-center">
             <div className="flex items-center justify-center">
               <img src={Lampada} alt="Icone de lâmpada" />
             </div>
-            <p>Transforme o ambiente</p>
-            <p>
+            <p className='font-koho font-normal'>Transforme o ambiente</p>
+            <p className='font-koho font-normal'>
               Crie um ecossistema onde o conforto reflita a harmonia da sua essência
             </p>
           </div>
