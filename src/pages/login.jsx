@@ -57,7 +57,7 @@ function Login() {
                   </div>
                   <p className="hidden text-xs text-red-600 mt-2" id="password-error">8+ characters required</p>
                   <div className="flex justify-end mt-2">
-                    <a className="text-sm text-green-600 decoration-2 hover:underline font-medium" href="www.teste.com">Esqueci minha senha</a>
+                    <a className="text-sm text-green-600 decoration-2 hover:underline font-medium" href="/sendCode">Esqueci minha senha</a>
                   </div>
                 </div>
                 <div className="flex flex-col items-center">

@@ -15,5 +15,5 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-//esse arquivo de configuração serve pra recumepar o token do usuario
+//esse arquivo de configuração serve pra recuperar o token do usuario
 export default axiosInstance;

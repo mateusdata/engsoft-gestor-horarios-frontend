@@ -3,19 +3,26 @@ import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { Link, useNavigate } from 'react-router-dom';
+import { AxiosInstance } from 'axios';
+import axiosInstance from '../components/config/axiosInstance';
 
 function Password(){
     const navigate = useNavigate();
     const [email, setEmail] = useState();
     function redirect(){
-       navigate("/sendCode");
+       //navigate("/sendCode");
+        axiosInstance.post('recumperaremail', email).then((response)=>{
+            console.log(response)
+        }).catch((error)=>{
+            console.log(error)
+        })
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
         <div className='bg-[#EFEFEF] w-screen h-screen'>
         <img src={ifba} alt="" className='pt-[20px] pl-[20px] pb-[55px]'/>
             <div className='flex justify-center min-h-40'>
-                <form action="" className='flex flex-col justify-center items-center'>
+                <form className='flex flex-col justify-center items-center'>
                     <h1 className='text-[40px] pb-[60px]'>Redefinir sua senha</h1>
                     <div className='flex flex-col'>
                         <label htmlFor="email" className='text-[20px] pb-[10px] ml-5'>Email</label>
