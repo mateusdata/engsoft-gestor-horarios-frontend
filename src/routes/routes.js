@@ -8,6 +8,7 @@ import { AuthProvider, Context } from "../context/authContext";
 import SendCode from "../pages/sendCode";
 import ChangePassword from "../pages/changePassword";
 import NotFound from "../components/notFound";
+import ContextGlobal, { GlobalContext } from "../context/globalContext";
 
 const MyRoutes = () => {
 
@@ -27,6 +28,7 @@ const MyRoutes = () => {
   }
   return (
     <BrowserRouter>
+      <ContextGlobal>
 
       <AuthProvider>
         
@@ -42,6 +44,7 @@ const MyRoutes = () => {
       </Routes>
 
       </AuthProvider>
+      </ContextGlobal>
     </BrowserRouter>
   );
 };
