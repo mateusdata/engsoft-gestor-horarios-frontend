@@ -9,6 +9,7 @@ import SendCode from "../pages/sendCode";
 import ChangePassword from "../pages/changePassword";
 import NotFound from "../components/notFound";
 import ContextGlobal, { GlobalContext } from "../context/globalContext";
+import RegisterUsers from "../pages/registerUsers";
 
 const MyRoutes = () => {
 
@@ -39,7 +40,7 @@ const MyRoutes = () => {
         <Route exact path="/sendCode" element={<SendCode />} />
         <Route exact path="/changePassword" element={<ChangePassword />} />
         <Route exact path="*" element={<NotFound />} />
-        
+        <Route exact pacth="/register" element={<RegisterUsers/>}/>
         
       </Routes>
 
