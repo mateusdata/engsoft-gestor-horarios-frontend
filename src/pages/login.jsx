@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Context } from '../context/authContext';
 import Lampada from '../image2/lampada.svg'
 import Logo from '../image2/logo-ifba.svg'
+import { GlobalContext } from '../context/globalContext';
 
 function Login() {
   const {login, contextHolder} = useContext(Context)
@@ -16,7 +17,6 @@ function Login() {
     console.log('senha')
     console.log(senha)
   }
-
   return (
     <>
     {contextHolder}
