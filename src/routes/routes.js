@@ -37,8 +37,6 @@ const MyRoutes = () => {
         <Route exact path="/sendCode" element={<SendCode />} />
         <Route exact path="/changePassword" element={<ChangePassword />} />
         <Route exact path="*" element={<NotFound />} />
-        
-        
       </Routes>
 
       </AuthProvider>
