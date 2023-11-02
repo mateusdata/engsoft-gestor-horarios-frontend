@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../components/config/axiosInstance';
+import { GlobalContext } from '../context/globalContext';
 
 function ChangePassword(){
     const navigate = useNavigate();
-    const [new_password, setNewPassword] = useState();
+    const [senha, setsenha] = useState();
     const [new_change, setNewChange] = useState();
-    function redirect(){
-       navigate("/");
+    const {email, setemail} = useContext(GlobalContext)
+
+    function redirect(e){
+        e.preventDefault()
+        axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
+            console.log(response)
+            navigate("/login");
+        }).catch((error) =>{
+            console.log(error)
+        })
+        
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
@@ -20,7 +31,7 @@ function ChangePassword(){
                     <h1 className='text-[40px] pb-[60px]'>Redefinir sua senha</h1>
                     <div className='flex flex-col'>
                         <label htmlFor="new_password" className='text-[20px] pb-[10px] ml-5'>Nova Senha</label>
-                        <div className='w-full flex flex-col justify-center items-center'><input type="password" name="new_password" id="new_password" placeholder='Nova Senha' onChange={(e)=> setNewPassword(e.target.value)} className='w-[370px] max-w-[90%] text-[20px] rounded-[10px] py-[10px] pl-[20px] mb-[25px]' /></div>
+                        <div className='w-full flex flex-col justify-center items-center'><input type="password" name="new_password" id="new_password" placeholder='Nova Senha' onChange={(e)=> setsenha(e.target.value)} className='w-[370px] max-w-[90%] text-[20px] rounded-[10px] py-[10px] pl-[20px] mb-[25px]' /></div>
                         <label htmlFor="new_confirm" className='text-[20px] pb-[10px] ml-5'>Confirmar Nova Senha</label>
                         <div className='w-full flex flex-col justify-center items-center'><input type="password" name="new_confirm" id="new_confirm" placeholder='Confirmar Nova Senha' onChange={(e)=> setNewChange(e.target.value)} className='w-[370px] max-w-[90%] text-[20px] rounded-[10px] py-[10px] pl-[20px] mb-[75px]' /></div>
                     </div>
