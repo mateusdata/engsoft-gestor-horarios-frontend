@@ -40,7 +40,7 @@ const MyRoutes = () => {
         <Route exact path="/sendCode" element={<SendCode />} />
         <Route exact path="/changePassword" element={<ChangePassword />} />
         <Route exact path="*" element={<NotFound />} />
-        <Route exact path="/register" element={<RegisterUsers/>}/>
+        <Route exact path="/register" element={<Private> <RegisterUsers/> </Private>} />
         
       </Routes>
 
