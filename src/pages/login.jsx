@@ -62,10 +62,6 @@ function Login() {
                 </div>
                 <div className="flex flex-col items-center">
                   <button type="submit" className="py-3 px-4 w-60 mt-5 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">Entrar</button>
-                  <p className="mt-5">
-                    Ainda não tem uma conta?
-                    <a className="text-sm text-green-600 decoration-2 hover:underline font-medium" href="www.teste.com">Criar conta</a>  
-                  </p>
                 </div>
               </div>
             </form>
