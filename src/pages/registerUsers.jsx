@@ -15,8 +15,10 @@ function RegisterUsers(){
             nome,email,senha,tipo
         }
         console.log(nome,email,senha);
+
         axiosInstance.post("/cadastro",obj).then((response)=>{
             console.log(response)
+            alert("Cadastro realizado....")
         }).catch((erro)=>{
             console.log(erro)
         })
