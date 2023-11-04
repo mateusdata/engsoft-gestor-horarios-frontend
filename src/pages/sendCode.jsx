@@ -9,7 +9,7 @@ import { GlobalContext } from '../context/globalContext';
 function SendCode(){
     const navigate = useNavigate();
     const [codigo, setcodigo] = useState();
-    const {email, setemail} = useContext(GlobalContext)
+    const {email, setemail, openNotificationWithIcon, contextHolder} = useContext(GlobalContext)
 
     function redirect(e){
         e.preventDefault()
@@ -19,11 +19,12 @@ function SendCode(){
                 navigate('/changePassword')
             }
         }).catch((error) =>{
-            alert('Código inválido!')
+            openNotificationWithIcon({ message: "Código invalido" }, "error")
         })
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
+        {contextHolder}
         <div className='bg-[#EFEFEF] w-screen h-screen'>
         <img src={ifba} alt="" className='pt-[20px] pl-[20px] pb-[55px]'/>
             <div className='flex justify-center min-h-40'>
