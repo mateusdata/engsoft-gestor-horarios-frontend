@@ -9,7 +9,7 @@ function RegisterUsers(){
     const [nome,setNome] = useState();
     const [email,setEmail] = useState();
     const [senha,setSenha] = useState();
-    const [tipo,setTipo] = useState(true);
+    const [administrador,setAdministrador] = useState(false);
     const [cargo,setCargo] = useState();
     const [matricula,setMatricula] = useState();
     const [departamento,setDepartamento] = useState();
@@ -19,7 +19,7 @@ function RegisterUsers(){
         e.preventDefault()
         
         const obj = {
-            nome,email,senha,tipo,cargo,matricula,departamento
+            nome,email,senha,administrador,cargo,matricula,departamento
         }
         console.log(obj);
         console.log(nome,email,senha,cargo,matricula,departamento);
@@ -111,7 +111,7 @@ return(
                         <div className="class items-center">
                          <label htmlFor="" className="m-2 text-lg
                           mb-2 dark:text-white font-[KoHo]">Administrador</label>
-                         <input defaultChecked={tipo} type="checkbox" onClick={()=> setTipo(! tipo)} name="Administrador" className=""/>    
+                         <input defaultChecked={administrador} type="checkbox" onClick={()=> setAdministrador(! administrador)} name="Administrador" className=""/>    
                         </div>       
                     </div> 
                     <div className="flex fle-col items-center"> 

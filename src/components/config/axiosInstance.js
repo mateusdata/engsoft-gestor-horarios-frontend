@@ -4,7 +4,7 @@ import axios from 'axios';
 acesse a api na rota / vai falar as rotas que existe
 */
 const axiosInstance = axios.create({
-  baseURL: 'https://apigestaohorarios.vercel.app',
+  baseURL: 'http://localhost:3001',
 });
 
 axiosInstance.interceptors.request.use((config) => {
