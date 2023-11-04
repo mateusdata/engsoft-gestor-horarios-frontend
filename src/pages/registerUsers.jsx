@@ -24,23 +24,30 @@ function RegisterUsers(){
         console.log(obj);
         console.log(nome,email,senha,cargo,matricula,departamento);
 
-        axiosInstance.post("/cadastro",obj).then((response)=>{
-            console.log(response)
-            openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success")
-        }).catch((erro)=>{
-            console.log(erro)
-            openNotificationWithIcon({ message: "Ocorreu um erro." }, "error")
-        })
+        if (senha.length >= 6){
+            axiosInstance.post("/cadastro",obj).then((response)=>{
+                console.log(response)
+                openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success")
+            }).catch((erro)=>{
+                console.log(erro)
+                openNotificationWithIcon({ message: "Ocorreu um erro." }, "error")
+            })
+        }
+        else{
+            openNotificationWithIcon({ message: "Informe uma senha maior." }, "warning")
+        }
 
     }
 return(
 
     <Layouts>
     {contextHolder}
-    <div className="bg-gray-100  flex item-center justify-stretch border w-full gap-80">  
-        <div className="m-5 ">
+
+    <div className="bg-gray-100  flex item-center  w-full flex-col">  
+        <div className="m-5 border flex items-center justify-center md:justify-start bg-[#82CF6F]">
             <img src={ifba} alt="Logo do IFBA" />
         </div>
+    <div className='flex flex-col items-center justify-center'>
         <div className=""> 
         <br />
             <div className="md:pr-8 md:w-1/2 xl:pr-0 xl:w-5/12">
@@ -114,13 +121,14 @@ return(
                          <input defaultChecked={administrador} type="checkbox" onClick={()=> setAdministrador(! administrador)} name="Administrador" className=""/>    
                         </div>       
                     </div> 
-                    <div className="flex fle-col items-center"> 
+                    <div className="flex fle-col items-center mb-50"> 
                      <button onClick={CadastrarUsuario} className="py-3 px-4 w-60 mt-5 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 font-[KoHo] ">Cadastrar</button>
                     </div>
                 </div>
              </form> 
             </div>
         </div> 
+        </div>
     </div>
     </Layouts>
 );
