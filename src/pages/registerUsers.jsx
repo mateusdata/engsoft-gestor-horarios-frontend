@@ -21,11 +21,11 @@ function RegisterUsers(){
         const obj = {
             nome,email,senha,tipo,cargo,matricula,departamento
         }
+        console.log(obj);
         console.log(nome,email,senha,cargo,matricula,departamento);
 
         axiosInstance.post("/cadastro",obj).then((response)=>{
             console.log(response)
-            alert("Cadastro realizado....")
             openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success")
         }).catch((erro)=>{
             console.log(erro)
