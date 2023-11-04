@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import 'animate.css';
+/* import 'animate.css'; */
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { Link, useNavigate } from 'react-router-dom';
