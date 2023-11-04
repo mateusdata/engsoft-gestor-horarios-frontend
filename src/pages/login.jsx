@@ -20,13 +20,13 @@ function Login() {
   return (
     <>
     {contextHolder}
-      <div className="relative overflow-hidden bg-gray-100 h-screen">
+      <div className="relative overflow-hidden bg-gray-100 min-h-screen font-normal not-italic leading-none shrink-0 md:flex-row pt-[20px] pl-[20px] pb-[55px]">
         <div className="m-5">
           <img src={Logo} alt="Logo do IFBA" />
         </div>
         <div className="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-20 lg:py-32 md:px-8">
           <div className="md:pr-8 md:w-1/2 xl:pr-0 xl:w-5/12">
-            <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200">
+            <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200 not-italic leading-none">
               Olá, faça o seu login
             </h1>
             <form className="mt-8" onSubmit={verificyEmail}>
