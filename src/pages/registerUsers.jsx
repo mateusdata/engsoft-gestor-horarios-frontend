@@ -44,13 +44,13 @@ return(
     {contextHolder}
 
     <div className="bg-gray-100  flex item-center  w-full flex-col">  
-        <div className="m-5 border flex items-center justify-center md:justify-start bg-[#82CF6F]">
+        <div className="m-1 ">
             <img src={ifba} alt="Logo do IFBA" />
         </div>
     <div className='flex flex-col items-center justify-center'>
-        <div className=""> 
+        <div className="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-15 lg:py-15 md:px-8"> 
         <br />
-            <div className="md:pr-8 md:w-1/2 xl:pr-0 xl:w-5/12">
+            <div className="md:pr-5 md:w-1/1 xl:pr-0 xl:w-1/1">
                 <h2 className="font-[KoHo] text-2xl text-gray-600 font-bold md:text-3xl md:leading-tight lg:text-4xl lg:leading-tight dark:text-gray-200 whitespace-nowrap">
                 Cadastro do professor
                 </h2>
@@ -79,7 +79,7 @@ return(
                           mb-2 dark:text-white font-[KoHo]">Cargo</label>
                         </div>
                         <div className=""> 
-                         <input placeholder="Informe o cargo" type="text" onChange={(e)=> setCargo(e.target.value)} name="Cargo"   required  className="py-3 px-4 block w-full border-gray-200 rounded-md text-lg
+                         <input placeholder="Informe o cargo" type="text" onChange={(e)=> setCargo(e.target.value)} name="Cargo"   required  className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm
                           focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"/> 
                         </div>
                     </div>  
@@ -121,7 +121,7 @@ return(
                          <input defaultChecked={administrador} type="checkbox" onClick={()=> setAdministrador(! administrador)} name="Administrador" className=""/>    
                         </div>       
                     </div> 
-                    <div className="flex fle-col items-center mb-50"> 
+                    <div className="flex justify-center items-center mb-50"> 
                      <button onClick={CadastrarUsuario} className="py-3 px-4 w-60 mt-5 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 font-[KoHo] ">Cadastrar</button>
                     </div>
                 </div>
