@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Layouts from "../layouts/layouts";
-import axiosInstance from "../components/config/axiosInstance";
+import axiosInstance from "../components/config/axiosInstance.js";
 import ifba from "../images/ifba.png";
 import { GlobalContext } from "../context/globalContext";
 

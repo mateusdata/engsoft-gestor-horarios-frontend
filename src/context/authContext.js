@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../components/config/axiosInstance";
+import axiosInstance from "../components/config/axiosInstance.js";
 import { notification } from 'antd';
 export const Context = createContext();
 

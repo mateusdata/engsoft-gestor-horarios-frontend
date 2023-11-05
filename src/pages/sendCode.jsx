@@ -3,7 +3,7 @@ import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../components/config/axiosInstance';
+import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
 
 function SendCode() {
