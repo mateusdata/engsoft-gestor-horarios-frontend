@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Spin } from 'antd';
 import Home from "../pages/home";
 import Login from "../pages/login";
@@ -8,14 +8,13 @@ import { AuthProvider, Context } from "../context/authContext";
 import SendCode from "../pages/sendCode";
 import ChangePassword from "../pages/changePassword";
 import NotFound from "../components/notFound";
-import ContextGlobal, { GlobalContext } from "../context/globalContext";
+import ContextGlobal from "../context/globalContext";
 import RegisterUsers from "../pages/registerUsers";
 
 const MyRoutes = () => {
 
   function Private({ children }) {
     const { autenticado, loading } = useContext(Context);
-    const navigate = useNavigate()
 
     if (loading) {
       return <div style={{display:"flex", color: "blue", justifyContent:"center",alignItems:"center", height:"100vh" }}>

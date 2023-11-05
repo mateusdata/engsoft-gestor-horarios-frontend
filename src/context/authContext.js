@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         setUser(userLocal);
         setTimeout(() => {
           setLoading(false);
-        }, 2000);
+        }, 1700);
         navigate("/");
       }
     }).catch((erro) => {
@@ -55,9 +55,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    navigate("/login");
-    setUser(null);
-    localStorage.removeItem("usuario");
+    setLoading(true)
+    setTimeout(() => {
+      navigate("/login");
+      setUser(null);
+      localStorage.removeItem("usuario");
+    }, 1500);
   };
 
   return (

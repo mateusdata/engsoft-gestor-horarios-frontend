@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-/* import 'animate.css'; */
+import React, { useContext, useEffect, useState } from 'react';
+import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { useNavigate } from 'react-router-dom';
@@ -11,16 +11,24 @@ function ChangePassword(){
     const [senha, setsenha] = useState();
     const [new_change, setNewChange] = useState();
     const {email, setemail} = useContext(GlobalContext)
-
+    useEffect(()=>{
+        if(!email){navigate("/login")};
+        },[]);
+        if(!email){
+            return null;
+        }
+        
     function redirect(e){
         e.preventDefault()
-        axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
-            console.log(response)
-            navigate("/login");
-        }).catch((error) =>{
-            console.log(error)
-        })
-        
+        if(senha === new_change){
+          return  axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
+                console.log(response)
+                navigate("/login");
+            }).catch((error) =>{
+                console.log(error);
+            })
+        }
+        alert("Senhas não são indenticas");
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>

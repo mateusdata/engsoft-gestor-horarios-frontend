@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React, { useContext, useState } from 'react';
 /* import 'animate.css'; */
+=======
+import React, { useContext, useEffect, useState } from 'react';
+import 'animate.css';
+>>>>>>> 818be52 (added: new features)
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { useNavigate } from 'react-router-dom';
@@ -9,8 +14,13 @@ import { GlobalContext } from '../context/globalContext';
 function SendCode(){
     const navigate = useNavigate();
     const [codigo, setcodigo] = useState();
-    const {email, setemail, openNotificationWithIcon, contextHolder} = useContext(GlobalContext)
-
+    const {email, openNotificationWithIcon, contextHolder} = useContext(GlobalContext)
+    useEffect(()=>{
+    if(!email){navigate("/login")};
+    },[]);
+    if(!email){
+        return null;
+    }
     function redirect(e){
         e.preventDefault()
         axiosInstance.post('/validarcodigo', {codigo: codigo, email: email}).then((response) => {

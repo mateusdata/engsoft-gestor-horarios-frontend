@@ -2,20 +2,21 @@ import React, { useContext, useState } from 'react';
 import { Context } from '../context/authContext';
 import Lampada from '../image2/lampada.svg'
 import Logo from '../image2/logo-ifba.svg'
-import { GlobalContext } from '../context/globalContext';
 
 function Login() {
-  const {login, contextHolder} = useContext(Context)
+  const {login, contextHolder,openNotificationWithIcon , openN} = useContext(Context)
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
   function verificyEmail(e) {
     e.preventDefault()
-    login(email, senha)
-    console.log('email')
-    console.log(email)
-    console.log('senha')
-    console.log(senha)
+    if(senha.length > 5 && email ){
+      login(email, senha);
+      return;
+    }
+      openNotificationWithIcon({ message: "A senha tem que ser maior que 6 digitos" }, "error")
+  
+  
   }
   return (
     <>
@@ -26,7 +27,7 @@ function Login() {
         </div>
         <div className="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-20 lg:py-32 md:px-8">
           <div className="md:pr-8 md:w-1/2 xl:pr-0 xl:w-5/12">
-            <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200 not-italic leading-none">
+            <h1 className="text-3xl text-gray-800 dark:text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight">
               Olá, faça o seu login
             </h1>
             <form className="mt-8" onSubmit={verificyEmail}>
@@ -34,11 +35,11 @@ function Login() {
                 <div>
                   <label for="email" className="block text-sm mb-2 dark:text-white">Email</label>
                   <div className="relative">
-                    <input placeholder='Digite aqui seu email' type="email" id="email" name="email" className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" onChange={(e) => setEmail(e.target.value)} />
+                    <input placeholder='Digite aqui seu email'required type="email" id="email" name="email" className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"  aria-describedby="email-error" onChange={(e) => setEmail(e.target.value)} />
                     <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                     {false && <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                      </svg>
+                      </svg>}
                     </div>
                   </div>
                   <p className="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p>
@@ -50,9 +51,9 @@ function Login() {
                   <div className="relative">
                     <input placeholder='Digite aqui sua senha' type="password" id="password" name="password" className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" onChange={(e) => setSenha(e.target.value)} />
                     <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                     {false && <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                      </svg>
+                      </svg>}
                     </div>
                   </div>
                   <p className="hidden text-xs text-red-600 mt-2" id="password-error">8+ characters required</p>
