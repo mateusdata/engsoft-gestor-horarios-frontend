@@ -25,7 +25,7 @@
             wrapper='span'
             style={{fontFamily:"Roboto Mono"}}
             className='text-3xl font-bold text-gray-600 '
-            repeat={showMensage ?  Infinity: false}
+            repeat={false}
             cursor={showMensage}
           />
         </div>

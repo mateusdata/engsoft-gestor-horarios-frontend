@@ -3,7 +3,7 @@ import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from '../components/config/axiosInstance';
+import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
 
 function Password(){
@@ -15,16 +15,19 @@ function Password(){
     function redirect(e){
         e.preventDefault()
         console.log(email)
-        axiosInstance.post('/recuperaremail', {email: email}).then((response)=>{
-            console.log(response)
-            if(response.status === 200){
-                navigate("/sendCode");
-            }
-        }).catch((error)=>{
-            console.log(error)
-            openNotificationWithIcon({ message: email ? "Nenhuma conta com esse email": "Informe um email" }, "warning");
-
-        })
+        if(email){
+            return  axiosInstance.post('/recuperaremail', {email: email}).then((response)=>{
+                console.log(response)
+                if(response.status === 200){
+                    navigate("/sendCode");
+                }
+            }).catch((error)=>{
+                console.log(error)
+                openNotificationWithIcon({ message:  "Nenhuma conta com esse email" }, "error");
+    
+            })
+        }
+        openNotificationWithIcon({ message:  "Informe um email" }, "info");
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>

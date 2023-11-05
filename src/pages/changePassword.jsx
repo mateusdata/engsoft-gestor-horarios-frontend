@@ -4,7 +4,7 @@ import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../components/config/axiosInstance';
+import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
 
 function ChangePassword(){
@@ -29,7 +29,7 @@ function ChangePassword(){
                 console.log(error);
             })
         }
-        alert("Senhas não são indenticas");
+        openNotificationWithIcon({ message: "Informe ambas as senhas e certifique-se de que sejam idênticas." }, "info")
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>

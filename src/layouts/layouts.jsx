@@ -7,55 +7,17 @@ import { MdDarkMode } from 'react-icons/md';
 import { Dropdown, Space } from 'antd';
 import { Context } from '../context/authContext';
 import { GlobalContext } from '../context/globalContext';
+import Header from '../components/header';
 
 function Layouts({ children }) {
   const [showMenu, setSHowMenu] = useState(true);
-  const [darkMode, setDarkMode] = useState(localStorage.theme === 'dark');
-  const { logout, user } = useContext(Context);
   const { currenPage, setCurrentPage} = useContext(GlobalContext);
 
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.theme = 'dark';
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.theme = 'light';
-    }
-  }, [darkMode]);
-  const items = [
-    {
-      label: (
-        <Link to={"/"}>
-          Painel
-        </Link>
-      ),
-      key: '0',
-    },
-    {
-      label: (
-        <Link to={"/"}>
-          Configurações
-        </Link>
-      ),
-      key: '1',
-    },
-    {
-      label: (
-        <div onClick={() => logout()}>
-          <hr className='w-full p-[0.4px]' />
-          <button className='mt-1  hover:text-red-300'>Sair</button>
-        </div>
-      ),
-      key: '2',
-    },
 
-
-  ];
   return (
     <div>
-      <body className="bg-gray-50 dark:bg-[#EFEFEF]">
-        <div className="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden dark:bg-gray-800 dark:border-gray-700">
+      <body className="bg-gray-[#EFEFEF] dark:bg-[#EFEFEF]">
+        <div className="sticky top-0 inset-x-0 z-20 bg-[#EFEFEF] dark:bg-[#EFEFEF] border-y px-4 sm:px-6 md:px-8   border ">
           <div className="flex items-center py-4  justify-between" >
 
             <div className='flex items-center justify-center'>
@@ -78,25 +40,8 @@ function Layouts({ children }) {
 
             </div>
 
-           <div className='flex'>
-           {false &&  <button className='dark:text-black pr-1 flex flex-row flex-nowrap justify-center items-center gap-1' onClick={() => setDarkMode(!darkMode)}>
-                  <span className={`${darkMode && "text-gray-300"}`}>{`Modo ${darkMode ? "light" : "Dark"}`}</span>
-                  <MdDarkMode size={26} color={`${!darkMode ? 'black' : '#0a5f9b'}`} />
-                </button>}
-                <Dropdown
-                  menu={{ items }}
-                  trigger={["click"]}
-                >
-                  <button onClick={(e) => e.preventDefault()}>
-                    <Space className="cursor-pointer">
-                      <Avatar
-                        size={40}
-                        style={{ backgroundColor: "black" }}
-                        icon={<UserOutlined />}
-                      />
-                    </Space>
-                  </button>
-                </Dropdown>
+           <div className='flex '>
+             <Header/>
            </div>
           </div>
 
@@ -212,38 +157,10 @@ function Layouts({ children }) {
             </ul>
           </nav>
         </div>
-        <div onClick={() => { setSHowMenu(true); }} className=" border pt-0  mt-5 md:mt-0 md:ml-5 px-4 sm:px-6 md:px-8 md:pl-64 break-words bg-gray-50 dark:bg-[#D9D9D9]">
-          <div className=' w-full items-center gap-4 justify-end  p-2 hidden md:flex'>
-            <div className='flex '>
-              <button className='dark:text-black pr-1 ronde flex flex-row flex-nowrap justify-center items-center gap-1' onClick={() => setDarkMode(!darkMode)}>
-                <span className={`${darkMode && "text-gray-800"}`}>{`Modo ${darkMode ? "light" : "Dark"}`}</span>
-                <MdDarkMode size={26} color={`${!darkMode ? 'black' : '#0a5f9b'}`} />
-              </button>
-              <span className='font-semibold text-lgtext-black'  >{
-                user.nome?.replace(/(\w)(\w*)/g, (_, firstChar, restOfWord) => firstChar.toUpperCase() + restOfWord.toLowerCase())
-              }</span>
+        <div onClick={() => { setSHowMenu(true); }} className="pt-0  mt-5 md:mt-0 md:ml-5 px-4 sm:px-6 md:px-8 md:pl-64 break-words bg-[#EFEFEF] dark:bg-[#EFEFEF]">
+         
 
-            </div>
-            <div className=''>
-              <Dropdown
-                menu={{ items }}
-                trigger={["click"]}
-              >
-                <button onClick={(e) => e.preventDefault()}>
-                  <Space className="cursor-pointer">
-                    <Avatar
-                      size={40}
-                      style={{ backgroundColor: "black" }}
-                      icon={<UserOutlined />}
-                    />
-                  </Space>
-                </button>
-              </Dropdown>
-            </div>
-
-          </div>
-
-          <div className='flex flex-col justify-between border border-gray-50 dark:border-gray-200 rounded-md min-h-[94vh]  '>
+          <div className='flex flex-col justify-between  dark:border-gray-200 rounded-md min-h-[94vh]  '>
             <div className='p-0 rounded-md min-h-[8vh] break-words flex flex-row'>
               {children}
             </div>
