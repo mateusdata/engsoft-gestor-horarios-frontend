@@ -44,7 +44,7 @@ return(
     {contextHolder}
 
     <div className="bg-gray-100  flex item-center  w-full flex-col">  
-        <div className="m-5 border flex items-center justify-center md:justify-start bg-[#82CF6F]">
+        <div className="m-5 border flex items-center justify-center md:justify-start bg-[#238662]">
             <img src={ifba} alt="Logo do IFBA" />
         </div>
     <div className='flex flex-col items-center justify-center'>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
@@ -8,8 +8,9 @@ import { GlobalContext } from '../context/globalContext';
 
 function Password(){
     const navigate = useNavigate();
-    const [isUser, setisUser] = useState(false);
-    const {email, setemail} = useContext(GlobalContext)
+    const {email, setemail} = useContext(GlobalContext);
+    const {contextHolder, openNotificationWithIcon}= useContext(GlobalContext);
+
 
     function redirect(e){
         e.preventDefault()
@@ -21,11 +22,13 @@ function Password(){
             }
         }).catch((error)=>{
             console.log(error)
-            window.alert('Teste')
+            openNotificationWithIcon({ message: email ? "Nenhuma conta com esse email": "Informe um email" }, "warning");
+
         })
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
+        {contextHolder}
         <div className='bg-[#EFEFEF] w-screen h-screen'>
         <img src={ifba} alt="" className='pt-[20px] pl-[20px] pb-[55px]'/>
             <div className='flex justify-center min-h-40'>

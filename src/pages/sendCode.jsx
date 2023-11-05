@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
@@ -9,8 +9,13 @@ import { GlobalContext } from '../context/globalContext';
 function SendCode(){
     const navigate = useNavigate();
     const [codigo, setcodigo] = useState();
-    const {email, setemail, openNotificationWithIcon, contextHolder} = useContext(GlobalContext)
-
+    const {email, openNotificationWithIcon, contextHolder} = useContext(GlobalContext)
+    useEffect(()=>{
+    if(!email){navigate("/login")};
+    },[]);
+    if(!email){
+        return null;
+    }
     function redirect(e){
         e.preventDefault()
         axiosInstance.post('/validarcodigo', {codigo: codigo, email: email}).then((response) => {
