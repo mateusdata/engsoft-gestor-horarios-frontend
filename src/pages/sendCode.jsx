@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useContext, useState } from 'react';
 /* import 'animate.css'; */
 =======
+=======
+>>>>>>> main
 import React, { useContext, useEffect, useState } from 'react';
 import 'animate.css';
 >>>>>>> 818be52 (added: new features)
