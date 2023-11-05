@@ -37,7 +37,7 @@ function ChangePassword(){
          }
          return openNotificationWithIcon({ message: "A nova senha deve conter pelo menos 6 caracteres." }, "error")
         }
-        openNotificationWithIcon({ message: "Informe as duas senha e de forma iquais" }, "error")
+        openNotificationWithIcon({ message: "Informe ambas as senhas e certifique-se de que sejam idênticas." }, "info")
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
