@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Layouts from "../layouts/layouts";
-import axiosInstance from "../components/config/axiosInstance";
+import axiosInstance from "../components/config/axiosInstance.js";
 import ifba from "../images/ifba.png";
 import { GlobalContext } from "../context/globalContext";
 
@@ -42,9 +42,11 @@ return(
 
     <Layouts>
     {contextHolder}
-
-    <div className="bg-gray-100  flex item-center  w-full flex-col">  
+     <div className="bg-gray-100  flex item-center  w-full flex-col">  
         <div className="m-1 ">
+
+        <div className="m-5 border flex items-center justify-center md:justify-start bg-[#238662]">
+
             <img src={ifba} alt="Logo do IFBA" />
         </div>
     <div className='flex flex-col items-center justify-center'>
@@ -129,6 +131,7 @@ return(
             </div>
         </div> 
         </div>
+    </div>
     </div>
     </Layouts>
 );

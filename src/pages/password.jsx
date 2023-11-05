@@ -1,31 +1,37 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import 'animate.css';
 import ifba from '../images/ifba.png';
 import lampada from '../images/lampada.png';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from '../components/config/axiosInstance';
+import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
 
 function Password(){
     const navigate = useNavigate();
-    const [isUser, setisUser] = useState(false);
-    const {email, setemail} = useContext(GlobalContext)
+    const {email, setemail} = useContext(GlobalContext);
+    const {contextHolder, openNotificationWithIcon}= useContext(GlobalContext);
+
 
     function redirect(e){
         e.preventDefault()
         console.log(email)
-        axiosInstance.post('/recuperaremail', {email: email}).then((response)=>{
-            console.log(response)
-            if(response.status === 200){
-                navigate("/sendCode");
-            }
-        }).catch((error)=>{
-            console.log(error)
-            window.alert('Teste')
-        })
+        if(email){
+            return  axiosInstance.post('/recuperaremail', {email: email}).then((response)=>{
+                console.log(response)
+                if(response.status === 200){
+                    navigate("/sendCode");
+                }
+            }).catch((error)=>{
+                console.log(error)
+                openNotificationWithIcon({ message:  "Nenhuma conta com esse email" }, "error");
+    
+            })
+        }
+        openNotificationWithIcon({ message:  "Informe um email" }, "info");
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
+        {contextHolder}
         <div className='bg-[#EFEFEF] w-screen h-screen'>
         <img src={ifba} alt="" className='pt-[20px] pl-[20px] pb-[55px]'/>
             <div className='flex justify-center min-h-40'>
