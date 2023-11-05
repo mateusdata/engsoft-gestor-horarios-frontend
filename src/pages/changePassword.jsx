@@ -10,28 +10,38 @@ function ChangePassword(){
     const navigate = useNavigate();
     const [senha, setsenha] = useState();
     const [new_change, setNewChange] = useState();
-    const {email, setemail} = useContext(GlobalContext)
+    const {email, contextHolder, openNotificationWithIcon} = useContext(GlobalContext)
+    const {}= useContext(GlobalContext);
+
     useEffect(()=>{
         if(!email){navigate("/login")};
-        },[]);
-        if(!email){
-            return null;
-        }
-        
+    },[]);
+
+    if(!email){
+        return null;
+    }
+       
     function redirect(e){
         e.preventDefault()
-        if(senha === new_change){
-          return  axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
-                console.log(response)
-                navigate("/login");
-            }).catch((error) =>{
-                console.log(error);
-            })
+        if(senha && senha === new_change){
+         if(senha && senha?.length > 5 ){
+            return  axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
+                openNotificationWithIcon({ message: "Sua senha foi atualizada." }, "success")
+                setTimeout(() => {
+                    navigate("/login");
+                }, 4000);
+                }).catch((error) =>{
+                    console.log(error);
+                    openNotificationWithIcon({ message: "Ocorreu um erro ao atualizar a senha" }, "error")
+                })
+         }
+         return openNotificationWithIcon({ message: "A nova senha deve conter pelo menos 6 caracteres." }, "error")
         }
-        alert("Senhas não são indenticas");
+        openNotificationWithIcon({ message: "Informe as duas senha e de forma iquais" }, "error")
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
+        {contextHolder}
         <div className='bg-[#EFEFEF] w-screen h-screen'>
         <img src={ifba} alt="" className='pt-[20px] pl-[20px] pb-[55px]'/>
             <div className='flex justify-center min-h-40'>
