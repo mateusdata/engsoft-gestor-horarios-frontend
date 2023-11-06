@@ -7,7 +7,7 @@
     useEffect(()=>{
       setTimeout(() => {
         setShowMensage(false)
-      }, 10000);
+      }, 20000);
     },[showMensage])
     return (
       <Layouts>
@@ -18,6 +18,7 @@
               1000,
               "Sistema de gestão de horários educacional",
               1000,  "Desenvolvido pelo IFBA ",
+              1000,  "Pagina Inicial",
               1000,
 
             ]}
@@ -26,7 +27,7 @@
             style={{fontFamily:"Roboto Mono"}}
             className='text-3xl font-bold text-gray-600 '
             repeat={false}
-            cursor={showMensage}
+            cursor={false}
           />
         </div>
       </Layouts>

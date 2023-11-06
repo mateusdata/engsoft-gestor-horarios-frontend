@@ -4,14 +4,11 @@ import { UserOutlined } from '@ant-design/icons';
 import { MdDarkMode } from 'react-icons/md';
 import { Dropdown, Space } from 'antd';
 import { Context } from '../context/authContext';
-import { GlobalContext } from '../context/globalContext';
 import { Link } from 'react-router-dom';
 
 function Header() {
-    const [showMenu, setSHowMenu] = useState(true);
     const [darkMode, setDarkMode] = useState(localStorage.theme === 'dark');
     const { logout, user } = useContext(Context);
-    const { currenPage, setCurrentPage } = useContext(GlobalContext);
 
     useEffect(() => {
         if (darkMode) {
