@@ -1,14 +1,17 @@
-  import React, { useEffect, useState } from 'react';
-  import Layouts from '../layouts/layouts';
-  import { TypeAnimation } from 'react-type-animation';
+import React, { useEffect, useState } from 'react';
+import Layouts from '../layouts/layouts';
+import { TypeAnimation } from 'react-type-animation';
 
-  function Home() {
-    const [showMensage, setShowMensage] = useState(true);
-    useEffect(()=>{
-      setTimeout(() => {
-        setShowMensage(false)
-      }, 20000);
-    },[showMensage])
+/**
+ * Página inicial da aplicação.
+ *
+ * Esta página exibe uma mensagem de boas-vindas e informações sobre o sistema de gestão de horários educacionais.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página inicial.
+ */
+function Home() {
+  const [showMensage, setShowMensage] = useState(true);
+
     return (
       <Layouts>
         <div className='flex itens-center justify-center text-center w-full'>

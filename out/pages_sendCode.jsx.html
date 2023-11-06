@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/sendCode.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/sendCode.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useContext, useEffect, useState } from 'react';
+import 'animate.css';
+import ifba from '../images/ifba.png';
+import lampada from '../images/lampada.png';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../components/config/axiosInstance.js';
+import { GlobalContext } from '../context/globalContext';
+
+/**
+ * Componente para envio e validação de código de recuperação.
+ *
+ * Este componente permite que o usuário insira um código de recuperação e valida o código.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página de envio e validação de código.
+ */
+function SendCode() {
+    const navigate = useNavigate();
+    const [codigo, setCodigo] = useState();
+    const { email, openNotificationWithIcon, contextHolder } = useContext(GlobalContext);
+
+    useEffect(() => {
+        if (!email) {
+            navigate("/login");
+        }
+    }, []);
+
+    if (!email) {
+        return null;
+    }
+
+    /**
+     * Valida o código inserido e redireciona para a página de redefinição de senha.
+     *
+     * @param {Event} e - O evento de clique no botão de validação do código.
+     */
+    function redirect(e) {
+        e.preventDefault();
+
+        if (codigo) {
+            axiosInstance.post('/validarcodigo', { codigo: codigo, email: email })
+                .then((response) => {
+                    console.log(response);
+                    if (response.status === 200) {
+                        navigate('/changePassword');
+                    }
+                })
+                .catch((error) => {
+                    openNotificationWithIcon({ message: "Código inválido" }, "error");
+                });
+        } else {
+            openNotificationWithIcon({ message: "Informe o código enviado por email" }, "info");
+        }
+    }
+
+    return (
+        &lt;div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
+            {contextHolder}
+            &lt;div className='bg-[#EFEFEF] w-screen h-screen'>
+                &lt;img src={ifba} alt="" className='pt-[20px] pl-[20px] pb-[55px]' />
+                &lt;div className='flex justify-center min-h-40'>
+                    &lt;form action="" className='flex flex-col justify-center items-center'>
+                        &lt;h1 className='text-[40px] pb-[60px]'>Redefinir sua senha&lt;/h1>
+                        &lt;div className='flex flex-col'>
+                            &lt;label htmlFor="code" className='text-[20px] pb-[10px] ml-5'>Código de Recuperação&lt;/label>
+                            &lt;span className='text-red-500 ml-5 pb-1'> {`Um email foi enviado para ${email}`}&lt;/span>
+                            &lt;div className='w-full flex flex-col justify-center items-center'>
+                                &lt;input type="text" name="code" id="code" placeholder='Código de Recuperação' onChange={(e) => setCodigo(e.target.value)} className='w-[370px] max-w-[90%] text-[20px] rounded-[10px] py-[10px] pl-[20px] mb-[75px]' />
+                            &lt;/div>
+
+                        &lt;/div>
+                        &lt;button type="submit" onClick={redirect} className='bg-[#59AD4B] rounded-[10px] w-[195px] h-[45px] text-[#FFF] text-[20px] md:text-[25px] mb-[35px]'>Verificar Código&lt;/button>
+                    &lt;/form>
+                &lt;/div>
+            &lt;/div>
+            &lt;div className='flex-col bg-[#82CF6F] w-screen h-screen justify-center items-center tracking-[7.4px] space-x-[50px] hidden md:flex'>
+                &lt;img src={lampada} alt="" className='mt-[70px] pb-[40px]' />
+                &lt;h1 className='text-[30px] mb-[10px]'>Redefina o ambiente&lt;/h1>
+                &lt;h1 className='text-[30px] mt-[10px]'>Abra novas portas para novos conhecimentos.&lt;/h1>
+            &lt;/div>
+        &lt;/div>
+    )
+}
+
+export default SendCode
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#ChangePassword">ChangePassword</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Password">Password</a></li><li><a href="global.html#RegisterUsers">RegisterUsers</a></li><li><a href="global.html#SendCode">SendCode</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Nov 06 2023 13:34:20 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

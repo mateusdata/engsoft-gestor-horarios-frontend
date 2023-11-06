@@ -6,30 +6,52 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
 
+/**
+ * Componente para envio e validação de código de recuperação.
+ *
+ * Este componente permite que o usuário insira um código de recuperação e valida o código.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página de envio e validação de código.
+ */
 function SendCode() {
     const navigate = useNavigate();
-    const [codigo, setcodigo] = useState();
-    const { email, openNotificationWithIcon, contextHolder } = useContext(GlobalContext)
+    const [codigo, setCodigo] = useState();
+    const { email, openNotificationWithIcon, contextHolder } = useContext(GlobalContext);
+
     useEffect(() => {
-        if (!email) { navigate("/login") };
+        if (!email) {
+            navigate("/login");
+        }
     }, []);
+
     if (!email) {
         return null;
     }
+
+    /**
+     * Valida o código inserido e redireciona para a página de redefinição de senha.
+     *
+     * @param {Event} e - O evento de clique no botão de validação do código.
+     */
     function redirect(e) {
-        e.preventDefault()
-       if(codigo){
-        return axiosInstance.post('/validarcodigo', { codigo: codigo, email: email }).then((response) => {
-            console.log(response)
-            if (response.status === 200) {
-                navigate('/changePassword')
-            }
-        }).catch((error) => {
-            openNotificationWithIcon({ message: "Código invalido" }, "error")
-        })
-       }
-       openNotificationWithIcon({ message: "Informe o codigo enviado por email" }, "info")
+        e.preventDefault();
+
+        if (codigo) {
+            axiosInstance.post('/validarcodigo', { codigo: codigo, email: email })
+                .then((response) => {
+                    console.log(response);
+                    if (response.status === 200) {
+                        navigate('/changePassword');
+                    }
+                })
+                .catch((error) => {
+                    openNotificationWithIcon({ message: "Código inválido" }, "error");
+                });
+        } else {
+            openNotificationWithIcon({ message: "Informe o código enviado por email" }, "info");
+        }
     }
+
     return (
         <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
             {contextHolder}
@@ -42,7 +64,7 @@ function SendCode() {
                             <label htmlFor="code" className='text-[20px] pb-[10px] ml-5'>Código de Recuperação</label>
                             <span className='text-red-500 ml-5 pb-1'> {`Um email foi enviado para ${email}`}</span>
                             <div className='w-full flex flex-col justify-center items-center'>
-                                <input type="text" name="code" id="code" placeholder='Código de Recuperação' onChange={(e) => setcodigo(e.target.value)} className='w-[370px] max-w-[90%] text-[20px] rounded-[10px] py-[10px] pl-[20px] mb-[75px]' />
+                                <input type="text" name="code" id="code" placeholder='Código de Recuperação' onChange={(e) => setCodigo(e.target.value)} className='w-[370px] max-w-[90%] text-[20px] rounded-[10px] py-[10px] pl-[20px] mb-[75px]' />
                             </div>
 
                         </div>

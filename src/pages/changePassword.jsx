@@ -6,39 +6,51 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
 
-function ChangePassword(){
+/**
+ * Componente para redefinir a senha do usuário.
+ *
+ * Este componente permite que o usuário redefina sua senha.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página de redefinição de senha.
+ */
+function ChangePassword() {
     const navigate = useNavigate();
     const [senha, setsenha] = useState();
     const [new_change, setNewChange] = useState();
-    const {email, contextHolder, openNotificationWithIcon} = useContext(GlobalContext)
-    const {}= useContext(GlobalContext);
+    const { email, contextHolder, openNotificationWithIcon } = useContext(GlobalContext);
 
-    useEffect(()=>{
-        if(!email){navigate("/login")};
-    },[]);
-
-    if(!email){
-        return null;
-    }
-       
-    function redirect(e){
-        e.preventDefault()
-        if(senha && senha === new_change){
-         if(senha && senha?.length > 5 ){
-            return  axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
-                openNotificationWithIcon({ message: "Sua senha foi atualizada." }, "success")
-                setTimeout(() => {
-                    navigate("/login");
-                }, 2500);
-                }).catch((error) =>{
-                    console.log(error);
-                    openNotificationWithIcon({ message: "Ocorreu um erro ao atualizar a senha" }, "error")
-                })
-         }
-         return openNotificationWithIcon({ message: "A nova senha deve conter pelo menos 6 caracteres." }, "error")
+    useEffect(() => {
+        if (!email) {
+            navigate("/login");
         }
-        openNotificationWithIcon({ message: "Informe ambas as senhas e certifique-se de que sejam idênticas." }, "info")
+    }, []);
+
+    /**
+     * Manipula a redefinição de senha e a navegação.
+     *
+     * @param {Event} e - O evento de clique do botão.
+     */
+    function redirect(e) {
+        e.preventDefault();
+        if (senha && senha === new_change) {
+            if (senha && senha?.length > 5) {
+                return axiosInstance.post('/resetarsenha', { email: email, senha: senha })
+                    .then((response) => {
+                        openNotificationWithIcon({ message: "Sua senha foi atualizada." }, "success");
+                        setTimeout(() => {
+                            navigate("/login");
+                        }, 2500);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        openNotificationWithIcon({ message: "Ocorreu um erro ao atualizar a senha" }, "error");
+                    });
+            }
+            return openNotificationWithIcon({ message: "A nova senha deve conter pelo menos 6 caracteres." }, "error");
+        }
+        openNotificationWithIcon({ message: "Informe ambas as senhas e certifique-se de que sejam idênticas." }, "info");
     }
+
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
         {contextHolder}

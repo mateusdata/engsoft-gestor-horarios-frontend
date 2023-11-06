@@ -6,29 +6,43 @@ import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
 
-function Password(){
+/**
+ * Componente para solicitar código de recuperação de senha por email.
+ *
+ * Este componente permite que o usuário insira seu email e solicite um código de recuperação de senha.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página de solicitação de código de recuperação de senha.
+ */
+function Password() {
     const navigate = useNavigate();
-    const {email, setemail} = useContext(GlobalContext);
-    const {contextHolder, openNotificationWithIcon}= useContext(GlobalContext);
+    const { email, setemail } = useContext(GlobalContext);
+    const { contextHolder, openNotificationWithIcon } = useContext(GlobalContext);
 
+    /**
+     * Manipula o processo de solicitação de código de recuperação por email.
+     *
+     * @param {Event} e - O evento de clique no botão de solicitação de código.
+     */
+    function redirect(e) {
+        e.preventDefault();
+        console.log(email);
 
-    function redirect(e){
-        e.preventDefault()
-        console.log(email)
-        if(email){
-            return  axiosInstance.post('/recuperaremail', {email: email}).then((response)=>{
-                console.log(response)
-                if(response.status === 200){
-                    navigate("/sendCode");
-                }
-            }).catch((error)=>{
-                console.log(error)
-                openNotificationWithIcon({ message:  "Nenhuma conta com esse email" }, "error");
-    
-            })
+        if (email) {
+            return axiosInstance.post('/recuperaremail', { email: email })
+                .then((response) => {
+                    console.log(response);
+                    if (response.status === 200) {
+                        navigate("/sendCode");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    openNotificationWithIcon({ message: "Nenhuma conta com esse email" }, "error");
+                });
         }
-        openNotificationWithIcon({ message:  "Informe um email" }, "info");
+        openNotificationWithIcon({ message: "Informe um email" }, "info");
     }
+
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
         {contextHolder}

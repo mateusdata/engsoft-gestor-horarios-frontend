@@ -3,20 +3,30 @@ import { Context } from '../context/authContext';
 import Lampada from '../image2/lampada.svg'
 import Logo from '../image2/logo-ifba.svg'
 
+/**
+ * Componente de login da aplicação.
+ *
+ * Este componente é responsável por exibir o formulário de login e lidar com a autenticação do usuário.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página de login.
+ */
 function Login() {
-  const {login, contextHolder,openNotificationWithIcon , openN} = useContext(Context)
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  const { login, contextHolder, openNotificationWithIcon, openN } = useContext(Context);
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
+  /**
+   * Verifica o email e a senha inseridos e realiza a autenticação do usuário.
+   *
+   * @param {Event} e - O evento de clique no botão de login.
+   */
   function verificyEmail(e) {
-    e.preventDefault()
-    if(senha.length > 5 && email ){
+    e.preventDefault();
+    if (senha.length > 5 && email) {
       login(email, senha);
       return;
     }
-      openNotificationWithIcon({ message: "A senha tem que ser maior que 6 digitos" }, "error")
-  
-  
+    openNotificationWithIcon({ message: "A senha deve conter pelo menos 6 caracteres" }, "error");
   }
   return (
     <>

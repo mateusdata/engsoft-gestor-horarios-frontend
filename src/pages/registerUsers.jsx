@@ -4,7 +4,13 @@ import axiosInstance from "../components/config/axiosInstance.js";
 import ifba from "../images/ifba.png";
 import { GlobalContext } from "../context/globalContext";
 import { Checkbox } from "antd";
-
+/**
+ * Componente para cadastrar usuários.
+ *
+ * Este componente permite que um administrador cadastre novos usuários no sistema.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página de cadastro de usuários.
+ */
 function RegisterUsers() {
     const [nome, setNome] = useState();
     const [email, setEmail] = useState();
@@ -15,29 +21,35 @@ function RegisterUsers() {
     const [departamento, setDepartamento] = useState();
     const { contextHolder, openNotificationWithIcon } = useContext(GlobalContext);
 
+    /**
+     * Realiza o cadastro de um novo usuário com base nos dados fornecidos.
+     *
+     * @param {Event} e - O evento de submissão do formulário.
+     */
     function CadastrarUsuario(e) {
-        e.preventDefault()
+        e.preventDefault();
 
         const obj = {
             nome, email, senha, administrador, cargo, matricula, departamento
-        }
+        };
         console.log(obj);
         console.log(nome, email, senha, cargo, matricula, departamento);
 
         if (senha && senha?.length >= 6) {
-            axiosInstance.post("/cadastro", obj).then((response) => {
-                console.log(response)
-                openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success")
-            }).catch((erro) => {
-                console.log(erro)
-                openNotificationWithIcon({ message: "Ocorreu um erro." }, "error")
-            })
+            axiosInstance.post("/cadastro", obj)
+                .then((response) => {
+                    console.log(response);
+                    openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success");
+                })
+                .catch((erro) => {
+                    console.log(erro);
+                    openNotificationWithIcon({ message: "Ocorreu um erro." }, "error");
+                });
+        } else {
+            openNotificationWithIcon({ message: "Informe uma senha com pelo menos 6 caracteres." }, "warning");
         }
-        else {
-            openNotificationWithIcon({ message: "Informe uma senha maior." }, "warning")
-        }
-
     }
+
     return (
 
         <Layouts>
