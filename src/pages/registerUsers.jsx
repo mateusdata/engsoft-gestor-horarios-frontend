@@ -6,12 +6,12 @@ import { GlobalContext } from "../context/globalContext";
 import { Checkbox } from "antd";
 
 function RegisterUsers() {
-    const [nome, setNome] = useState();
-    const [email, setEmail] = useState();
-    const [senha, setSenha] = useState();
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
     const [administrador, setAdministrador] = useState(false);
-    const [cargo, setCargo] = useState();
-    const [matricula, setMatricula] = useState();
+    const [cargo, setCargo] = useState("");
+    const [matricula, setMatricula] = useState("");
     const [departamento, setDepartamento] = useState();
     const { contextHolder, openNotificationWithIcon } = useContext(GlobalContext);
 
@@ -26,10 +26,16 @@ function RegisterUsers() {
 
         if (senha && senha?.length >= 6) {
             axiosInstance.post("/cadastro", obj).then((response) => {
-                console.log(response)
+             
+                setDepartamento("");
+                setAdministrador("");
+                setNome("");
+                setEmail("");
+                setSenha("");
+                setCargo("");
                 openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success")
+
             }).catch((erro) => {
-                console.log(erro)
                 openNotificationWithIcon({ message: "Ocorreu um erro." }, "error")
             })
         }
@@ -42,7 +48,7 @@ function RegisterUsers() {
 
         <Layouts>
             {contextHolder}
-            <div style={{fontFamily:"Inter"}} className="bg-gray-100  flex item-center min-h-[85vh] w-full  flex-col">
+            <div style={{ fontFamily: "Inter" }} className="bg-gray-100  flex item-center min-h-[85vh] w-full  flex-col">
                 <div className="m-1  ">
                     <div className=" border  items-center justify-center md:justify-start hidden lg:flex fixed" >
                         <img src={ifba} alt="Logo do IFBA" className="h-15 w-15 rounded-lg shadow-md" />
@@ -61,13 +67,13 @@ function RegisterUsers() {
                                             <div className=" w-full">
                                                 <label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Nome</label>
                                                 <div className="">
-                                                    <input placeholder="Nome" type="text" onChange={(e) => setNome(e.target.value)} name="Nome" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                    <input value={nome}  placeholder="Nome" type="text" onChange={(e) => setNome(e.target.value)} name="Nome" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
                                                 </div>
                                             </div>
                                             <div className=" w-full">
                                                 <label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Email</label>
                                                 <div className="">
-                                                    <input placeholder="Email" type="text" onChange={(e) => setEmail(e.target.value)} name="Email" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                    <input value={email} placeholder="Email" type="text" onChange={(e) => setEmail(e.target.value)} name="Email" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
                                                 </div>
                                             </div>
 
@@ -77,13 +83,13 @@ function RegisterUsers() {
                                             <div className=" w-full">
                                                 <label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Cargo</label>
                                                 <div className="">
-                                                    <input placeholder="cargo" type="text" onChange={(e) => setCargo(e.target.value)} name="Cargo" required className="border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                    <input value={cargo} placeholder="cargo" type="text" onChange={(e) => setCargo(e.target.value)} name="Cargo" required className="border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
                                                 </div>
                                             </div>
                                             <div className=" w-full">
                                                 <label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Matricula</label>
                                                 <div className="">
-                                                    <input placeholder="matricula" type="text" onChange={(e) => setMatricula(e.target.value)} name="matricula" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                    <input value={matricula} placeholder="matricula" type="text" onChange={(e) => setMatricula(e.target.value)} name="matricula" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
                                                 </div>
                                             </div>
 
@@ -93,13 +99,13 @@ function RegisterUsers() {
                                             <div className=" w-full">
                                                 <label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Departamento</label>
                                                 <div className="">
-                                                    <input placeholder="Departamento" type="text" onChange={(e) => setDepartamento(e.target.value)} name="Departamento" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                    <input value={departamento} placeholder="Departamento" type="text" onChange={(e) => setDepartamento(e.target.value)} name="Departamento" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
                                                 </div>
                                             </div>
                                             <div className=" w-full">
                                                 <label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Senha</label>
                                                 <div className="">
-                                                    <input placeholder="Senha" type="password" onChange={(e) => setSenha(e.target.value)} name="Senha" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                    <input value={senha} placeholder="Senha" type="password" onChange={(e) => setSenha(e.target.value)} name="Senha" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
                                                 </div>
                                             </div>
 
@@ -108,7 +114,7 @@ function RegisterUsers() {
                                         <div className="flex items-center  pt-3  gap-8 justify-center">
                                             <div className="class items-center">
                                                 <label htmlFor="" className="m-2 text-lg mb-2 ">Administrador</label>
-                                                <Checkbox onChange={()=>setAdministrador(!administrador )}></Checkbox>
+                                                <Checkbox  value={administrador} onChange={() => setAdministrador(!administrador)}></Checkbox>
                                             </div>
                                         </div>
                                         <div className="flex justify-center items-center mb-50">
