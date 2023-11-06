@@ -24,7 +24,7 @@ function RegisterUsers() {
         console.log(obj);
         console.log(nome, email, senha, cargo, matricula, departamento);
 
-        if (senha && senha?.length >= 6) {
+        if (senha && senha?.length >= 6 && email && matricula && departamento && cargo) {
             axiosInstance.post("/cadastro", obj).then((response) => {
              
                 setDepartamento("");
@@ -40,7 +40,7 @@ function RegisterUsers() {
             })
         }
         else {
-            openNotificationWithIcon({ message: "Informe uma senha maior." }, "warning")
+            openNotificationWithIcon({ message: "Informe todods os campos." }, "warning")
         }
 
     }
