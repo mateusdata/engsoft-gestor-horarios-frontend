@@ -26,13 +26,14 @@ function RegisterUsers() {
 
         if (senha && senha?.length >= 6 && email && matricula && departamento && cargo) {
             axiosInstance.post("/cadastro", obj).then((response) => {
-             
+             console.log(email, senha, cargo, matricula, departamento, administrador);
                 setDepartamento("");
-                setAdministrador("");
+                setAdministrador(false);
                 setNome("");
                 setEmail("");
                 setSenha("");
                 setCargo("");
+                setMatricula("");
                 openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success")
 
             }).catch((erro) => {
