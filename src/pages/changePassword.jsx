@@ -21,13 +21,19 @@ function ChangePassword(){
         
     function redirect(e){
         e.preventDefault()
-        if(senha === new_change){
-          return  axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
-                console.log(response)
-                navigate("/login");
-            }).catch((error) =>{
-                console.log(error);
-            })
+        if(senha && senha === new_change){
+         if(senha && senha?.length > 5 ){
+            return  axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
+                openNotificationWithIcon({ message: "Sua senha foi atualizada." }, "success")
+                setTimeout(() => {
+                    navigate("/login");
+                }, 2500);
+                }).catch((error) =>{
+                    console.log(error);
+                    openNotificationWithIcon({ message: "Ocorreu um erro ao atualizar a senha" }, "error")
+                })
+         }
+         return openNotificationWithIcon({ message: "A nova senha deve conter pelo menos 6 caracteres." }, "error")
         }
         openNotificationWithIcon({ message: "Informe ambas as senhas e certifique-se de que sejam idênticas." }, "info")
     }

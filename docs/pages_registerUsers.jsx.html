@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/registerUsers.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/registerUsers.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useContext, useState } from "react";
+import Layouts from "../layouts/layouts";
+import axiosInstance from "../components/config/axiosInstance.js";
+import ifba from "../images/ifba.png";
+import { GlobalContext } from "../context/globalContext";
+import { Checkbox } from "antd";
+/**
+ * Componente para cadastrar usuários.
+ *
+ * Este componente permite que um administrador cadastre novos usuários no sistema.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página de cadastro de usuários.
+ */
+function RegisterUsers() {
+    const [nome, setNome] = useState();
+    const [email, setEmail] = useState();
+    const [senha, setSenha] = useState();
+    const [administrador, setAdministrador] = useState(false);
+    const [cargo, setCargo] = useState();
+    const [matricula, setMatricula] = useState();
+    const [departamento, setDepartamento] = useState();
+    const { contextHolder, openNotificationWithIcon } = useContext(GlobalContext);
+
+    /**
+     * Realiza o cadastro de um novo usuário com base nos dados fornecidos.
+     *
+     * @param {Event} e - O evento de submissão do formulário.
+     */
+    function CadastrarUsuario(e) {
+        e.preventDefault();
+
+        const obj = {
+            nome, email, senha, administrador, cargo, matricula, departamento
+        };
+        console.log(obj);
+        console.log(nome, email, senha, cargo, matricula, departamento);
+
+        if (senha &amp;&amp; senha?.length >= 6) {
+            axiosInstance.post("/cadastro", obj)
+                .then((response) => {
+                    console.log(response);
+                    openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success");
+                })
+                .catch((erro) => {
+                    console.log(erro);
+                    openNotificationWithIcon({ message: "Ocorreu um erro." }, "error");
+                });
+        } else {
+            openNotificationWithIcon({ message: "Informe uma senha com pelo menos 6 caracteres." }, "warning");
+        }
+    }
+
+    return (
+
+        &lt;Layouts>
+            {contextHolder}
+            &lt;div style={{fontFamily:"Inter"}} className="bg-gray-100  flex item-center min-h-[85vh] w-full  flex-col">
+                &lt;div className="m-1  ">
+                    &lt;div className=" border  items-center justify-center md:justify-start hidden lg:flex fixed" >
+                        &lt;img src={ifba} alt="Logo do IFBA" className="h-15 w-15 rounded-lg shadow-md" />
+                    &lt;/div>
+                    &lt;div className='flex flex-col items-center justify-center  sm:mt-8 2xl:mt-32 '>
+                        &lt;div className="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-15 lg:py-15 md:px-8  xl:w-[50%] w-full">
+                            &lt;div className="md:pr-5 md:w-1/1 xl:pr-0 xl:w-1/1 w-full  ">
+                                &lt;h2 className=" text-center text-2xl sm:text-1xl dark:text-gray-800 text-gray-600 font-semibold md:text-3xl md:leading-tight lg:text-4xl lg:leading-tight whitespace-nowrap">
+                                    Cadastro do professor
+                                &lt;/h2>
+
+                                &lt;form action="" className="mt-8 border rounded-md shadow-lg p-5">
+                                    &lt;div className=" gap-y-4">
+
+                                        &lt;div className="flex items-center  gap-8  flex-col md:flex-row">
+                                            &lt;div className=" w-full">
+                                                &lt;label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Nome&lt;/label>
+                                                &lt;div className="">
+                                                    &lt;input placeholder="Nome" type="text" onChange={(e) => setNome(e.target.value)} name="Nome" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                &lt;/div>
+                                            &lt;/div>
+                                            &lt;div className=" w-full">
+                                                &lt;label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Email&lt;/label>
+                                                &lt;div className="">
+                                                    &lt;input placeholder="Email" type="text" onChange={(e) => setEmail(e.target.value)} name="Email" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                &lt;/div>
+                                            &lt;/div>
+
+                                        &lt;/div>
+
+                                        &lt;div className="flex items-center  gap-8  flex-col md:flex-row">
+                                            &lt;div className=" w-full">
+                                                &lt;label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Cargo&lt;/label>
+                                                &lt;div className="">
+                                                    &lt;input placeholder="cargo" type="text" onChange={(e) => setCargo(e.target.value)} name="Cargo" required className="border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                &lt;/div>
+                                            &lt;/div>
+                                            &lt;div className=" w-full">
+                                                &lt;label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Matricula&lt;/label>
+                                                &lt;div className="">
+                                                    &lt;input placeholder="matricula" type="text" onChange={(e) => setMatricula(e.target.value)} name="matricula" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                &lt;/div>
+                                            &lt;/div>
+
+                                        &lt;/div>
+
+                                        &lt;div className="flex items-center  gap-8  flex-col md:flex-row">
+                                            &lt;div className=" w-full">
+                                                &lt;label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Departamento&lt;/label>
+                                                &lt;div className="">
+                                                    &lt;input placeholder="Departamento" type="text" onChange={(e) => setDepartamento(e.target.value)} name="Departamento" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                &lt;/div>
+                                            &lt;/div>
+                                            &lt;div className=" w-full">
+                                                &lt;label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Senha&lt;/label>
+                                                &lt;div className="">
+                                                    &lt;input placeholder="Senha" type="password" onChange={(e) => setSenha(e.target.value)} name="Senha" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                &lt;/div>
+                                            &lt;/div>
+
+                                        &lt;/div>
+
+                                        &lt;div className="flex items-center  pt-3  gap-8 justify-center">
+                                            &lt;div className="class items-center">
+                                                &lt;label htmlFor="" className="m-2 text-lg mb-2 ">Administrador&lt;/label>
+                                                &lt;Checkbox onChange={()=>setAdministrador(!administrador )}>&lt;/Checkbox>
+                                            &lt;/div>
+                                        &lt;/div>
+                                        &lt;div className="flex justify-center items-center mb-50">
+                                            &lt;button onClick={CadastrarUsuario} className="py-3 px-4 w-60 mt-5 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800  ">Cadastrar&lt;/button>
+                                        &lt;/div>
+                                    &lt;/div>
+                                &lt;/form>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+        &lt;/Layouts>
+    );
+
+}
+export default RegisterUsers;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#ChangePassword">ChangePassword</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Password">Password</a></li><li><a href="global.html#RegisterUsers">RegisterUsers</a></li><li><a href="global.html#SendCode">SendCode</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Nov 06 2023 13:34:20 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

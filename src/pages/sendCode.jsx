@@ -54,7 +54,7 @@ function SendCode() {
                             </div>
 
                         </div>
-                        <button type="submit" onClick={redirect} className='bg-[#59AD4B] rounded-[10px] w-[195px] h-[45px] text-[#FFF] text-[25px] mb-[35px]'>Verificar Código</button>
+                        <button type="submit" onClick={redirect} className='bg-[#59AD4B] rounded-[10px] w-[195px] h-[45px] text-[#FFF] text-[20px] md:text-[25px] mb-[35px]'>Verificar Código</button>
                     </form>
                 </div>
             </div>
