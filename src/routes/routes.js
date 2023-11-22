@@ -10,6 +10,7 @@ import ChangePassword from "../pages/changePassword";
 import NotFound from "../components/notFound";
 import ContextGlobal from "../context/globalContext";
 import RegisterUsers from "../pages/registerUsers";
+import ScheduleTable from "../pages/scheduleTable";
 
 const MyRoutes = () => {
 
@@ -40,6 +41,7 @@ const MyRoutes = () => {
         <Route exact path="/changePassword" element={<ChangePassword />} />
         <Route exact path="*" element={<NotFound />} />
         <Route exact path="/register" element={<Private> <RegisterUsers/> </Private>} />
+        <Route exact path="/table" element={<ScheduleTable />} />
         
       </Routes>
 
