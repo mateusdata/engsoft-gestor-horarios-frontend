@@ -49,7 +49,7 @@ function RegisterUsers() {
 
         <Layouts>
             {contextHolder}
-            <div style={{ fontFamily: "Inter" }} className="bg-gray-100  flex item-center min-h-[85vh] w-full  flex-col">
+            <div style={{ fontFamily: "Inter" }} className="bg-[#D9D9D9]  flex item-center min-h-[85vh] w-full  flex-col">
                 <div className="m-1  ">
                     <div className=" border  items-center justify-center md:justify-start hidden lg:flex fixed" >
                         <img src={ifba} alt="Logo do IFBA" className="h-15 w-15 rounded-lg shadow-md" />
