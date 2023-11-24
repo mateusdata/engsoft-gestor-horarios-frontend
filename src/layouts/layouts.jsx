@@ -63,7 +63,7 @@ function Layouts({ children }) {
                   </svg>
                   Painel
                 </Link>
-                  }
+                  
 
               </li>
 
