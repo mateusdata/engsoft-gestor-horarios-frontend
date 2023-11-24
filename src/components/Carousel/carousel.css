@@ -1,0 +1,8 @@
+.slick-prev:before,
+.slick-next:before {
+    color: #4AA729;
+}
+
+.slick-slide {
+    padding-right: 55px;
+}
