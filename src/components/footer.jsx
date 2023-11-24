@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className='bg-[EFEFEF] dark:bg-[#EFEFEF]'>
+    <div className='bg-[F1F1F1] dark:bg-[#D9D9D9]'>
         <hr  className='w-full'/>
         <footer>
         <div className="max-w-[85rem] lg-w-full  mt-3    mb-5 px-4 sm:px-6 lg:px-8 mx-auto">

@@ -39,7 +39,6 @@ function Header() {
         {
           label: (
             <div onClick={() => logout()}>
-              <hr className='w-full p-[0.4px]' />
               <button className='mt-1  hover:text-red-300'>Sair</button>
             </div>
           ),
