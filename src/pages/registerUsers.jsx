@@ -45,7 +45,7 @@ return(
      <div className="bg-gray-100  flex item-center  w-full flex-col">  
         <div className="m-1 ">
 
-        <div className="m-5 border flex items-center justify-center md:justify-start bg-[#238662]">
+        <div className="m-5 ">
 
             <img src={ifba} alt="Logo do IFBA" />
         </div>
