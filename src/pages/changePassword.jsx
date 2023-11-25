@@ -13,11 +13,11 @@ function ChangePassword(){
     const {}= useContext(GlobalContext);
 
     useEffect(()=>{
-        //if(!email){navigate("/login")};
+        if(!email){navigate("/login")};
     },[]);
 
     if(!email){
-        //return null;
+        return null;
     }
 
     const verificarSenha = (senha) => /[0-9]/.test(senha) && /[!@#$%^&*(),.?":{}|<>]/.test(senha);; 
