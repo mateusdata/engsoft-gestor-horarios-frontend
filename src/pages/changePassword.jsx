@@ -13,11 +13,11 @@ function ChangePassword(){
     const {}= useContext(GlobalContext);
 
     useEffect(()=>{
-        if(!email){navigate("/login")};
+        //if(!email){navigate("/login")};
     },[]);
 
     if(!email){
-        return null;
+        //return null;
     }
 
     const verificarSenha = (senha) => /[0-9]/.test(senha) && /[!@#$%^&*(),.?":{}|<>]/.test(senha);; 
@@ -36,7 +36,7 @@ function ChangePassword(){
                     openNotificationWithIcon({ message: "Ocorreu um erro ao atualizar a senha."}, "error")
                 })
          }
-         return openNotificationWithIcon({ message: "A nova senha deve conter números caracteres especiais ! Ex:' 123456* '"}, "warning")
+         return openNotificationWithIcon({ message: "A nova senha deve conter números e caracteres especiais ! Ex:' 123456* '"}, "warning")
         }
         openNotificationWithIcon({ message: "Informe ambas as senhas e certifique-se de que sejam idênticas." }, "info")
     }
