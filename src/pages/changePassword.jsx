@@ -29,7 +29,7 @@ function ChangePassword(){
                 openNotificationWithIcon({ message: "Sua senha foi atualizada." }, "success")
                 setTimeout(() => {
                     navigate("/login");
-                }, 4000);
+                }, 2500);
                 }).catch((error) =>{
                     console.log(error);
                     openNotificationWithIcon({ message: "Ocorreu um erro ao atualizar a senha" }, "error")

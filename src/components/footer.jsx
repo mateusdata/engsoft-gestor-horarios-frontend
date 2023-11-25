@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className='bg-[white] dark:bg-[#D9D9D9]'>
+    <div className='bg-[F1F1F1] dark:bg-[#D9D9D9]'>
         <hr  className='w-full'/>
         <footer>
         <div className="max-w-[85rem] lg-w-full  mt-3    mb-5 px-4 sm:px-6 lg:px-8 mx-auto">
@@ -26,7 +26,7 @@ const Footer = () => {
                 </li>
                 <li className="inline-block relative pr-8 last:pr-0 last-of-type:before:hidden before:absolute before:top-1/2 before:right-3 before:-translate-y-1/2 before:content-['/'] before:text-gray-300 dark:before:text-gray-600">
                 <a href='https://github.com/mateusdata/engsoft-gestor-horarios-frontend' className="inline-flex gap-x-2 text-sm text-gray-500 hover:text-gray-800 dark:text-gray-500 dark:hover:text-gray-200">
-                    Projeto
+                Desenvolvedores
                 </a>
                 </li>
             </ul>
