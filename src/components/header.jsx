@@ -39,7 +39,6 @@ function Header() {
         {
           label: (
             <div onClick={() => logout()}>
-              <hr className='w-full p-[0.4px]' />
               <button className='mt-1  hover:text-red-300'>Sair</button>
             </div>
           ),
@@ -58,7 +57,7 @@ function Header() {
                     <MdDarkMode size={26} color={`${!darkMode ? 'black' : '#0a5f9b'}`} />
                 </button>
                 <span className='font-semibold text-lgtext-black'  >{
-                    user.nome?.replace(/(\w)(\w*)/g, (_, firstChar, restOfWord) => firstChar.toUpperCase() + restOfWord.toLowerCase())
+                    user?.nome?.replace(/(\w)(\w*)/g, (_, firstChar, restOfWord) => firstChar.toUpperCase() + restOfWord.toLowerCase())
                 }</span>
 
             </div>

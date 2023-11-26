@@ -10,6 +10,8 @@ import ChangePassword from "../pages/changePassword";
 import NotFound from "../components/notFound";
 import ContextGlobal from "../context/globalContext";
 import RegisterUsers from "../pages/registerUsers";
+import ScheduleTable from "../pages/scheduleTable";
+import Teachers from "../pages/teachers";
 
 const MyRoutes = () => {
 
@@ -40,6 +42,8 @@ const MyRoutes = () => {
         <Route exact path="/changePassword" element={<ChangePassword />} />
         <Route exact path="*" element={<NotFound />} />
         <Route exact path="/register" element={<Private> <RegisterUsers/> </Private>} />
+        <Route exact path="/teachers" element={<Private><Teachers /></Private>} />
+
         
       </Routes>
 
