@@ -8,12 +8,12 @@ import Carousel from "../components/Carousel/index.js";
 
 function ScheduleTable() {
     const { contextHolder } = useContext(GlobalContext);
-    const [showSubjects, setShowSubjects] = useState([]); 
+    const [showTeachers, setShowTeachers] = useState([]); 
 
     useEffect(() => {
         axiosInstance.get('/teacher_list').then((response) => {
             console.log(response);
-            setShowSubjects(response.data);
+            setShowTeachers(response.data[0]);
         }).catch((error) => {
             console.log(error);
         })
@@ -88,20 +88,15 @@ function ScheduleTable() {
     return (
 
         <Layouts>
-            {/* {JSON.stringify(showSubjects)} */}
+            {/* {JSON.stringify(showTeachers)} */}
             {contextHolder}
             <div class="flex flex-col items-center p-2 w-full overflow-hidden m-auto">
                 <p class="text-xl px-8 relative top-4">Professores</p>
                 <div class="w-full h-18 ps-4 pe-4 py-6 text-center">
-                    <Carousel>                        
-                        <Button>Luan</Button>
-                        <Button>Ana</Button>
-                        <Button>Fernanda</Button>
-                        <Button>Rabelo</Button>
-                        <Button>Luan</Button>
-                        <Button>Ana</Button>
-                        <Button>Fernanda</Button>
-                        <Button>Rabelo</Button>
+                    <Carousel> 
+                        {showTeachers.map((teacher)=> (
+                            <Button>{teacher.nome}</Button>
+                        ))} 
                     </Carousel>
                 </div>
                 <div class="overflow-x-auto px-4 py-2 max-w-full my-2 mx-auto">                    
