@@ -11,6 +11,14 @@ function ScheduleTable() {
     const [showTeachers, setShowTeachers] = useState([]); 
     const [schedule, setSchedule] = useState([]);
 
+    const mondaySched = schedule[0];
+    const tuesdaySched = schedule[1];
+    const wednesdaySched = schedule[2];
+    const thursdaySched = schedule[3];
+    const fridaySched = schedule[4];
+
+    console.log(fridaySched);
+
     useEffect(() => {
         axiosInstance.get('/teacher_list').then((response) => {
             console.log(response);
@@ -21,12 +29,22 @@ function ScheduleTable() {
     }, []);
 
     useEffect(() => {
-        axiosInstance.get('/horarios').then((response) => {
-            console.log(response);
-            setSchedule(response.data);
-        }).catch((error) => {
-            console.log(error);
-        })
+        const fetchData = async () => {
+            try {
+                const response = await axiosInstance.get('/horarios');
+                console.log(response);
+    
+                if (response.data !== undefined) {
+                    setSchedule(response.data);
+                } else {
+                    console.log("Dados indefinidos");
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+    
+        fetchData();
     }, []);
 
     const Button = styled.button`        
@@ -101,125 +119,156 @@ function ScheduleTable() {
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[0].prim_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && mondaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.prim_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[1].prim_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && tuesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.prim_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[2].prim_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && wednesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.prim_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[3].prim_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && thursdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.prim_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[4].prim_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && fridaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.prim_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>                                            
                                         </tr> 
                                         <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
+                                                
                                                     <span class="block px-12 py-5">
                                                         <span class="font-mono text-center text-sm text-black dark:text-blue-500">14:10</span>
-                                                    </span>
+                                                    </span>                                            
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[0].segu_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && mondaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.segu_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[1].segu_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && tuesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.segu_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[2].segu_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && wednesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.segu_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[3].segu_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && thursdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.segu_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[4].segu_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && fridaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.segu_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>                                            
                                         </tr> 
                                         <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
                                             <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
+                                                <div class="flex items-center justify-center gap-x-2">                                                
                                                     <span class="block px-12 py-5">
                                                         <span class="font-mono text-center text-sm text-black dark:text-blue-500">15:10</span>
-                                                    </span>
+                                                    </span>                                                
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[0].terc_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && mondaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.terc_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[1].terc_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && tuesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.terc_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[2].terc_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && wednesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.terc_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[3].terc_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && thursdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.terc_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[4].terc_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && fridaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.terc_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>                                            
                                         </tr>                                        
@@ -228,42 +277,52 @@ function ScheduleTable() {
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     <span class="block px-12 py-5">
                                                         <span class="font-mono text-center text-sm text-black dark:text-blue-500">16:00</span>
-                                                    </span>
+                                                    </span>   
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[0].quar_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && mondaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quar_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[1].quar_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && tuesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quar_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[2].quar_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && wednesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quar_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[3].quar_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && thursdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quar_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[4].quar_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && fridaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quar_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>                                            
                                         </tr> 
@@ -277,37 +336,47 @@ function ScheduleTable() {
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[0].quin_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && mondaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quin_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[1].quin_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && tuesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quin_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[2].quin_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && wednesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quin_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[3].quin_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && thursdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quin_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[4].quin_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && fridaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quin_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>                                            
                                         </tr>
@@ -321,37 +390,47 @@ function ScheduleTable() {
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[0].sext_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && mondaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.sext_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[1].sext_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && tuesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.sext_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[2].sext_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && wednesdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.sext_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[3].sext_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && thursdaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.sext_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">{schedule[4].sext_hor_materia}</span>
-                                                    </span>
+                                                    {schedule && schedule.length > 0 && fridaySched && (
+                                                        <span class="block px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.sext_hor_materia}</span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </td>                                            
                                         </tr>                                                                                                                   
