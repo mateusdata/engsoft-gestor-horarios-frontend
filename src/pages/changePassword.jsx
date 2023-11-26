@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import 'animate.css';
-import ifba from '../images/ifba.png';
-import lampada from '../images/lampada.png';
+import Sifba from '../image2/sifba.svg';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
@@ -20,11 +19,13 @@ function ChangePassword(){
     if(!email){
         return null;
     }
-       
+
+    const verificarSenha = (senha) => /[0-9]/.test(senha) && /[!@#$%^&*(),.?":{}|<>]/.test(senha);; 
+      
     function redirect(e){
         e.preventDefault()
         if(senha && senha === new_change){
-         if(senha && senha?.length > 5 ){
+            if(senha && senha?.length > 5 && verificarSenha(senha)){
             return  axiosInstance.post('/resetarsenha', {email: email, senha: senha}).then((response) =>{
                 openNotificationWithIcon({ message: "Sua senha foi atualizada." }, "success")
                 setTimeout(() => {
@@ -32,18 +33,18 @@ function ChangePassword(){
                 }, 2500);
                 }).catch((error) =>{
                     console.log(error);
-                    openNotificationWithIcon({ message: "Ocorreu um erro ao atualizar a senha" }, "error")
+                    openNotificationWithIcon({ message: "Ocorreu um erro ao atualizar a senha."}, "error")
                 })
          }
-         return openNotificationWithIcon({ message: "A nova senha deve conter pelo menos 6 caracteres." }, "error")
+         return openNotificationWithIcon({ message: "A nova senha deve conter números e caracteres especiais ! Ex:' 123456* '"}, "warning")
         }
         openNotificationWithIcon({ message: "Informe ambas as senhas e certifique-se de que sejam idênticas." }, "info")
     }
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
         {contextHolder}
-        <div className='bg-[#EFEFEF] w-screen h-screen'>
-        <img src={ifba} alt="" className='pt-[20px] pl-[20px] pb-[55px]'/>
+        <div className='bg-[#EFEFEF] w-screen h-screen flex flex-col justify-center items-center'>
+        <img src={Sifba} alt="" className='pt-[20px] pl-[20px] pb-[55px]'/>
             <div className='flex justify-center min-h-40'>
                 <form action="" method="post" className='flex flex-col justify-center items-center'>
                     <h1 className='text-[40px] pb-[60px]'>Redefinir sua senha</h1>
@@ -53,14 +54,9 @@ function ChangePassword(){
                         <label htmlFor="new_confirm" className='text-[20px] pb-[10px] ml-5'>Confirmar Nova Senha</label>
                         <div className='w-full flex flex-col justify-center items-center'><input type="password" name="new_confirm" id="new_confirm" placeholder='Confirmar Nova Senha' onChange={(e)=> setNewChange(e.target.value)} className='w-[370px] max-w-[90%] text-[20px] rounded-[10px] py-[10px] pl-[20px] mb-[75px]' /></div>
                     </div>
-                    <button type="submit" onClick={redirect} className='bg-[#59AD4B] rounded-[10px] w-[195px] h-[45px] text-[#FFF] text-[25px] mb-[35px]'>Alterar Senha</button>
+                    <button type="submit" onClick={redirect} className='bg-green-500 rounded-[10px] w-[195px] h-[45px] text-[#FFF] text-[25px] mb-[35px]'>Alterar Senha</button>
                 </form>
             </div>
-        </div>
-        <div className='flex-col bg-[#82CF6F] w-screen h-screen justify-center items-center tracking-[7.4px] space-x-[50px] hidden md:flex'>
-            <img src={lampada} alt="" className='mt-[70px] pb-[40px]' />
-            <h1 className='text-[30px] mb-[10px]'>Redefina o ambiente</h1>
-            <h1 className='text-[30px] mt-[10px]'>Abra novas portas para novos conhecimentos.</h1>
         </div>
     </div>
   )

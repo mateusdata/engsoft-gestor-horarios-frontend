@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import 'animate.css';
 import Sifba from '../image2/sifba.svg'
-import lampada from '../images/lampada.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../components/config/axiosInstance.js';
 import { GlobalContext } from '../context/globalContext';
@@ -32,7 +31,7 @@ function Password(){
   return (
     <div className='flex flex-col border min-h-screen font-normal font-[KoHo] not-italic leading-none shrink-0 md:flex-row'>
         {contextHolder}
-        <div className='bg-[#EFEFEF] w-screen h-screen'>
+        <div className='bg-[#EFEFEF] w-screen h-screen flex flex-col justify-center items-center'>
         <div className='flex text justify-center'><img src={Sifba} alt="logo-SIFBA" className='pt-[20px] pl-[20px] pb-[55px]'/></div>
             <div className='flex justify-center min-h-40'>
                 <form className='flex flex-col justify-center items-center'>
