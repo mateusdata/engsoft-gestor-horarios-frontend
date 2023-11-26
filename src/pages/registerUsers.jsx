@@ -15,66 +15,57 @@ function RegisterUsers() {
     const [departamento, setDepartamento] = useState();
     const { contextHolder, openNotificationWithIcon } = useContext(GlobalContext);
     const [MostrarModal, setMostrarModal] = useState(false);
-
     function CadastrarUsuario(e) {
         e.preventDefault()
-
         const obj = {
             nome, email, senha, administrador, cargo, matricula, departamento
         }
-        console.log(obj);
-        console.log(nome, email, senha, cargo, matricula, departamento);
-
-        if (senha && senha?.length >= 6 && email && matricula && departamento && cargo) {
-            axiosInstance.post("/cadastro", obj).then((response) => {
-             console.log(email, senha, cargo, matricula, departamento, administrador);
-                setDepartamento("");
-                setAdministrador(false);
-                setNome("");
-                setEmail("");
-                setSenha("");
-                setCargo("");
-                setMatricula("");
-                openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success")
-
-            }).catch((erro) => {
-                openNotificationWithIcon({ message: "Ocorreu um erro." }, "error")
-            })
+        const verificarSenha = (senha) => /[0-9]/.test(senha) && /[!@#$%^&*(),.?":{}|<>]/.test(senha) && senha.length > 5;
+        if (nome && email && matricula && departamento && cargo && senha) {
+            if(verificarSenha(senha)){
+               return axiosInstance.post("/cadastro", obj).then((response) => {
+                    console.log(email, senha, cargo, matricula, departamento, administrador);
+                    setDepartamento(""); setAdministrador(false);setNome("");setEmail("");setSenha("");setCargo("");setMatricula("");
+                    openNotificationWithIcon({ message: "Cadastro realizado com sucesso!" }, "success")
+                }).catch((erro) => {
+                    openNotificationWithIcon({ message: "Ocorreu um  erro no servidor" }, "error")
+                })
+            }
+            openNotificationWithIcon({ message: "A senha deve ter no mínimo 6 dígitos e incluir números e caracteres especiais." }, "warning")          
         }
         else {
-            openNotificationWithIcon({ message: "Informe todods os campos." }, "warning")
-        }
-
+            openNotificationWithIcon({ message: "Preencha todos os campos."}, "info")
+        }   
     }
     return (
 
         <Layouts>
             {contextHolder}
-            <Modal open = {MostrarModal} onCancel={()=>{setMostrarModal(false)}} >
-            <div className="flex flex-col gap-3">
-                <h1>Selecione os dia disponiveis</h1>
-                <div>
-                    <label className="flex items-center gap-2" htmlFor="">Segunda-Feira <Checkbox ></Checkbox> </label>
-                       
+            <Modal open={MostrarModal} onCancel={() => { setMostrarModal(false) }} >
+                <div className="flex flex-col gap-3">
+                    <h1>Selecione os dia disponiveis</h1>
+                    <div>
+                        <label className="flex items-center gap-2" htmlFor="">Segunda-Feira <Checkbox ></Checkbox> </label>
+
+                    </div>
+                    <div>
+                        <label className="flex items-center gap-2" htmlFor="">Terça-Feira <Checkbox ></Checkbox> </label>
+
+                    </div>
+                    <div>
+                        <label className="flex items-center gap-2" htmlFor="">Quarta-Feira <Checkbox ></Checkbox> </label>
+
+                    </div>
+                    <div>
+                        <label className="flex items-center gap-2" htmlFor="">Quinta-Feira <Checkbox ></Checkbox> </label>
+
+                    </div>
+                    <div>
+                        <label className="flex items-center gap-2" htmlFor="">Sexta-Feira <Checkbox ></Checkbox> </label>
+
+                    </div>
+
                 </div>
-                <div>
-                    <label className="flex items-center gap-2" htmlFor="">Terça-Feira <Checkbox ></Checkbox> </label>
-                      
-                </div>
-                <div>
-                    <label className="flex items-center gap-2" htmlFor="">Quarta-Feira <Checkbox ></Checkbox> </label>
-                      
-                </div>
-                <div>
-                    <label className="flex items-center gap-2" htmlFor="">Quinta-Feira <Checkbox ></Checkbox> </label>
-                      
-                </div>
-                <div>
-                    <label className="flex items-center gap-2" htmlFor="">Sexta-Feira <Checkbox ></Checkbox> </label>
-                      
-                </div>
-                
-            </div>
             </Modal>
             <div style={{ fontFamily: "Inter" }} className="bg-[#D9D9D9]  flex item-center min-h-[85vh] w-full  flex-col">
                 <div className="m-1  ">
@@ -95,7 +86,7 @@ function RegisterUsers() {
                                             <div className=" w-full">
                                                 <label htmlFor="" className="block mb-2  text-lg dark:text-gray-800">Nome</label>
                                                 <div className="">
-                                                    <input value={nome}  placeholder="Nome" type="text" onChange={(e) => setNome(e.target.value)} name="Nome" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
+                                                    <input value={nome} placeholder="Nome" type="text" onChange={(e) => setNome(e.target.value)} name="Nome" required className=" border border-gray-200 focus:outline-none focus:border-[#1A73E8] py-3 px-4 block w-full  rounded-md text-sm   dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" />
                                                 </div>
                                             </div>
                                             <div className=" w-full">
@@ -105,7 +96,7 @@ function RegisterUsers() {
                                                 </div>
                                             </div>
 
-                                        </div> 
+                                        </div>
 
                                         <div className="flex items-center  gap-8  flex-col md:flex-row">
                                             <div className=" w-full">
@@ -142,11 +133,11 @@ function RegisterUsers() {
                                         <div className="flex items-center  pt-3  gap-8 justify-between flex-row-reverse">
                                             <div className="class items-center">
                                                 <label htmlFor="" className="m-2 text-lg mb-2 ">Administrador</label>
-                                                <Checkbox  value={administrador} onChange={() => setAdministrador(!administrador)}></Checkbox>
+                                                <Checkbox value={administrador} onChange={() => setAdministrador(!administrador)}></Checkbox>
                                             </div>
                                             <div className="class items-center">
-                                                    <button style={{ fontFamily: "Inter" }} onClick={()=>{setMostrarModal(true)}} className="px-4 inline-flex items-center gap-x-2 text-md font-semibold rounded-lg border border-transparent text-gray-700 hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
-                                                >Disponibilidade</button>     
+                                                <button style={{ fontFamily: "Inter" }} onClick={() => { setMostrarModal(true) }} className="px-4 inline-flex items-center gap-x-2 text-md font-semibold rounded-lg border border-transparent text-gray-700 hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
+                                                >Disponibilidade</button>
                                             </div>
 
                                         </div>

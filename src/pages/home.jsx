@@ -1,37 +1,12 @@
-  import React, { useEffect, useState } from 'react';
-  import Layouts from '../layouts/layouts';
-  import { TypeAnimation } from 'react-type-animation';
+import React from 'react'
+import ScheduleTable from './scheduleTable'
 
-  function Home() {
-    const [showMensage, setShowMensage] = useState(true);
-    useEffect(()=>{
-      setTimeout(() => {
-        setShowMensage(false)
-      }, 20000);
-    },[showMensage])
-    return (
-      <Layouts>
-        <div className='flex itens-center justify-center text-center w-full'>
-          <TypeAnimation
-            sequence={[
-              'Bem vindo ao gestor de horários ',
-              1000,
-              "Sistema de gestão de horários educacional",
-              1000,  "Desenvolvido pelo IFBA ",
-              1000,  "Pagina Inicial",
-              1000,
+const Home = () => {
+  return (
+    <div>
+      <ScheduleTable/>
+    </div>
+  )
+}
 
-            ]}
-            speed={50}
-            wrapper='span'
-            style={{fontFamily:"Roboto Mono"}}
-            className='text-3xl font-bold text-gray-600 '
-            repeat={false}
-            cursor={false}
-          />
-        </div>
-      </Layouts>
-    );
-  }
-
-  export default Home;
+export default Home

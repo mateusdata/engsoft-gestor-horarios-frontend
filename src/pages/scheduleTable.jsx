@@ -155,43 +155,43 @@ function ScheduleTable() {
 
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     {array.map((item)=> (
-                                        <tr class="bg-green-200 dark:bg-slate-900 dark:hover:bg-slate-800">
-                                        <td class="h-px w-px whitespace-nowrap bg-white">
+                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
+                                        <td class="h-px w-px whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-x-2">
                                                 <span class="block px-12 py-5">
                                                     <span class="font-mono text-center text-sm text-black dark:text-blue-500">{item.hora}</span>
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="h-px w-px hover:bg-gray-50 whitespace-nowrap">
+                                        <td class="h-px w-px hover:bg-gray-50 dark:hover:bg-gray-300 whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-x-2">
                                                 <span class="block px-12 py-5">
                                                     <span class="font-mono text-center text-sm text-black dark:text-blue-500">{item.nome}</span>
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="h-px w-px hover:bg-gray-50 whitespace-nowrap">
+                                        <td class="h-px w-px hover:bg-gray-50 dark:hover:bg-gray-300 whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-x-2">
                                                 <span class="block px-12 py-5">
                                                     <span class="font-mono text-center text-sm text-black dark:text-blue-500">{item.nome}</span>
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="h-px w-px hover:bg-gray-50 whitespace-nowrap">
+                                        <td class="h-px w-px hover:bg-gray-50 dark:hover:bg-gray-300 whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-x-2">
                                                 <span class="block px-12 py-5">
                                                     <span class="font-mono text-center text-sm text-black dark:text-blue-500">{item.nome}</span>
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="h-px w-px hover:bg-gray-50 whitespace-nowrap">
+                                        <td class="h-px w-px hover:bg-gray-50 dark:hover:bg-gray-300 whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-x-2">
                                                 <span class="block px-12 py-5">
                                                     <span class="font-mono text-center text-sm text-black dark:text-blue-500">{item.nome}</span>
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="h-px w-px hover:bg-gray-50 whitespace-nowrap">
+                                        <td class="h-px w-px hover:bg-gray-50 dark:hover:bg-gray-300 whitespace-nowrap">
                                             <div class="flex items-center justify-center gap-x-2">
                                                 <span class="block px-12 py-5">
                                                     <span class="font-mono text-center text-sm text-black dark:text-blue-500">{item.nome}</span>
