@@ -136,7 +136,7 @@ function RegisterUsers() {
                                                 <Checkbox value={administrador} onChange={() => setAdministrador(!administrador)}></Checkbox>
                                             </div>
                                             <div className="class items-center">
-                                                <button style={{ fontFamily: "Inter" }} onClick={() => { setMostrarModal(true) }} className="px-4 inline-flex items-center gap-x-2 text-md font-semibold rounded-lg border border-transparent text-gray-700 hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
+                                                <button style={{ fontFamily: "Inter" }} onClick={() => { setMostrarModal(true) }} className="px-4 inline-flex items-center gap-x-2 text-md font-semibold animate-pulse rounded-lg border border-transparent text-gray-700 hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
                                                 >Disponibilidade</button>
                                             </div>
 
