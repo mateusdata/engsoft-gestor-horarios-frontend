@@ -5,6 +5,7 @@ import { GlobalContext } from "../context/globalContext";
 import { useEffect } from "react";
 import edit from "../image2/icon-edit.svg"
 import { Modal } from 'antd';
+import axios from "axios";
 
 function Teachers() {
     const { contextHolder } = useContext(GlobalContext);
@@ -14,24 +15,38 @@ function Teachers() {
 
     const [selectedData, setSelectedData] = useState(null);
 
+    const [teacher, setTeacher] = useState([])
+
     const selectedTeacher= (teacher) => {
         console.log('selectedTeacher')
         console.log(teacher)
         setSelectedData(teacher);
+
+        axiosInstance.get('/dadosatuais').then((response) => {
+            console.log('/dadosatuais')
+            console.log(response);
+            //setShowSubjects(response.data[0]);
+        }).catch((error) => console.log(error))
     };
 
     const showModal = () => {
         setIsModalOpen(true);
     };
     const handleOk = () => { 
-        setSelectedData(null);
+        alert(JSON.stringify(teacher))
         setIsModalOpen(false);
         updatedTeacher(selectedData)
+        setSelectedData(null);
     };
     const handleCancel = () => {
-        setSelectedData(null);
         setIsModalOpen(false);
+        setSelectedData(null);
+        setTeacher([])
     };
+
+    const esdras = (e) => {
+        setTeacher( prevValue=> ({...prevValue, [e.target.name]:e.target.value }))
+    }
 
     useEffect(() => {
         axiosInstance.get('/teacher_list').then((response) => {
@@ -39,17 +54,11 @@ function Teachers() {
             console.log(response.data[0]);
             setShowSubjects(response.data[0]);
         }).catch((error) => console.log(error))
-
-        axiosInstance.get('/dadosatuais').then((response) => {
-            console.log('/dadosatuais')
-            console.log(response);
-            //setShowSubjects(response.data[0]);
-        }).catch((error) => console.log(error))
     }, []);
 
     const updatedTeacher = (teacher) => {
-        axiosInstance.post(`/atualizarprofessor`, {params: {selectedData}})
-        .then((response) => {
+        
+        axios.post('https://ebbd-179-54-100-101.ngrok-free.app/atualizarprofessor', selectedData).then((response) => {
             console.log('/atualizarprofessor')
             console.log(response);
             //setShowSubjects(response.data[0]);
@@ -85,6 +94,7 @@ function Teachers() {
                                             onClick={() => {
                                                 showModal()
                                                 selectedTeacher(teacher)
+                                                setTeacher(teacher)
                                             }} 
                                         />
                                     </div>
@@ -93,22 +103,25 @@ function Teachers() {
                         </ul> 
                     </div>
                     <Modal okButtonProps={{className: "bg-blue-500"}} title="Edição do professor" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                        {JSON.stringify(teacher)
+                            
+                        }
                         <div className="flex flex-col gap-4">
                             <div className="flex gap-2 content-center">
                                 <span className="content-center">Nome</span>
-                                <input type="text" defaultValue={selectedData?.nome} className="border rounded px-2" />
+                                <input type="text" defaultValue={teacher?.nome} name="nome" onChange={esdras}  className="border rounded px-2" />
                             </div>
                             <div className="flex gap-2 content-center">
                                 <span className="content-center">Email</span>
-                                <input type="text" defaultValue={selectedData?.email} className="border rounded px-2" />
+                                <input type="text" defaultValue={teacher?.email} name="email" onChange={esdras}  className="border rounded px-2" />
                             </div>
                             <div className="flex gap-2 content-center">
                                 <span className="content-center">Cargo</span>
-                                <input type="text" defaultValue={selectedData?.cargo} className="border rounded px-2" />
+                                <input type="text" defaultValue={teacher?.cargo} name="cargo" onChange={esdras} className="border rounded px-2" />
                             </div>
                             <div className="flex gap-2 content-center">
                                 <span className="content-center">Departamento</span>
-                                <input type="text" defaultValue={selectedData?.departamento} className="border rounded px-2" />
+                                <input type="text" defaultValue={teacher?.departamento} name="departamento" onChange={esdras} className="border rounded px-2" />
                             </div>
                         </div>
                     </Modal>
