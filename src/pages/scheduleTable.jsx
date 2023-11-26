@@ -63,7 +63,28 @@ function ScheduleTable() {
             color:white;
             box-shadow: 5px 3px 5px 3px #dcfadd;         
         }
+        &:active {
+            background-color: #ADD1A7;
+        }
         `; 
+
+    const ActiveButton = styled.button`
+        background-color: #439158;
+        color: white;
+        font-size: 16px;        
+        border-radius: 5px;
+        margin: 10px 10px;
+        cursor: pointer;
+        text-align: center;
+        height:30px;
+        line-height:0px;
+
+        &:hover {
+            background-color: #30ab51;  
+            color:white;
+            box-shadow: 5px 3px 5px 3px #dcfadd;         
+        }
+    `
 
     const weekDays = [
         {day: 'Segunda'},{day: 'Terça'},{day: 'Quarta'},{day: 'Quinta'},{day: 'Sexta'},
@@ -84,11 +105,16 @@ function ScheduleTable() {
                 <p class="text-xl px-8 relative top-4">Escolha o semestre</p>
                 <div class="w-full h-18 ps-4 pe-4 py-6 text-center">
                     <Carousel> 
-                        {semesters.map((semester)=> (
-                            <Button>{semester.number}</Button>
-                        ))} 
+                        <ActiveButton>1º Semestre</ActiveButton>
+                        <Button>2º Semestre</Button>
+                        <Button>3º Semestre</Button>
+                        <Button>4º Semestre</Button>
+                        <Button>5º Semestre</Button>
+                        <Button>6º Semestre</Button>
+                        <Button>7º Semestre</Button>
+                        <Button>8º Semestre</Button>
                     </Carousel>
-                </div>
+                </div>                
                 <div class="overflow-x-auto px-4 py-2 max-w-full my-2 mx-auto">                    
                     <div class="shadow-sm dark:bg-slate-900 dark:border-gray-700">
                             <table class="rounded-2xl min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -112,16 +138,17 @@ function ScheduleTable() {
                                         <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
+                                                    <span class="flex flex-col items-center px-12 py-5">
                                                         <span class="font-mono text-center text-sm text-black dark:text-blue-500">13:20</span>
                                                     </span>
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.prim_hor_materia}</span>
+                                                    {schedule && schedule.length > 0 && mondaySched && (                                                        
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.prim_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.prim_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -129,8 +156,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.prim_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.prim_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.prim_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -138,8 +166,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.prim_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.prim_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.prim_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -147,8 +176,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.prim_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.prim_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.prim_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -156,63 +186,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.prim_hor_materia}</span>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>                                            
-                                        </tr> 
-                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">14:10</span>
-                                                    </span>                                            
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.segu_hor_materia}</span>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.segu_hor_materia}</span>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.segu_hor_materia}</span>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.segu_hor_materia}</span>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.segu_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.prim_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.prim_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -221,34 +197,39 @@ function ScheduleTable() {
                                         <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">                                                
-                                                    <span class="block px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">15:10</span>
-                                                    </span>                                                
+                                                <span class="flex flex-col items-center px-12 py-5">
+                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">14:10</span>
+                                                    </span>                                            
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.terc_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.segu_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.segu_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
                                             </td>
+
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.terc_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.segu_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.segu_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
                                             </td>
+
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.terc_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.segu_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.segu_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -256,8 +237,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.terc_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.segu_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.segu_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -265,8 +247,68 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.terc_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.segu_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.segu_hor_materia}</p>
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>                                            
+                                        </tr> 
+                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="flex items-center justify-center gap-x-2">                                                
+                                                    <span class="flex flex-col items-center px-12 py-5">
+                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">15:10</span>
+                                                    </span>                                                
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="flex items-center justify-center gap-x-2">
+                                                    {schedule && schedule.length > 0 && mondaySched && (
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.terc_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.terc_hor_materia}</p>
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="flex items-center justify-center gap-x-2">
+                                                    {schedule && schedule.length > 0 && tuesdaySched && (
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.terc_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.terc_hor_materia}</p>
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="flex items-center justify-center gap-x-2">
+                                                    {schedule && schedule.length > 0 && wednesdaySched && (
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.terc_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.terc_hor_materia}</p>
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="flex items-center justify-center gap-x-2">
+                                                    {schedule && schedule.length > 0 && thursdaySched && (
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.terc_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.terc_hor_materia}</p>
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="flex items-center justify-center gap-x-2">
+                                                    {schedule && schedule.length > 0 && fridaySched && (
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.terc_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.terc_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -275,7 +317,7 @@ function ScheduleTable() {
                                         <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
+                                                    <span class="flex flex-col items-center px-12 py-5">
                                                         <span class="font-mono text-center text-sm text-black dark:text-blue-500">16:00</span>
                                                     </span>   
                                                 </div>
@@ -283,8 +325,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quar_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quar_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quar_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -292,8 +335,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quar_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quar_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quar_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -301,8 +345,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quar_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quar_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quar_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -310,8 +355,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quar_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quar_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quar_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -319,8 +365,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quar_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quar_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quar_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -329,7 +376,7 @@ function ScheduleTable() {
                                         <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
+                                                    <span class="flex flex-col items-center px-12 py-5">
                                                         <span class="font-mono text-center text-sm text-black dark:text-blue-500">16:50</span>
                                                     </span>
                                                 </div>
@@ -337,8 +384,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quin_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quin_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quin_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -346,8 +394,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quin_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quin_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quin_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -355,8 +404,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quin_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quin_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quin_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -364,8 +414,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quin_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quin_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quin_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -373,8 +424,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quin_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quin_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quin_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -383,7 +435,7 @@ function ScheduleTable() {
                                         <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="block px-12 py-5">
+                                                    <span class="flex flex-col items-center px-12 py-5">
                                                         <span class="font-mono text-center text-sm text-black dark:text-blue-500">17:40</span>
                                                     </span>
                                                 </div>
@@ -391,8 +443,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.sext_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.sext_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.sext_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -400,8 +453,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.sext_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.sext_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.sext_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -409,8 +463,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.sext_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.sext_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.sext_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -418,8 +473,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.sext_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.sext_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.sext_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
@@ -427,8 +483,9 @@ function ScheduleTable() {
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-x-2">
                                                     {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="block px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.sext_hor_materia}</span>
+                                                        <span class="flex flex-col items-center px-12 py-5">
+                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.sext_hor}</span>
+                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.sext_hor_materia}</p>
                                                         </span>
                                                     )}
                                                 </div>
