@@ -15,6 +15,19 @@ function RegisterUsers() {
     const [departamento, setDepartamento] = useState();
     const { contextHolder, openNotificationWithIcon } = useContext(GlobalContext);
     const [MostrarModal, setMostrarModal] = useState(false);
+    const [disponibilidade, setdisponibilidadel] = useState({
+        segundaFeira:"", tercaFeira:"", quartaFeira:"", quintaFeira:"", sextaFeira:""
+    });
+
+    function SelecionarDia(e){
+        
+        if (e.target.value == Object.keys(disponibilidade).includes("segundaFeira")){
+            alert("aa")
+            return
+        }
+        alert("não possue esse intem no objeto")
+    }
+   
     function CadastrarUsuario(e) {
         e.preventDefault()
         const obj = {
@@ -45,7 +58,7 @@ function RegisterUsers() {
                 <div className="flex flex-col gap-3">
                     <h1>Selecione os dia disponiveis</h1>
                     <div>
-                        <label className="flex items-center gap-2" htmlFor="">Segunda-Feira <Checkbox ></Checkbox> </label>
+                        <label className="flex items-center gap-2" htmlFor="">Segunda-Feira <Checkbox onChange={SelecionarDia} value={"segundaFeira"}></Checkbox> </label>
 
                     </div>
                     <div>
