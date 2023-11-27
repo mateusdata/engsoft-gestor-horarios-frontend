@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import edit from "../image2/icon-edit.svg"
 import { Modal } from 'antd';
 import axios from "axios";
+import trash from "../image2/icon-trash.svg"
+
 
 function Teachers() {
     const { contextHolder } = useContext(GlobalContext);
@@ -64,6 +66,14 @@ function Teachers() {
             //setShowSubjects(response.data[0]);
         }).catch((error) => console.log(error))
     }
+
+    const deleteTeacher = (id) => {
+        console.log('deleteTeacher')
+        axios.delete(`https://ebbd-179-54-100-101.ngrok-free.app/delete-teacher/${id}`).then((response) => {
+            console.log('/delete')
+            console.log(response);
+        }).catch((error) => console.log(error))
+    }
     
     return (
         <Layouts>
@@ -85,7 +95,7 @@ function Teachers() {
                                         <span>Cargo: {teacher.cargo}</span>
                                         <span>Email: {teacher.email}</span>
                                     </div>
-                                    <div className="flex flex-col justify-center content-end w-20">
+                                    <div className="flex flex-col gap-4 justify-center content-end w-20">
                                         <img src={edit} 
                                             alt="Pencil edit" 
                                             className="cursor-pointer" 
@@ -96,6 +106,13 @@ function Teachers() {
                                                 selectedTeacher(teacher)
                                                 setTeacher(teacher)
                                             }} 
+                                        />
+                                        <img src={trash}
+                                            className="cursor-pointer" 
+                                            width={15} 
+                                            height={15} 
+                                            alt="Trash" 
+                                            onClick={() => deleteTeacher(teacher.id)}
                                         />
                                     </div>
                                 </li>
