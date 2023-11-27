@@ -8,7 +8,6 @@ import { Modal } from 'antd';
 import axios from "axios";
 import trash from "../image2/icon-trash.svg"
 
-
 function Teachers() {
     const { contextHolder } = useContext(GlobalContext);
     const [showSubjects, setShowSubjects] = useState([]); 
@@ -24,18 +23,16 @@ function Teachers() {
         console.log(teacher)
         setSelectedData(teacher);
 
-        axiosInstance.get('/dadosatuais').then((response) => {
+        /* axiosInstance.get('/dadosatuais').then((response) => {
             console.log('/dadosatuais')
             console.log(response);
-            //setShowSubjects(response.data[0]);
-        }).catch((error) => console.log(error))
+        }).catch((error) => console.log(error)) */
     };
 
     const showModal = () => {
         setIsModalOpen(true);
     };
     const handleOk = () => { 
-        alert(JSON.stringify(teacher))
         setIsModalOpen(false);
         updatedTeacher(selectedData)
         setSelectedData(null);
@@ -46,7 +43,7 @@ function Teachers() {
         setTeacher([])
     };
 
-    const esdras = (e) => {
+    const selectTeacher = (e) => {
         setTeacher( prevValue=> ({...prevValue, [e.target.name]:e.target.value }))
     }
 
@@ -58,9 +55,8 @@ function Teachers() {
         }).catch((error) => console.log(error))
     }, []);
 
-    const updatedTeacher = (teacher) => {
-        
-        axios.post('https://ebbd-179-54-100-101.ngrok-free.app/atualizarprofessor', selectedData).then((response) => {
+    const updatedTeacher = () => {
+        axiosInstance.put('/atualizarprofessor', selectedData).then((response) => {
             console.log('/atualizarprofessor')
             console.log(response);
             //setShowSubjects(response.data[0]);
@@ -69,7 +65,7 @@ function Teachers() {
 
     const deleteTeacher = (id) => {
         console.log('deleteTeacher')
-        axios.delete(`https://ebbd-179-54-100-101.ngrok-free.app/delete-teacher/${id}`).then((response) => {
+        axiosInstance.delete(`/delete-teacher/${id}`).then((response) => {
             console.log('/delete')
             console.log(response);
         }).catch((error) => console.log(error))
@@ -90,8 +86,6 @@ function Teachers() {
                                         <span>{teacher.departamento}</span>
                                     </div>
                                     <div className="flex flex-col justify-center w-60">
-                                        {/* <span>Quantidade de materias: {teacher.materias}</span>
-                                        <span>Horas disponíveis: {teacher.horasLivre}</span> */}
                                         <span>Cargo: {teacher.cargo}</span>
                                         <span>Email: {teacher.email}</span>
                                     </div>
@@ -120,25 +114,22 @@ function Teachers() {
                         </ul> 
                     </div>
                     <Modal okButtonProps={{className: "bg-blue-500"}} title="Edição do professor" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                        {JSON.stringify(teacher)
-                            
-                        }
                         <div className="flex flex-col gap-4">
                             <div className="flex gap-2 content-center">
                                 <span className="content-center">Nome</span>
-                                <input type="text" defaultValue={teacher?.nome} name="nome" onChange={esdras}  className="border rounded px-2" />
+                                <input type="text" value={teacher?.nome} name="nome" onChange={selectTeacher}  className="border rounded px-2" />
                             </div>
                             <div className="flex gap-2 content-center">
                                 <span className="content-center">Email</span>
-                                <input type="text" defaultValue={teacher?.email} name="email" onChange={esdras}  className="border rounded px-2" />
+                                <input type="text" value={teacher?.email} name="email" onChange={selectTeacher}  className="border rounded px-2" />
                             </div>
                             <div className="flex gap-2 content-center">
                                 <span className="content-center">Cargo</span>
-                                <input type="text" defaultValue={teacher?.cargo} name="cargo" onChange={esdras} className="border rounded px-2" />
+                                <input type="text" value={teacher?.cargo} name="cargo" onChange={selectTeacher} className="border rounded px-2" />
                             </div>
                             <div className="flex gap-2 content-center">
                                 <span className="content-center">Departamento</span>
-                                <input type="text" defaultValue={teacher?.departamento} name="departamento" onChange={esdras} className="border rounded px-2" />
+                                <input type="text" value={teacher?.departamento} name="departamento" onChange={selectTeacher} className="border rounded px-2" />
                             </div>
                         </div>
                     </Modal>
