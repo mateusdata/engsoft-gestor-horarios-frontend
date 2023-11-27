@@ -5,7 +5,13 @@ import { GlobalContext } from "../context/globalContext";
 import { useEffect } from "react";
 import styled from 'styled-components';
 import Carousel from "../components/Carousel/index.js";
-
+/**
+ * Componente para solicitar código de recuperação de senha por email.
+ *
+ * Este componente permite que o usuário insira seu email e solicite um código de recuperação de senha.
+ *
+ * @returns {JSX.Element} Elemento JSX que representa a página de solicitação de código de recuperação de senha.
+ */
 function ScheduleTable() {
     const { contextHolder } = useContext(GlobalContext);
     const [showTeachers, setShowTeachers] = useState([]); 
