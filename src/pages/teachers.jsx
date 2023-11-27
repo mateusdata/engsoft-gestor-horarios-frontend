@@ -10,10 +10,10 @@ import trash from "../image2/icon-trash.svg"
 
 /**
  * Este código React utiliza os hooks `useContext` e `useState` para gerenciar estados e contextos.
-  Inclui funções auxiliares como `selectedTeacher`, `showModal`, `handleOk`, `handleCancel`, `esdras`, 
-  além de efeitos colaterais usando o hook `useEffect`. 
+ * Inclui funções auxiliares como `selectedTeacher`, `showModal`, `handleOk`, `handleCancel`, `esdras`, 
+ * além de efeitos colaterais usando o hook `useEffect`. 
  * @returns {JSX.Element} A renderização JSX exibe uma lista de professores com opções de edição e exclusão, 
-    juntamente com um modal para editar os dados do professor selecionado.
+ *  juntamente com um modal para editar os dados do professor selecionado.
  */
 function Teachers() {
     const { contextHolder } = useContext(GlobalContext);
