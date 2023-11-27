@@ -15,6 +15,19 @@ function RegisterUsers() {
     const [departamento, setDepartamento] = useState();
     const { contextHolder, openNotificationWithIcon } = useContext(GlobalContext);
     const [MostrarModal, setMostrarModal] = useState(false);
+    const [disponibilidade, setdisponibilidadel] = useState({
+        segundaFeira:"", tercaFeira:"", quartaFeira:"", quintaFeira:"", sextaFeira:""
+    });
+
+    function SelecionarDia(e){
+        
+        if (e.target.value == Object.keys(disponibilidade).includes("segundaFeira")){
+            alert("aa")
+            return
+        }
+        alert("não possue esse intem no objeto")
+    }
+   
     function CadastrarUsuario(e) {
         e.preventDefault()
         const obj = {
@@ -45,7 +58,7 @@ function RegisterUsers() {
                 <div className="flex flex-col gap-3">
                     <h1>Selecione os dia disponiveis</h1>
                     <div>
-                        <label className="flex items-center gap-2" htmlFor="">Segunda-Feira <Checkbox ></Checkbox> </label>
+                        <label className="flex items-center gap-2" htmlFor="">Segunda-Feira <Checkbox onChange={SelecionarDia} value={"segundaFeira"}></Checkbox> </label>
 
                     </div>
                     <div>
@@ -136,7 +149,7 @@ function RegisterUsers() {
                                                 <Checkbox value={administrador} onChange={() => setAdministrador(!administrador)}></Checkbox>
                                             </div>
                                             <div className="class items-center">
-                                                <button style={{ fontFamily: "Inter" }} onClick={() => { setMostrarModal(true) }} className="px-4 inline-flex items-center gap-x-2 text-md font-semibold rounded-lg border border-transparent text-gray-700 hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
+                                                <button style={{ fontFamily: "Inter" }} onClick={() => { setMostrarModal(true) }} className="px-4 inline-flex items-center gap-x-2 text-md font-semibold animate-pulse rounded-lg border border-transparent text-gray-700 hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
                                                 >Disponibilidade</button>
                                             </div>
 
