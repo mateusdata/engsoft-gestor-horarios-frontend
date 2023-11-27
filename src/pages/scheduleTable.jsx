@@ -5,12 +5,15 @@ import { GlobalContext } from "../context/globalContext";
 import { useEffect } from "react";
 import styled from 'styled-components';
 import Carousel from "../components/Carousel/index.js";
+
 /**
- * Componente para solicitar código de recuperação de senha por email.
- *
- * Este componente permite que o usuário insira seu email e solicite um código de recuperação de senha.
- *
- * @returns {JSX.Element} Elemento JSX que representa a página de solicitação de código de recuperação de senha.
+ * Componente React: ScheduleTable
+ * Este componente utiliza os hooks `useContext` e `useState` para gerenciar estados e contextos.
+ * Inclui funções auxiliares como `selectedTeacher`, `showModal`, `handleOk`, `handleCancel`, `esdras`,
+ * além de efeitos colaterais usando o hook `useEffect`.
+ * @returns {JSX.Element} A renderização JSX exibe uma tabela de horários de aulas com funcionalidades
+ * como obtenção de dados de professores e horários, renderização condicional para verificar disponibilidade de dados,
+ * estilização com styled-components, e apresentação das informações na tabela.
  */
 function ScheduleTable() {
     const { contextHolder } = useContext(GlobalContext);
