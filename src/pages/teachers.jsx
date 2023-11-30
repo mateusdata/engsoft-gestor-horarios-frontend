@@ -1,15 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Layouts from "../layouts/layouts";
 import axiosInstance from "../components/config/axiosInstance.js";
 import { GlobalContext } from "../context/globalContext";
-import { useEffect } from "react";
 import edit from "../image2/icon-edit.svg"
 import { Modal } from 'antd';
-import axios from "axios";
 import trash from "../image2/icon-trash.svg"
 
 function Teachers() {
     const { contextHolder } = useContext(GlobalContext);
+
     const [showSubjects, setShowSubjects] = useState([]); 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,25 +17,18 @@ function Teachers() {
 
     const [teacher, setTeacher] = useState([])
 
-    const selectedTeacher= (teacher) => {
-        console.log('selectedTeacher')
-        console.log(teacher)
-        setSelectedData(teacher);
-
-        /* axiosInstance.get('/dadosatuais').then((response) => {
-            console.log('/dadosatuais')
-            console.log(response);
-        }).catch((error) => console.log(error)) */
-    };
+    const [updatePage, setUpdatePage] = useState(false)
 
     const showModal = () => {
         setIsModalOpen(true);
     };
+
     const handleOk = () => { 
         setIsModalOpen(false);
         updatedTeacher(selectedData)
         setSelectedData(null);
     };
+
     const handleCancel = () => {
         setIsModalOpen(false);
         setSelectedData(null);
@@ -47,29 +39,32 @@ function Teachers() {
         setTeacher( prevValue=> ({...prevValue, [e.target.name]:e.target.value }))
     }
 
-    useEffect(() => {
-        axiosInstance.get('/teacher_list').then((response) => {
-            console.log('/teacher_list') 
-            console.log(response.data[0]);
-            setShowSubjects(response.data[0]);
-        }).catch((error) => console.log(error))
-    }, []);
+    const selectedTeacher= (teacher) => {
+        setSelectedData(teacher);
+
+        /* axiosInstance.get('/dadosatuais').then((response) => {
+            console.log('/dadosatuais')
+            console.log(response);
+        }).catch((error) => console.log(error)) */
+    };
 
     const updatedTeacher = () => {
-        axiosInstance.put('/atualizarprofessor', selectedData).then((response) => {
-            console.log('/atualizarprofessor')
-            console.log(response);
-            //setShowSubjects(response.data[0]);
+        axiosInstance.put('/atualizarprofessor', teacher).then((response) => {
+            setUpdatePage(true)
         }).catch((error) => console.log(error))
     }
 
     const deleteTeacher = (id) => {
-        console.log('deleteTeacher')
         axiosInstance.delete(`/delete-teacher/${id}`).then((response) => {
-            console.log('/delete')
-            console.log(response);
+            setUpdatePage(true)
         }).catch((error) => console.log(error))
     }
+
+    useEffect(() => {
+        axiosInstance.get('/teacher_list').then((response) => {
+            setShowSubjects(response.data[0]);
+        }).catch((error) => console.log(error))
+    }, [updatePage]);
     
     return (
         <Layouts>
