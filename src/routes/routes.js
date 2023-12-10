@@ -23,7 +23,7 @@ const MyRoutes = () => {
           <Spin size="large" delay={0} />
          </div>
     }
-    if (false) {
+    if (!autenticado) {
       return <Navigate to={"/login" || "/test"} />
     }
     return children
