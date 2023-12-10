@@ -25,7 +25,7 @@ function RegisterUsers() {
             alert("aa")
             return
         }
-        alert("não possue esse intem no objeto")
+
     }
    
     function CadastrarUsuario(e) {
@@ -54,7 +54,7 @@ function RegisterUsers() {
 
         <Layouts>
             {contextHolder}
-            <Modal open={MostrarModal} onCancel={() => { setMostrarModal(false) }} >
+            <Modal open={MostrarModal} onCancel={() => { setMostrarModal(false) }} okButtonProps={{className:"bg-blue-500"}} >
                 <div className="flex flex-col gap-3">
                     <h1>Selecione os dia disponiveis</h1>
                     <div>
@@ -80,7 +80,7 @@ function RegisterUsers() {
 
                 </div>
             </Modal>
-            <div style={{ fontFamily: "Inter" }} className="bg-[#D9D9D9]  flex item-center min-h-[85vh] w-full  flex-col">
+            <div style={{ fontFamily: "Inter" }} className="bg-[#F3F4F6]  flex item-center min-h-[85vh] w-full  flex-col">
                 <div className="m-1  ">
                     <div className=" border  items-center justify-center md:justify-start hidden lg:flex fixed" >
                         <img src={ifba} alt="Logo do IFBA" className="h-15 w-15 rounded-lg shadow-md" />

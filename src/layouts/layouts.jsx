@@ -47,7 +47,7 @@ function Layouts({ children }) {
 
 
         <div id="application-sidebar-dark"
-          className={`${showMenu ? "hs-overlay  bg-gray-100 dark:bg-[#238662] hs-overlay-open:translate-x-0   border-none -translate-x-full hidden transition-all duration-300 transform "
+          className={`${showMenu ? "hs-overlay border bg-gray-200 dark:bg-[#238662] hs-overlay-open:translate-x-0   border-none -translate-x-full hidden transition-all duration-300 transform "
             : ""} fixed top-0 left-0 bottom-0 z-[60] w-64 bg-[#136CAD] dark:bg-gray-800 border-r border-gray-800 pt-7 pb-10 overflow-y-auto scrollbar-y md:block 
           md:translate-x-0 md:right-auto md:bottom-0`}>
           <div className=" text-center flex items-center justify-center">
@@ -170,7 +170,7 @@ function Layouts({ children }) {
             </div>
 
             <div className=''>
-              {false && <Footer />}
+              { <Footer />}
             </div>
           </div>
 
