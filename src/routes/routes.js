@@ -43,6 +43,8 @@ const MyRoutes = () => {
         <Route exact path="*" element={<NotFound />} />
         <Route exact path="/register" element={<Private> <RegisterUsers/> </Private>} />
         <Route exact path="/teachers" element={<Private><Teachers /></Private>} />
+        <Route exact path="/horarios" element={<Private><ScheduleTable /></Private>} />
+        
 
         
       </Routes>
