@@ -5,12 +5,13 @@ import { GlobalContext } from "../context/globalContext";
 import { useEffect } from "react";
 import styled from 'styled-components';
 import Carousel from "../components/Carousel/index.js";
+import { PropagateLoader, SkewLoader, SyncLoader } from "react-spinners";
 
 function ScheduleTable() {
     const { contextHolder } = useContext(GlobalContext);
     const [showTeachers, setShowTeachers] = useState([]); 
     const [schedule, setSchedule] = useState([]);
-
+    const [colorButton, setColorButton] = useState(1)
     const mondaySched = schedule[0];
     const tuesdaySched = schedule[1];
     const wednesdaySched = schedule[2];
@@ -18,15 +19,18 @@ function ScheduleTable() {
     const fridaySched = schedule[4];
 
     console.log(fridaySched);
-
+  const [updataData, setUpdateData] = useState(false);
     useEffect(() => {
         axiosInstance.get('/teacher_list').then((response) => {
             console.log(response);
-            setShowTeachers(response.data[0]);
+            setShowTeachers(response.data);
+            setTimeout(() => {
+                setUpdateData(false)
+            }, 3500);
         }).catch((error) => {
             console.log(error);
         })
-    }, []);
+    }, [updataData]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,9 +50,14 @@ function ScheduleTable() {
     
         fetchData();
     }, []);
+    const updatePage = (semestre) =>{
+        axiosInstance.get('/horarios',{params:{semestre}}).then((response)=>{
+            setSchedule(response.data);
+            setUpdateData(true)
+        })
+    }
 
     const Button = styled.button`        
-        background-color: #CDCDCD;
         color: black;
         font-size: 14px;        
         border-radius: 5px;
@@ -69,7 +78,6 @@ function ScheduleTable() {
         `; 
 
     const ActiveButton = styled.button`
-        background-color: #439158;
         color: white;
         font-size: 16px;        
         border-radius: 5px;
@@ -104,17 +112,18 @@ function ScheduleTable() {
             <div class="flex flex-col items-center p-2 w-full overflow-hidden m-auto">
                 <p class="text-xl px-8 relative top-4">Escolha o semestre</p>
                 <div class="w-full h-18 ps-4 pe-4 py-6 text-center">
-                    <Carousel> 
-                        <ActiveButton>1º Semestre</ActiveButton>
-                        <Button>2º Semestre</Button>
-                        <Button>3º Semestre</Button>
-                        <Button>4º Semestre</Button>
-                        <Button>5º Semestre</Button>
-                        <Button>6º Semestre</Button>
-                        <Button>7º Semestre</Button>
-                        <Button>8º Semestre</Button>
-                    </Carousel>
+                <Carousel>
+                    <Button className={colorButton === 1 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("primeiro"); setColorButton(1);}} >1º Semestre</Button>
+                    <Button className={colorButton === 2 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("segundo"); setColorButton(2);}} >2º Semestre</Button>
+                    <Button className={colorButton === 3 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("terceiro"); setColorButton(3);}} >3º Semestre</Button>
+                    <Button className={colorButton === 4 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("quarto"); setColorButton(4);}} >4º Semestre</Button>
+                    <Button className={colorButton === 5 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("quinto"); setColorButton(5);}} >5º Semestre</Button>
+                    <Button className={colorButton === 6 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("sexto"); setColorButton(6);}} >6º Semestre</Button>
+                    <Button className={colorButton === 7 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("setimo"); setColorButton(7);}} >7º Semestre</Button>
+                    <Button className={colorButton === 8 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("oitavo"); setColorButton(8);}} >8º Semestre</Button>
+            </Carousel>
                 </div>                
+                { updataData && <PropagateLoader color="orange" />}
                 <div class="overflow-x-auto px-4 py-2 max-w-full my-2 mx-auto">                    
                     <div class="shadow-sm dark:bg-slate-900 dark:border-gray-700">
                             <table class="rounded-2xl min-w-full divide-y divide-gray-200 dark:divide-gray-700">
