@@ -5,13 +5,15 @@ import { GlobalContext } from "../context/globalContext";
 import { useEffect } from "react";
 import styled from 'styled-components';
 import Carousel from "../components/Carousel/index.js";
-import { PropagateLoader, SkewLoader, SyncLoader } from "react-spinners";
+import { BeatLoader, PropagateLoader, SkewLoader, SyncLoader } from "react-spinners";
+import { Skeleton, Space } from "antd";
 
 function ScheduleTable() {
     const { contextHolder } = useContext(GlobalContext);
     const [showTeachers, setShowTeachers] = useState([]); 
     const [schedule, setSchedule] = useState([]);
     const [colorButton, setColorButton] = useState(1)
+    const [loading, setLoading] = useState(true);
     const mondaySched = schedule[0];
     const tuesdaySched = schedule[1];
     const wednesdaySched = schedule[2];
@@ -26,6 +28,7 @@ function ScheduleTable() {
             setShowTeachers(response.data);
             setTimeout(() => {
                 setUpdateData(false)
+                setLoading(false)
             }, 3500);
         }).catch((error) => {
             console.log(error);
@@ -40,11 +43,14 @@ function ScheduleTable() {
     
                 if (response.data !== undefined) {
                     setSchedule(response.data);
+                    setLoading(false)
+
                 } else {
                     console.log("Dados indefinidos");
                 }
             } catch (error) {
                 console.log(error);
+                setLoading(false)
             }
         };
     
@@ -54,6 +60,8 @@ function ScheduleTable() {
         axiosInstance.get('/show-schedules',{params:{semestre}}).then((response)=>{
             setSchedule(response.data);
             setUpdateData(true)
+            setLoading(false)
+
         })
     }
 
@@ -122,8 +130,26 @@ function ScheduleTable() {
                     <Button className={colorButton === 7 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("setimo"); setColorButton(7);}} >7º Semestre</Button>
                     <Button className={colorButton === 8 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("oitavo"); setColorButton(8);}} >8º Semestre</Button>
             </Carousel>
-                </div>                
-                { updataData && <PropagateLoader color="orange" />}
+                </div>     
+                    {
+
+                        loading ?  <Space className="w-[80%]"
+                        direction="vertical"
+                        style={{
+                          width: '100%',
+                        }}
+                        size={16}
+                      >
+                        <Skeleton loading={true}>                         
+                        </Skeleton>
+                        <Skeleton loading={true}>                    
+                         </Skeleton>
+                        
+                      </Space>:
+
+                        <>
+                        
+                        { updataData && <BeatLoader color="orange" />}
                 <div class="overflow-x-auto px-4 py-2 max-w-full my-2 mx-auto">                    
                     <div class="shadow-sm dark:bg-slate-900 dark:border-gray-700">
                             <table class="rounded-2xl min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -504,6 +530,11 @@ function ScheduleTable() {
                             </table>                    
                         </div>
                     </div>
+                        </>
+
+                    }    
+
+               
                 </div>                           
         </Layouts>
     );
