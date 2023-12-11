@@ -21,7 +21,7 @@ function ScheduleTable() {
     console.log(fridaySched);
   const [updataData, setUpdateData] = useState(false);
     useEffect(() => {
-        axiosInstance.get('/teacher_list').then((response) => {
+        axiosInstance.get('/show-schedules').then((response) => {
             console.log(response);
             setShowTeachers(response.data);
             setTimeout(() => {
@@ -35,7 +35,7 @@ function ScheduleTable() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosInstance.get('/show schedules');
+                const response = await axiosInstance.get('/show-schedules');
                 console.log(response);
     
                 if (response.data !== undefined) {
