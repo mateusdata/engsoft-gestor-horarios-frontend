@@ -35,7 +35,7 @@ function ScheduleTable() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosInstance.get('/horarios');
+                const response = await axiosInstance.get('/show schedules');
                 console.log(response);
     
                 if (response.data !== undefined) {
@@ -51,7 +51,7 @@ function ScheduleTable() {
         fetchData();
     }, []);
     const updatePage = (semestre) =>{
-        axiosInstance.get('/horarios',{params:{semestre}}).then((response)=>{
+        axiosInstance.get('/show-schedules',{params:{semestre}}).then((response)=>{
             setSchedule(response.data);
             setUpdateData(true)
         })
