@@ -148,10 +148,10 @@ function RegisterUsers() {
                                                 <label htmlFor="" className="m-2 text-lg mb-2 ">Administrador</label>
                                                 <Checkbox value={administrador} onChange={() => setAdministrador(!administrador)}></Checkbox>
                                             </div>
-                                            <div className="class items-center">
+                                          { false &&  <div className="class items-center">
                                                 <button style={{ fontFamily: "Inter" }} onClick={() => { setMostrarModal(true) }} className="px-4 inline-flex items-center gap-x-2 text-md font-semibold animate-pulse rounded-lg border border-transparent text-gray-700 hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 "
                                                 >Disponibilidade</button>
-                                            </div>
+                                            </div>}
 
                                         </div>
                                         <div className="flex justify-center items-center mb-50">
