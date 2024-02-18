@@ -1,543 +1,620 @@
-import React, { useContext, useState } from "react";
-import Layouts from "../layouts/layouts";
-import axiosInstance from "../components/config/axiosInstance.js";
-import { GlobalContext } from "../context/globalContext";
-import { useEffect } from "react";
-import styled from 'styled-components';
-import Carousel from "../components/Carousel/index.js";
-import { BeatLoader, PropagateLoader, SkewLoader, SyncLoader } from "react-spinners";
-import { Skeleton, Space } from "antd";
+import React, { useState } from 'react'
+import Layouts from '../layouts/layouts'
+import { Modal, Select } from 'antd'
 
-function ScheduleTable() {
-    const { contextHolder } = useContext(GlobalContext);
-    const [showTeachers, setShowTeachers] = useState([]); 
-    const [schedule, setSchedule] = useState([]);
-    const [colorButton, setColorButton] = useState(1)
-    const [loading, setLoading] = useState(true);
-    const mondaySched = schedule[0];
-    const tuesdaySched = schedule[1];
-    const wednesdaySched = schedule[2];
-    const thursdaySched = schedule[3];
-    const fridaySched = schedule[4];
+const ScheduleTable = () => {
+  const [open, setOpen] =  useState(false)
+  return (
+    <Layouts>
+      
+<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+  
+  <div class="flex flex-col">
+  <Select
+              defaultValue="TIPO DE CURSO"
+              style={{ width: 120 }}
+              
+              options={[{ value: 'SISTEMAS DE INBFORMAÇÃO', label: 'SISTEMAS DE INBFORMAÇÃO' }, { value: 'INTEGRADO', label: 'INTEGRADO' }, { value: 'SUBSEQUENTE', label: 'SUBSEQUENTE' }]}
+            />
+    <div class="-m-1.5 overflow-x-auto">
+      <div class="p-1.5 min-w-full inline-block align-middle">
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+      
+          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
+            <div>
+              <div>
+              <Select
+              defaultValue="lucy"
+              style={{ width: 120 }}
+              
+              options={[{ value: '1 SEMESTRE', label: ' 2 SEMESTRE' }]}
+            />
+              </div>
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                BSI PRIMEIRO SEMESTRE
+              </h2>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Keys you have generated to connect with third-party clients or access the <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium" href="#">Preline API.</a>
+              </p>
+            </div>
 
-    console.log(fridaySched);
-  const [updataData, setUpdateData] = useState(false);
-    useEffect(() => {
-        axiosInstance.get('/show-schedules').then((response) => {
-            console.log(response);
-            setShowTeachers(response.data);
-            setTimeout(() => {
-                setUpdateData(false)
-                setLoading(false)
-            }, 3500);
-        }).catch((error) => {
-            console.log(error);
-        })
-    }, [updataData]);
+            <div>
+              <div class="inline-flex gap-x-2">
+                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                  View all
+                </a>
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosInstance.get('/show-schedules');
-                console.log(response);
-    
-                if (response.data !== undefined) {
-                    setSchedule(response.data);
-                    setLoading(false)
+                <a onClick={()=>setOpen(!open)} class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                  <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                  Create
+                </a>
 
-                } else {
-                    console.log("Dados indefinidos");
-                }
-            } catch (error) {
-                console.log(error);
-                setLoading(false)
-            }
-        };
-    
-        fetchData();
-    }, []);
-    const updatePage = (semestre) =>{
-        axiosInstance.get('/show-schedules',{params:{semestre}}).then((response)=>{
-            setSchedule(response.data);
-            setUpdateData(true)
-            setLoading(false)
+                <Modal onCancel={()=>setOpen(false)} open={open}>
 
-        })
-    }
+                  cria horarios
+                </Modal>
+              </div>
+            </div>
+          </div>
+          
 
-    const Button = styled.button`        
-        color: black;
-        font-size: 14px;        
-        border-radius: 5px;
-        margin: 10px 10px;
-        cursor: pointer;
-        text-align: center;
-        height:30px;
-        line-height:0px;
+          
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-slate-900">
+              <tr>
+                <th scope="col" class="ps-6 py-3 text-start">
+                  <label for="hs-at-with-checkboxes-main" class="flex">
+                    <input type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-main"/>
+                    <span class="sr-only">Checkbox</span>
+                  </label>
+                </th>
 
-        &:hover {
-            background-color: #ADD1A7;  
-            color:white;
-            box-shadow: 5px 3px 5px 3px #dcfadd;         
-        }
-        &:active {
-            background-color: #ADD1A7;
-        }
-        `; 
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                      Name
+                    </span>
+                  </div>
+                </th>
 
-    const ActiveButton = styled.button`
-        color: white;
-        font-size: 16px;        
-        border-radius: 5px;
-        margin: 10px 10px;
-        cursor: pointer;
-        text-align: center;
-        height:30px;
-        line-height:0px;
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                      Created by
+                    </span>
+                  </div>
+                </th>
 
-        &:hover {
-            background-color: #30ab51;  
-            color:white;
-            box-shadow: 5px 3px 5px 3px #dcfadd;         
-        }
-    `
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                      API Key
+                    </span>
+                  </div>
+                </th>
 
-    const weekDays = [
-        {day: 'Segunda'},{day: 'Terça'},{day: 'Quarta'},{day: 'Quinta'},{day: 'Sexta'},
-    ]
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                      Status
+                    </span>
+                  </div>
+                </th>
 
-    const semesters = [
-        {number: '1º Semestre'},{number: '2º Semestre'},{number: '3º Semestre'},{number: '4º Semestre'},
-        {number: '5º Semestre'},{number: '6º Semestre'},{number: '7º Semestre'},{number: '8º Semestre'},
-    ]
+                <th scope="col" class="px-6 py-3 text-start">
+                  <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                      Created
+                    </span>
+                  </div>
+                </th>
 
+                <th scope="col" class="px-6 py-3 text-end"></th>
+              </tr>
+            </thead>
 
-    return (
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+              <tr>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="ps-6 py-3">
+                    <label for="hs-at-with-checkboxes-1" class="flex">
+                      <input type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-1"/>
+                      <span class="sr-only">Checkbox</span>
+                    </label>
+                  </div>
+                </td>
 
-        <Layouts>
-            {/* {JSON.stringify(showTeachers)} */}
-            {contextHolder}
-            <div class="flex flex-col items-center p-2 w-full overflow-hidden m-auto">
-                <p class="text-xl px-8 relative top-4">Escolha o semestre</p>
-                <div class="w-full h-18 ps-4 pe-4 py-6 text-center">
-                <Carousel>
-                    <Button className={colorButton === 1 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("primeiro"); setColorButton(1);}} >1º Semestre</Button>
-                    <Button className={colorButton === 2 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("segundo"); setColorButton(2);}} >2º Semestre</Button>
-                    <Button className={colorButton === 3 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("terceiro"); setColorButton(3);}} >3º Semestre</Button>
-                    <Button className={colorButton === 4 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("quarto"); setColorButton(4);}} >4º Semestre</Button>
-                    <Button className={colorButton === 5 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("quinto"); setColorButton(5);}} >5º Semestre</Button>
-                    <Button className={colorButton === 6 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("sexto"); setColorButton(6);}} >6º Semestre</Button>
-                    <Button className={colorButton === 7 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("setimo"); setColorButton(7);}} >7º Semestre</Button>
-                    <Button className={colorButton === 8 ? "bg-green-600" : "bg-[#ADD1A7]"} onClick={()=>{updatePage("oitavo"); setColorButton(8);}} >8º Semestre</Button>
-            </Carousel>
-                </div>     
-                    {
-
-                        loading ?  <Space className="w-[80%]"
-                        direction="vertical"
-                        style={{
-                          width: '100%',
-                        }}
-                        size={16}
-                      >
-                        <Skeleton loading={true}>                         
-                        </Skeleton>
-                        <Skeleton loading={true}>                    
-                         </Skeleton>
-                        
-                      </Space>:
-
-                        <>
-                        
-                        { updataData && <BeatLoader color="orange" />}
-                <div class="overflow-x-auto px-4 py-2 max-w-full my-2 mx-auto">                    
-                    <div class="shadow-sm dark:bg-slate-900 dark:border-gray-700">
-                            <table class="rounded-2xl min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-inherit">
-                                    <tr>
-                                        <th scope="col" class="">                                
-                                        </th>
-                                        {weekDays.map((week) => (
-                                            <th scope="col" class="px-12 py-5 text-start">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                        {week.day}
-                                                    </span>
-                                                </div>
-                                            </th>
-                                        ))}                                        
-                                    </tr>
-                                </thead>
-
-                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="flex flex-col items-center px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">13:20</span>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && mondaySched && (                                                        
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.prim_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.prim_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.prim_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.prim_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.prim_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.prim_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.prim_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.prim_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.prim_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.prim_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>                                            
-                                        </tr> 
-                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">                                                
-                                                <span class="flex flex-col items-center px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">14:10</span>
-                                                    </span>                                            
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.segu_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.segu_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.segu_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.segu_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.segu_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.segu_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.segu_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.segu_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.segu_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.segu_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>                                            
-                                        </tr> 
-                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">                                                
-                                                    <span class="flex flex-col items-center px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">15:10</span>
-                                                    </span>                                                
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.terc_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.terc_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.terc_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.terc_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.terc_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.terc_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.terc_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.terc_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.terc_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.terc_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>                                            
-                                        </tr>                                        
-                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="flex flex-col items-center px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">16:00</span>
-                                                    </span>   
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quar_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quar_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quar_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quar_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quar_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quar_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quar_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quar_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quar_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quar_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>                                            
-                                        </tr> 
-                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="flex flex-col items-center px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">16:50</span>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quin_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.quin_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quin_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.quin_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quin_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.quin_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quin_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.quin_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quin_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.quin_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>                                            
-                                        </tr>
-                                        <tr class="bg-green-200 dark:bg-slate-800 dark:hover:bg-slate-800">
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    <span class="flex flex-col items-center px-12 py-5">
-                                                        <span class="font-mono text-center text-sm text-black dark:text-blue-500">17:40</span>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && mondaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.sext_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{mondaySched.sext_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && tuesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.sext_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{tuesdaySched.sext_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && wednesdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.sext_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{wednesdaySched.sext_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && thursdaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.sext_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{thursdaySched.sext_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td class="h-px w-px whitespace-nowrap">
-                                                <div class="flex items-center justify-center gap-x-2">
-                                                    {schedule && schedule.length > 0 && fridaySched && (
-                                                        <span class="flex flex-col items-center px-12 py-5">
-                                                            <span class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.sext_hor}</span>
-                                                            <p class="font-mono text-center text-sm text-black dark:text-blue-500">{fridaySched.sext_hor_materia}</p>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>                                            
-                                        </tr>                                                                                                                   
-                                </tbody>
-                            </table>                    
-                        </div>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Streamlab</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <div class="flex items-center gap-x-2">
+                      <img class="inline-block h-6 w-6 rounded-full" src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Image Description"/>
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Christina Bersh</span>
+                      </div>
                     </div>
-                        </>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-xs rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                      Copy Key
+                      <svg class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                      <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                      </svg>
+                      Successful
+                    </span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">28 Dec, 12:12</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-1.5">
+                    <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                      <button id="hs-table-dropdown-1" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                      </button>
+                      <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-table-dropdown-1">
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Rename
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Regenrate Key
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Disable
+                          </a>
+                        </div>
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700" href="#">
+                            Delete
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
 
-                    }    
+              <tr>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="ps-6 py-3">
+                    <label for="hs-at-with-checkboxes-2" class="flex">
+                      <input type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-2"/>
+                      <span class="sr-only">Checkbox</span>
+                    </label>
+                  </div>
+                </td>
 
-               
-                </div>                           
-        </Layouts>
-    );
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Node</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <div class="flex items-center gap-x-2">
+                      <img class="inline-block h-6 w-6 rounded-full" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Image Description"/>
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">David Harrison</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-xs rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                      Copy Key
+                      <svg class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-green-200">
+                      <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                      </svg>
+                      Warning
+                    </span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">20 Dec, 09:27</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-1.5">
+                    <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                      <button id="hs-table-dropdown-2" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                      </button>
+                      <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-table-dropdown-2">
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Rename
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Regenrate Key
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Disable
+                          </a>
+                        </div>
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700" href="#">
+                            Delete
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
 
+              <tr>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="ps-6 py-3">
+                    <label for="hs-at-with-checkboxes-3" class="flex">
+                      <input type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-3"/>
+                      <span class="sr-only">Checkbox</span>
+                    </label>
+                  </div>
+                </td>
+
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">FrontMail</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <div class="flex items-center gap-x-2">
+                      <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-700">
+                        <span class="text-xs font-medium text-gray-800 leading-none dark:text-gray-200">A</span>
+                      </span>
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Anne Richard</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-xs rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                      Copy Key
+                      <svg class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                      <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                      </svg>
+                      Successful
+                    </span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">18 Dec, 15:20</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-1.5">
+                    <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                      <button id="hs-table-dropdown-3" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                      </button>
+                      <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-table-dropdown-3">
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Rename
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Regenrate Key
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Disable
+                          </a>
+                        </div>
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700" href="#">
+                            Delete
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="ps-6 py-3">
+                    <label for="hs-at-with-checkboxes-4" class="flex">
+                      <input type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-4"/>
+                      <span class="sr-only">Checkbox</span>
+                    </label>
+                  </div>
+                </td>
+
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">MobileAPI</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <div class="flex items-center gap-x-2">
+                      <img class="inline-block h-6 w-6 rounded-full" src="https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80" alt="Image Description"/>
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Samia Kartoon</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-xs rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                      Copy Key
+                      <svg class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                      <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                      </svg>
+                      Successful
+                    </span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">18 Dec, 15:20</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-1.5">
+                    <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                      <button id="hs-table-dropdown-4" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                      </button>
+                      <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-table-dropdown-4">
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Rename
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Regenrate Key
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Disable
+                          </a>
+                        </div>
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700" href="#">
+                            Delete
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="ps-6 py-3">
+                    <label for="hs-at-with-checkboxes-5" class="flex">
+                      <input type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-5"/>
+                      <span class="sr-only">Checkbox</span>
+                    </label>
+                  </div>
+                </td>
+
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">RachelsKey</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <div class="flex items-center gap-x-2">
+                      <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-700">
+                        <span class="text-xs font-medium text-gray-800 leading-none dark:text-gray-200">D</span>
+                      </span>
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">David Harrison</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-xs rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                      Copy Key
+                      <svg class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-green-200">
+                      <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                      </svg>
+                      Danger
+                    </span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">15 Dec, 14:41</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-1.5">
+                    <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                      <button id="hs-table-dropdown-5" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                      </button>
+                      <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-table-dropdown-5">
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Rename
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Regenrate Key
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Disable
+                          </a>
+                        </div>
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700" href="#">
+                            Delete
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="ps-6 py-3">
+                    <label for="hs-at-with-checkboxes-6" class="flex">
+                      <input type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-6"/>
+                      <span class="sr-only">Checkbox</span>
+                    </label>
+                  </div>
+                </td>
+
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">Gulp</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <div class="flex items-center gap-x-2">
+                      <img class="inline-block h-6 w-6 rounded-full" src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Image Description"/>
+                      <div class="grow">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Brian Halligan</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-xs rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                      Copy Key
+                      <svg class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+                    </button>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                      <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                      </svg>
+                      Successful
+                    </span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">11 Dec, 18:51</span>
+                  </div>
+                </td>
+                <td class="h-px w-px whitespace-nowrap">
+                  <div class="px-6 py-1.5">
+                    <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                      <button id="hs-table-dropdown-6" type="button" class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                        <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                      </button>
+                      <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700" aria-labelledby="hs-table-dropdown-6">
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Rename
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Regenrate Key
+                          </a>
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
+                            Disable
+                          </a>
+                        </div>
+                        <div class="py-2 first:pt-0 last:pb-0">
+                          <a class="flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700" href="#">
+                            Delete
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+
+          
+          <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
+            <div>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                <span class="font-semibold text-gray-800 dark:text-gray-200">6</span> results
+              </p>
+            </div>
+
+            <div>
+              <div class="inline-flex gap-x-2">
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                  <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  Prev
+                </button>
+
+                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                  Next
+                  <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+    </Layouts>
+  )
 }
-export default ScheduleTable;
+
+export default ScheduleTable
