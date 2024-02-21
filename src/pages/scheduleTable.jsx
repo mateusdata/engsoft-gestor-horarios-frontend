@@ -21,7 +21,7 @@ const ScheduleTable = () => {
   return (
     <Layouts>
 
-      <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+      <div class="lg:max-w-[85rem] md:max-w-[100%] sm:max-w-[100%] max-w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
 
         <div class="flex flex-col">
           <Select
@@ -33,7 +33,7 @@ const ScheduleTable = () => {
             <div class="p-1.5 min-w-full inline-block align-middle">
               <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
 
-                <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
+                <div class="px-6 py-4 grid gap-3 md:flex md:justify-between  md:items-center border-b border-gray-200 dark:border-gray-700">
                   <div>
                     <div>
                       <Select
@@ -126,7 +126,7 @@ const ScheduleTable = () => {
                   </div>
                 </div>
 
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <table class="min-w-full divide-y  divide-gray-200 dark:divide-gray-700">
                   <thead>
                     <tr>
                       <th className="px-4 text-sm text-gray-700 py-2">Horário</th>
@@ -135,10 +135,10 @@ const ScheduleTable = () => {
                       ))}
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className='border border-red-600 '>
                     {Array.from({ length: 6 }).map((_, index) => (
                       <tr key={index}>
-                        <td className={`border-y  ${false && "bg-gray-100"} border-x px-4 py-2  h-12`}>
+                        <td className={`border-y   ${false && "bg-gray-100"} border-x px-4 py-2  h-12`}>
                           {data[0].aulas[index] ? (
                             <div>
                               <span className='text-sm'>{data[0].aulas[index].hora}</span>
