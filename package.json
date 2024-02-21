@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
+    "@ant-design/icons": "^5.3.0",
     "@ant-design/pro-components": "^2.6.31",
     "@hookform/resolvers": "^3.3.4",
     "@testing-library/jest-dom": "^5.17.0",
