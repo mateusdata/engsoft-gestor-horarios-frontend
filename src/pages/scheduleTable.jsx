@@ -15,7 +15,7 @@ const ScheduleTable = () => {
   const data = [
     {
       segunda: [
-        { name: "Alessa", disciplina: "PRogramação mobile", hora: "13:20" },
+        { name: "Alessa", disciplina: "PRogramação mobile", hora: "13:20",},
         { name: "Moises", disciplina: "PRogramação web", hora: "13:20" },
         { name: "Ana", disciplina: "PRogramação web", hora: "13:20" },
       ]
