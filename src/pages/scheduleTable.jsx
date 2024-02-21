@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Layouts from '../layouts/layouts'
-import { Modal, Select } from 'antd'
 import { EditFilled, EditOutlined, FilePdfOutlined } from '@ant-design/icons'
-
+import MyDocument from './pdf'
+import { Form, Input, Button, Select, Modal } from 'antd';
+import { Option } from 'antd/es/mentions';
 const ScheduleTable = () => {
   const [open, setOpen] = useState(false)
   const data = [
@@ -13,6 +14,9 @@ const ScheduleTable = () => {
     { dia: 'Sexta', aulas: [{ name: "Patricia", disciplina: "Engenharia de Software", hora: "14:00 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Mateus", disciplina: "Compiladores", hora: "15:10 -50 " }] },
   ];
 
+  const onFinish = (values) => {
+    console.log('Received values of form: ', values);
+  };
   const maxAulas = Math.max(...data.map(item => item.aulas.length));
   return (
     <Layouts>
@@ -43,27 +47,80 @@ const ScheduleTable = () => {
                       BSI PRIMEIRO SEMESTRE
                     </h2>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                     Horarios de aulas  
-                     <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium" href="https://suap.ifba.edu.br/">
-                     {":"} Suap
+                      Horarios de aulas
+                      <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium" href="https://suap.ifba.edu.br/">
+                        {":"} Suap
                       </a>
                     </p>
                   </div>
 
                   <div>
-                    <div class="inline-flex gap-x-2">
+                    <div onClick={() => { }} class="inline-flex gap-x-2">
                       <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg  bg-white  text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
-                      <FilePdfOutlined className='text-red-600'  style={{ fontSize: '26px',  }}   />
+
+                        <MyDocument />
                       </a>
+
 
                       <a onClick={() => setOpen(!open)} class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#">
                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
-                        Criar orário 
+                        Criar horário
                       </a>
 
-                      <Modal onCancel={() => setOpen(false)} open={open}>
+                      <Modal  footer={false} okButtonProps={{ className:"bg-blue-600" }} onCancel={() => setOpen(false)} open={open}>
 
-                        Cria horarios
+                        <Form
+                          name="cadastro"
+                          onFinish={onFinish}
+                          className='p-12'
+                        >
+                          <Form.Item
+                            name="dia"
+                            rules={[{ required: true, message: 'Por favor, selecione o dia!' }]}
+                          >
+                            <span className='text-center flex w-full justify-center items-center mb-5 text-2xl'>Cadastrar Horários</span>
+                            <Select placeholder="Selecione o dia">
+                              <Option value="segunda">Segunda</Option>
+                              <Option value="terca">Terça</Option>
+                              <Option value="quarta">Quarta</Option>
+                              <Option value="quinta">Quinta</Option>
+                              <Option value="sexta">Sexta</Option>
+                            </Select>
+                          </Form.Item>
+
+                          <Form.Item
+                            name="professor"
+                            rules={[{ required: true, message: 'Por favor, insira o nome do professor!' }]}
+                          >
+                            <Input placeholder="Nome do professor" />
+                          </Form.Item>
+
+                          <Form.Item
+                            name="disciplina"
+                            rules={[{ required: true, message: 'Por favor, insira a disciplina!' }]}
+                          >
+                            <Input placeholder="Disciplina" />
+                          </Form.Item>
+
+                          <Form.Item
+                            name="hora"
+                            rules={[{ required: true, message: 'Por favor, selecione a hora!' }]}
+                          >
+                            <Select placeholder="Selecione a hora">
+                              <Option value="08:00">13:00 - 13:20</Option>
+                              <Option value="09:00">14:00 - 14:50</Option>
+                              <Option value="10:00">15:00 - 15:10</Option>
+                              <Option value="11:00">16:00 - 16:20</Option>
+                              <Option value="12:00">18:00 - 18:30</Option>
+                            </Select>
+                          </Form.Item>
+
+                          <Form.Item>
+                            <Button className='bg-blue-600 w-full' type="primary" htmlType="submit">
+                              Cadastrar
+                            </Button>
+                          </Form.Item>
+                        </Form>
                       </Modal>
                     </div>
                   </div>
