@@ -24,6 +24,7 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
 
     const [updatePage, setUpdatePage] = useState(false)
     useEffect(() => {
+        setUpdatePage(false)
         axiosInstance.get('/teacher_list').then((response) => {
             setShowSubjects(response.data);
         }).catch((error) => console.log(error))
@@ -89,7 +90,7 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
                 <Space direction="vertical">
                 <Search
                 addonBefore="SIFBA"
-                placeholder="Pesquise por um professor"
+                placeholder="Pesquisar professor"
                 allowClear
                 onSearch={seachTeacher}
                 onChange={((e)=>seachTeacher(e.target.value))}
@@ -111,7 +112,7 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
                 
                                    <div className="">
                                     <div className="">
-                                            <h1 className="font-semibold text-le">{teacher.nome}</h1>
+                                            <h1 className="font-semibold text-left">{teacher.nome}</h1>
                                             <span>{teacher.departamento}</span>
                                         </div>
                                         <div className="flex flex-col justify-center w-60">

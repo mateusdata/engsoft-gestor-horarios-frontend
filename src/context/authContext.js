@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
       }
     }).catch((erro) => {
       console.log(erro);
-      openNotificationWithIcon({ message: erro?.response?.data?.message, description: "Por favor, entre com as credenciais corretas." }, "error");
+      openNotificationWithIcon({ message: "Senha ou email incorretos."}, "error");
     });
   };
 

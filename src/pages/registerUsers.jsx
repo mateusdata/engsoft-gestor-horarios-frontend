@@ -108,7 +108,7 @@ const FormularioCadastro = () => {
                         </div>
 
                     </div>
-                    <pre>{JSON.stringify(watch(), null, 2)}</pre>
+                    <pre>{ false && JSON.stringify(watch(), null, 2)}</pre>
 
                     <div className='md:w-full  flex justify-center md:py-4'>
                         <button type="submit" className="py-2 px-4 md:w-1/2 w-full bg-green-500 text-white rounded">Cadastrar</button>
