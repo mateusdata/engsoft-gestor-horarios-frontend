@@ -4,7 +4,7 @@ import { FilePdfOutlined } from '@ant-design/icons';
 
 // Create styles
 const styles = StyleSheet.create({
-  page: {
+  /* page: {
     flexDirection: 'column',
     padding: 30,
   },
@@ -20,13 +20,55 @@ const styles = StyleSheet.create({
   lesson: {
     fontSize: 14,
     marginBottom: 5,
+  }, */
+
+  page: {
+    flexDirection: 'row',
+    backgroundColor: '#E4E4E4',
+    padding: 10,
   },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+  table: {
+    display: 'table',
+    width: '100%',
+    fontSize: '12px',
+  },
+  tableRow: {
+    flexDirection: 'row',
+  },
+  tableCell: {
+    width: '20%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#000',
+    padding: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerCell: {
+    backgroundColor: '#ccc',
+    fontWeight: 'bold',
+  },
+  disciplina: {
+    fontSize: '8px'
+  }
 });
 
 // Create Document Component
-const MyDocument = ({ data }) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
+const MyDocument = ({ data }) => {
+
+  // Obtendo os horários das aulas
+  const horarios = data[0].aulas.map(aula => aula.hora);
+  // Obtendo os dias da semana
+  const diasSemana = data.map(item => item.dia);
+
+  return (
+    <Document>
+    {/* <Page size="A4" style={styles.page}>     
       {data.map((item, index) => (
         <View key={index} style={styles.section}>
           <Text style={styles.day}>{item.dia}</Text>
@@ -37,9 +79,44 @@ const MyDocument = ({ data }) => (
           ))}
         </View>
       ))}
-    </Page>
-  </Document>
-);
+    </Page> */}
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <View style={styles.table}>
+            {/* Cabeçalho da tabela */}
+            <View style={styles.tableRow}>
+              <View style={[styles.tableCell, styles.headerCell]}></View>
+              {diasSemana.map((dia, index) => (
+                <View key={index} style={[styles.tableCell, styles.headerCell]}>
+                  <Text>{dia}</Text>
+                </View>
+              ))}
+            </View>
+            {/* Conteúdo da tabela */}
+            {horarios.map((hora, index) => (
+              <View key={index} style={styles.tableRow}>
+                <View style={[styles.tableCell, styles.headerCell]}>
+                  <Text>{hora}</Text>
+                </View>
+                {data.map((item, itemIndex) => (
+                  <View key={itemIndex} style={styles.tableCell}>
+                    {item.aulas[index] &&
+                      <>
+                        <Text>{item.aulas[index].name}</Text>
+                        <Text style={styles.disciplina}>{item.aulas[index].disciplina}</Text>
+                      </>
+                    }
+                  </View>
+                ))}
+              </View>
+            ))}
+          </View>
+        </View>
+      </Page>
+    </Document>
+  )
+};
 
 function Pdf() {
     const data = [
