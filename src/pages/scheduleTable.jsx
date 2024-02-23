@@ -19,8 +19,15 @@ const ScheduleTable = () => {
       try {
         const response = await axiosInstance.get(`/search-schedules/1`)
         console.log('Resposta completa:', response);
+
+        // Ordem correta dos dias da semana
+        const diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+
+        // Ordenando os dados
+        const dadosOrdenados = response.data.sort((a, b) => diasDaSemana.indexOf(a.dia) - diasDaSemana.indexOf(b.dia));
+
         setUpdatePage(false)
-        setData(response?.data)
+        setData(dadosOrdenados)
       } catch (error) {
         console.log(error)
       }
@@ -28,13 +35,14 @@ const ScheduleTable = () => {
     fetchData();
   }, [updatePage])
 
- /* const data = [
-    { dia: 'Segunda', aulas: [{ name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Moises", disciplina: "Programação Web", horario: "14:30 - 13:50" }] },
-    { dia: 'Terça', aulas: [{ name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Jonas", disciplina: "Inteligência Artificial", horario: "11:30 -20:00" }] },
-    { dia: 'Quarta', aulas: [{ name: "Pedro", disciplina: "Banco de Dados", horario: "15:40 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Paulo", disciplina: "Estrutura de Dados", horario: "16:50 -50" }] },
-    { dia: 'Quinta', aulas: [{ name: "Lucas", disciplina: "Redes de Computadores", horario: "09:10 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "João", disciplina: "Sistemas Operacionais", horario: "10:20 -50" }] },
-    { dia: 'Sexta', aulas: [{ name: "Patricia", disciplina: "Engenharia de Software", horario: "14:00 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Mateus", disciplina: "Compiladores", horario: "15:10 -50 " }] },
-  ];*/
+
+  /* const data = [
+     { dia: 'Segunda', aulas: [{ name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Moises", disciplina: "Programação Web", horario: "14:30 - 13:50" }] },
+     { dia: 'Terça', aulas: [{ name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Jonas", disciplina: "Inteligência Artificial", horario: "11:30 -20:00" }] },
+     { dia: 'Quarta', aulas: [{ name: "Pedro", disciplina: "Banco de Dados", horario: "15:40 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Paulo", disciplina: "Estrutura de Dados", horario: "16:50 -50" }] },
+     { dia: 'Quinta', aulas: [{ name: "Lucas", disciplina: "Redes de Computadores", horario: "09:10 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "João", disciplina: "Sistemas Operacionais", horario: "10:20 -50" }] },
+     { dia: 'Sexta', aulas: [{ name: "Patricia", disciplina: "Engenharia de Software", horario: "14:00 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Mateus", disciplina: "Compiladores", horario: "15:10 -50 " }] },
+   ];*/
 
   const onFinish = async (values) => {
     console.log('Received values of form: ', { ...values, semestre: watch("semestre") });
@@ -46,18 +54,18 @@ const ScheduleTable = () => {
     } catch (error) {
       console.log(error)
     }
-   
+
   };
-const rowDays = [
-  "SEGUNDA",
-  "TERÇA",
-  "QUARTA", 
-  "QUINTA",
-  "SEXTA",
-]
-  if (!data){
-  return <p>carregando</p>
-}
+  const rowDays = [
+    "SEGUNDA",
+    "TERÇA",
+    "QUARTA",
+    "QUINTA",
+    "SEXTA",
+  ]
+  if (!data | rowDays) {
+    return null
+  }
   return (
     <Layouts>
 
@@ -174,24 +182,28 @@ const rowDays = [
 
                 <table class="min-w-full divide-y  divide-gray-200 dark:divide-gray-700">
                   <thead>
-                  <tr>
-                      {data.length>0 && <th className="px-4 text-sm text-gray-700 py-2">Horário</th>}
-                      {data.map((item, index) => (
+                    <tr>
+                      {data.length > 0 && <th className="px-4 text-sm text-gray-700 py-2">Horário</th>}
+                      {false &&  data.map((item, index) => (
                         <th key={index} className="px-4 text-sm text-gray-700 py-2">{item?.dia}</th>
+                      ))}
+
+                      {true && rowDays.map((item, index) => (
+                        <th key={index} className="px-4 text-sm text-gray-700 py-2">{item}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody className='border border-red-600 '>
-                    { data && Array.from({ length: 6 }).map((_, index) => (
+                    {data.length > 0 && Array.from({ length: 6 }).map((_, index) => (
                       <tr key={index}>
                         <td className={`border-y    border-x px-4 py-2  h-12`}>
-                          {data.length>0 &&data[0].aulas[index] ? (
+                          {data.length > 0 && data[0].aulas[index] ? (
                             <div>
                               <span className='text-sm'>{data[0]?.aulas[index]?.horario}</span>
                             </div>
                           ) : null}
                         </td>
-                        {data.length>0 &&data.map((item, diaIndex) => (
+                        {data.length > 0 && data.map((item, diaIndex) => (
                           <td key={diaIndex} className={`border-y ${false && "bg-gray-100"} text-center text-sm px-4 py-2`}>
                             {item?.aulas[index] ? (
                               <div className='flex flex-col'>
@@ -212,7 +224,7 @@ const rowDays = [
                 <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
                   <div>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                      <span class="font-semibold text-gray-800 dark:text-gray-200">6</span> results
+                      <span class="font-semibold text-gray-800 dark:text-gray-200">{data?.length}</span> resultados
                     </p>
                   </div>
 
@@ -220,11 +232,11 @@ const rowDays = [
                     <div class="inline-flex gap-x-2">
                       <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
-                        Prev
+                        Proximo
                       </button>
 
                       <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                        Next
+                        Anterior
                         <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
                       </button>
                     </div>
