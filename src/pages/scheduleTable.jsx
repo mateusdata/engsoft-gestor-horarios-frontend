@@ -2,30 +2,47 @@ import React, { useEffect, useState } from 'react'
 import Layouts from '../layouts/layouts'
 import { EditFilled, EditOutlined, FilePdfOutlined } from '@ant-design/icons'
 import MyDocument from './pdf'
-import { Form, Input, Button, Select, Modal } from 'antd';
+import { Form, Input, Button, Select, Modal, Checkbox } from 'antd';
 import { useForm } from 'react-hook-form';
 import { Option } from 'antd/es/mentions';
 import axiosInstance from '../components/config/axiosInstance';
+
+import ptBR from 'antd/lib/locale/pt_BR';
+import 'moment/locale/pt-br';
+import moment from 'moment';
+
+
 const ScheduleTable = () => {
   const [open, setOpen] = useState(false)
   const [data, setData] = useState([]);
   const [updatePage, setUpdatePage] = useState(true);
+  const [isFormActive, setIsFormActive] = useState(false);
+  const [dateRange, setDateRange] = useState({ start: null, end: null });
+
+  useEffect(() => {
+      const storedStartDate = localStorage.getItem('semestreduracao_start');
+      const storedEndDate = localStorage.getItem('semestreduracao_end');
+
+      if (storedStartDate && storedEndDate) {
+          setDateRange({
+              start: moment(storedStartDate, 'DD/MM/YYYY'),
+              end: moment(storedEndDate, 'DD/MM/YYYY')
+          });
+      }
+  }, []);
+
   const { register, handleSubmit, watch } = useForm({
     defaultValues: "semestre"
   });
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(`/search-schedules/1`)
+        const response = await axiosInstance.get(`/search-schedules/${watch("semestre")}`)
         console.log('Resposta completa:', response);
-
-        // Ordem correta dos dias da semana
         const diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-
-        // Ordenando os dados
         const dadosOrdenados = response.data.sort((a, b) => diasDaSemana.indexOf(a.dia) - diasDaSemana.indexOf(b.dia));
-
         setUpdatePage(false)
         setData(dadosOrdenados)
       } catch (error) {
@@ -33,23 +50,14 @@ const ScheduleTable = () => {
       }
     }
     fetchData();
-  }, [updatePage])
-
-
-  /* const data = [
-     { dia: 'Segunda', aulas: [{ name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Moises", disciplina: "Programação Web", horario: "14:30 - 13:50" }] },
-     { dia: 'Terça', aulas: [{ name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Jonas", disciplina: "Inteligência Artificial", horario: "11:30 -20:00" }] },
-     { dia: 'Quarta', aulas: [{ name: "Pedro", disciplina: "Banco de Dados", horario: "15:40 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Paulo", disciplina: "Estrutura de Dados", horario: "16:50 -50" }] },
-     { dia: 'Quinta', aulas: [{ name: "Lucas", disciplina: "Redes de Computadores", horario: "09:10 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "João", disciplina: "Sistemas Operacionais", horario: "10:20 -50" }] },
-     { dia: 'Sexta', aulas: [{ name: "Patricia", disciplina: "Engenharia de Software", horario: "14:00 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Mateus", disciplina: "Compiladores", horario: "15:10 -50 " }] },
-   ];*/
+  }, [updatePage, watch("semestre")])
 
   const onFinish = async (values) => {
     console.log('Received values of form: ', { ...values, semestre: watch("semestre") });
     try {
       const response = await axiosInstance.post("/create-schedules", { ...values, semestre: watch("semestre") });
       console.log(response)
-      setOpen(false)
+      !isFormActive && setOpen(false);
       setUpdatePage(true)
     } catch (error) {
       console.log(error)
@@ -72,19 +80,14 @@ const ScheduleTable = () => {
       <div class="lg:max-w-[85rem] md:max-w-[100%] sm:max-w-[100%] max-w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
 
         <div class="flex flex-col">
-          <Select
-            defaultValue="TIPO DE CURSO"
-            style={{ width: 120 }}
-            options={[{ value: 'SISTEMAS DE INBFORMAÇÃO', label: 'SISTEMAS DE INBFORMAÇÃO' }, { value: 'INTEGRADO', label: 'INTEGRADO' }, { value: 'SUBSEQUENTE', label: 'SUBSEQUENTE' }]}
-          />
           <div class="-m-1.5 overflow-x-auto">
             <div class="p-1.5 min-w-full inline-block align-middle">
               <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
-
+             
                 <div class="px-6 py-4 grid gap-3 md:flex md:justify-between  md:items-center border-b border-gray-200 dark:border-gray-700">
                   <div>
                     <div>
-                      <select className='border-gray-200  focus:border-blue-500 border-2  p-1' {...register("semestre")} defaultValue="1">
+                      <select className='border-green-800  focus:border-blue-500 border-2  p-1' {...register("semestre")} defaultValue="1">
                         <option className='py-1' value="1">1° SEMESTRE</option>
                         <option className='py-1' value="2">2° SEMESTRE</option>
                         <option className='py-1' value="3">3° SEMESTRE</option>
@@ -100,10 +103,11 @@ const ScheduleTable = () => {
                       {`BSI ${watch("semestre")}° SEMESTRE`}
                     </h2>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                      horariorios de aulas
-                      <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium" href="https://suap.ifba.edu.br/">
-                        {":"} Suap
-                      </a>
+                    {dateRange.start && dateRange.end && (
+                        <p>
+                            Período selecionado: {dateRange.start.format('DD/MM/YYYY')} - {dateRange.end.format('DD/MM/YYYY')}
+                        </p>
+                    )}
                     </p>
                   </div>
 
@@ -175,6 +179,8 @@ const ScheduleTable = () => {
                             </Button>
                           </Form.Item>
                         </Form>
+                        
+                          <Checkbox className={`${isFormActive&& "text-green-700"}`} onChange={()=>setIsFormActive(!isFormActive)}>Permanecer ativo</Checkbox>
                       </Modal>
                     </div>
                   </div>
@@ -183,7 +189,7 @@ const ScheduleTable = () => {
                 <table class="min-w-full divide-y  divide-gray-200 dark:divide-gray-700">
                   <thead>
                     <tr>
-                      {data.length > 0 && <th className="px-4 text-sm text-gray-700 py-2">Horário</th>}
+                      { <th className="px-4 text-sm text-gray-700 py-2">HORÁRIO</th>}
                       {false &&  data.map((item, index) => (
                         <th key={index} className="px-4 text-sm text-gray-700 py-2">{item?.dia}</th>
                       ))}
@@ -198,8 +204,8 @@ const ScheduleTable = () => {
                       <tr key={index}>
                         <td className={`border-y    border-x px-4 py-2  h-12`}>
                           {data.length > 0 && data[0].aulas[index] ? (
-                            <div>
-                              <span className='text-sm'>{data[0]?.aulas[index]?.horario}</span>
+                            <div className='border border-gray-100 flex flex-row flex-nowrap w-28'>
+                              <span className='text-sm'>🕓{data[0]?.aulas[index]?.horario}</span>
                             </div>
                           ) : null}
                         </td>

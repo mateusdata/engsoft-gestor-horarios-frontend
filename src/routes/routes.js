@@ -12,6 +12,7 @@ import ContextGlobal from "../context/globalContext";
 import RegisterUsers from "../pages/registerUsers";
 import ScheduleTable from "../pages/scheduleTable";
 import Teachers from "../pages/teachers";
+import CalendarPage from "../pages/calendarPage";
 
 const MyRoutes = () => {
 
@@ -44,6 +45,8 @@ const MyRoutes = () => {
         <Route exact path="/register" element={<Private> <RegisterUsers/> </Private>} />
         <Route exact path="/teachers" element={<Private><Teachers /></Private>} />
         <Route exact path="/horarios" element={<Private><ScheduleTable /></Private>} />
+        <Route exact path="/calendar" element={<Private><CalendarPage /></Private>} />
+
  
 
         
