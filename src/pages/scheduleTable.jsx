@@ -1,23 +1,63 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layouts from '../layouts/layouts'
 import { EditFilled, EditOutlined, FilePdfOutlined } from '@ant-design/icons'
 import MyDocument from './pdf'
 import { Form, Input, Button, Select, Modal } from 'antd';
+import { useForm } from 'react-hook-form';
 import { Option } from 'antd/es/mentions';
+import axiosInstance from '../components/config/axiosInstance';
 const ScheduleTable = () => {
   const [open, setOpen] = useState(false)
-  const data = [
-    { dia: 'Segunda', aulas: [{ name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Moises", disciplina: "Programação Web", hora: "14:30 - 13:50" }] },
-    { dia: 'Terça', aulas: [{ name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Jonas", disciplina: "Inteligência Artificial", hora: "11:30 -20:00" }] },
-    { dia: 'Quarta', aulas: [{ name: "Pedro", disciplina: "Banco de Dados", hora: "15:40 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Paulo", disciplina: "Estrutura de Dados", hora: "16:50 -50" }] },
-    { dia: 'Quinta', aulas: [{ name: "Lucas", disciplina: "Redes de Computadores", hora: "09:10 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "João", disciplina: "Sistemas Operacionais", hora: "10:20 -50" }] },
-    { dia: 'Sexta', aulas: [{ name: "Patricia", disciplina: "Engenharia de Software", hora: "14:00 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Mateus", disciplina: "Compiladores", hora: "15:10 -50 " }] },
-  ];
+  const [data, setData] = useState([]);
+  const [updatePage, setUpdatePage] = useState(true);
+  const { register, handleSubmit, watch } = useForm({
+    defaultValues: "semestre"
+  });
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(`/search-schedules/1`)
+        console.log('Resposta completa:', response);
+        setUpdatePage(false)
+        setData(response?.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData();
+  }, [updatePage])
+
+ /* const data = [
+    { dia: 'Segunda', aulas: [{ name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", horario: "13:20 - 14:50" }, { name: "Moises", disciplina: "Programação Web", horario: "14:30 - 13:50" }] },
+    { dia: 'Terça', aulas: [{ name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Jonas", disciplina: "Inteligência Artificial", horario: "11:30 -20:00" }] },
+    { dia: 'Quarta', aulas: [{ name: "Pedro", disciplina: "Banco de Dados", horario: "15:40 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Paulo", disciplina: "Estrutura de Dados", horario: "16:50 -50" }] },
+    { dia: 'Quinta', aulas: [{ name: "Lucas", disciplina: "Redes de Computadores", horario: "09:10 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "João", disciplina: "Sistemas Operacionais", horario: "10:20 -50" }] },
+    { dia: 'Sexta', aulas: [{ name: "Patricia", disciplina: "Engenharia de Software", horario: "14:00 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", horario: "10:00  - 15: 50" }, { name: "Mateus", disciplina: "Compiladores", horario: "15:10 -50 " }] },
+  ];*/
+
+  const onFinish = async (values) => {
+    console.log('Received values of form: ', { ...values, semestre: watch("semestre") });
+    try {
+      const response = await axiosInstance.post("/create-schedules", { ...values, semestre: watch("semestre") });
+      console.log(response)
+      setOpen(false)
+      setUpdatePage(true)
+    } catch (error) {
+      console.log(error)
+    }
+   
   };
-  const maxAulas = Math.max(...data.map(item => item.aulas.length));
+const rowDays = [
+  "SEGUNDA",
+  "TERÇA",
+  "QUARTA", 
+  "QUINTA",
+  "SEXTA",
+]
+  if (!data){
+  return <p>carregando</p>
+}
   return (
     <Layouts>
 
@@ -36,18 +76,23 @@ const ScheduleTable = () => {
                 <div class="px-6 py-4 grid gap-3 md:flex md:justify-between  md:items-center border-b border-gray-200 dark:border-gray-700">
                   <div>
                     <div>
-                      <Select
-                        defaultValue="lucy"
-                        style={{ width: 120 }}
+                      <select className='border-gray-200  focus:border-blue-500 border-2  p-1' {...register("semestre")} defaultValue="1">
+                        <option className='py-1' value="1">1° SEMESTRE</option>
+                        <option className='py-1' value="2">2° SEMESTRE</option>
+                        <option className='py-1' value="3">3° SEMESTRE</option>
+                        <option className='py-1' value="4">4° SEMESTRE</option>
+                        <option className='py-1' value="5">5° SEMESTRE</option>
+                        <option className='py-1' value="6">6° SEMESTRE</option>
+                        <option className='py-1' value="7">7° SEMESTRE</option>
+                        <option className='py-1' value="8">8° SEMESTRE</option>
+                      </select>
 
-                        options={[{ value: '1 SEMESTRE', label: ' 2 SEMESTRE' }]}
-                      />
                     </div>
                     <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                      BSI PRIMEIRO SEMESTRE
+                      {`BSI ${watch("semestre")}° SEMESTRE`}
                     </h2>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                      Horarios de aulas
+                      horariorios de aulas
                       <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium" href="https://suap.ifba.edu.br/">
                         {":"} Suap
                       </a>
@@ -67,8 +112,8 @@ const ScheduleTable = () => {
                         Criar horário
                       </a>
 
-                      <Modal  footer={false} okButtonProps={{ className:"bg-blue-600" }} onCancel={() => setOpen(false)} open={open}>
-
+                      <Modal footer={false} okButtonProps={{ className: "bg-blue-600" }} onCancel={() => setOpen(false)} onOk={() => setOpen(false)} open={open}>
+                        <span className='text-center flex w-full justify-center items-center mb-5 text-2xl'>Cadastrar Horários</span>
                         <Form
                           name="cadastro"
                           onFinish={onFinish}
@@ -78,7 +123,7 @@ const ScheduleTable = () => {
                             name="dia"
                             rules={[{ required: true, message: 'Por favor, selecione o dia!' }]}
                           >
-                            <span className='text-center flex w-full justify-center items-center mb-5 text-2xl'>Cadastrar Horários</span>
+
                             <Select placeholder="Selecione o dia">
                               <Option value="segunda">Segunda</Option>
                               <Option value="terca">Terça</Option>
@@ -103,15 +148,16 @@ const ScheduleTable = () => {
                           </Form.Item>
 
                           <Form.Item
-                            name="hora"
-                            rules={[{ required: true, message: 'Por favor, selecione a hora!' }]}
+                            name="horario"
+                            rules={[{ required: true, message: 'Por favor, selecione a horario!' }]}
                           >
-                            <Select placeholder="Selecione a hora">
-                              <Option value="08:00">13:00 - 13:20</Option>
-                              <Option value="09:00">14:00 - 14:50</Option>
-                              <Option value="10:00">15:00 - 15:10</Option>
-                              <Option value="11:00">16:00 - 16:20</Option>
-                              <Option value="12:00">18:00 - 18:30</Option>
+                            <Select placeholder="Selecione a horario">
+                              <Option value="13:20 - 14:10">13:20 - 14:10</Option>
+                              <Option value="14:10 - 15:00">14:10 - 15:00</Option>
+                              <Option value="15:10 - 16:00">15:10 - 16:00</Option>
+                              <Option value="16:00 - 16:50">16:00 - 16:50</Option>
+                              <Option value="16:50 - 17:50">16:50 - 17:50</Option>
+                              <Option value="17:50 - 18:30">17:50 - 18:30</Option>
                             </Select>
                           </Form.Item>
 
@@ -128,29 +174,29 @@ const ScheduleTable = () => {
 
                 <table class="min-w-full divide-y  divide-gray-200 dark:divide-gray-700">
                   <thead>
-                    <tr>
-                      <th className="px-4 text-sm text-gray-700 py-2">Horário</th>
+                  <tr>
+                      {data.length>0 && <th className="px-4 text-sm text-gray-700 py-2">Horário</th>}
                       {data.map((item, index) => (
-                        <th key={index} className="px-4 text-sm text-gray-700 py-2">{item.dia}</th>
+                        <th key={index} className="px-4 text-sm text-gray-700 py-2">{item?.dia}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody className='border border-red-600 '>
-                    {Array.from({ length: 6 }).map((_, index) => (
+                    { data && Array.from({ length: 6 }).map((_, index) => (
                       <tr key={index}>
-                        <td className={`border-y   ${false && "bg-gray-100"} border-x px-4 py-2  h-12`}>
-                          {data[0].aulas[index] ? (
+                        <td className={`border-y    border-x px-4 py-2  h-12`}>
+                          {data.length>0 &&data[0].aulas[index] ? (
                             <div>
-                              <span className='text-sm'>{data[0].aulas[index].hora}</span>
+                              <span className='text-sm'>{data[0]?.aulas[index]?.horario}</span>
                             </div>
                           ) : null}
                         </td>
-                        {data.map((item, diaIndex) => (
+                        {data.length>0 &&data.map((item, diaIndex) => (
                           <td key={diaIndex} className={`border-y ${false && "bg-gray-100"} text-center text-sm px-4 py-2`}>
-                            {item.aulas[index] ? (
+                            {item?.aulas[index] ? (
                               <div className='flex flex-col'>
-                                <span>{item.aulas[index].name}</span>
-                                <span className='text-blue-400 text-sm'>{item.aulas[index].disciplina}</span>
+                                <span>{item?.aulas[index].name}</span>
+                                <span className='text-blue-400 text-sm'>{item?.aulas[index].disciplina}</span>
                               </div>
                             ) : null}
                           </td>
