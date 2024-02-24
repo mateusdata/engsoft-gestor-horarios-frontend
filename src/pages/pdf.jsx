@@ -2,31 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, pdf } from '@react-pdf/renderer';
 import { FilePdfOutlined } from '@ant-design/icons';
 import axiosInstance from '../components/config/axiosInstance';
-
-// Create styles
+import 'moment/locale/pt-br';
+import moment from 'moment';
 const styles = StyleSheet.create({
-  /* page: {
-    flexDirection: 'column',
-    padding: 30,
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    border: '1px solid black',
-  },
-  day: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  lesson: {
-    fontSize: 14,
-    marginBottom: 5,
-  }, */
-
   page: {
     flexDirection: 'row',
     backgroundColor: '#E4E4E4',
-    padding: 10,
+    padding: 30,
   },
   section: {
     margin: 10,
@@ -56,16 +38,41 @@ const styles = StyleSheet.create({
   },
   disciplina: {
     fontSize: '8px'
+  },
+  nome: {
+    fontSize: '8px',
+    color:"blue"
   }
 });
 
 const MyDocument = ({ data }) => {
+  const [dateRange, setDateRange] = useState({ start: null, end: null });
+
+  useEffect(() => {
+    const storedStartDate = localStorage.getItem('semestreduracao_start');
+    const storedEndDate = localStorage.getItem('semestreduracao_end');
+
+    if (storedStartDate && storedEndDate) {
+      setDateRange({
+        start: moment(storedStartDate, 'DD/MM/YYYY'),
+        end: moment(storedEndDate, 'DD/MM/YYYY')
+      });
+    }
+  }, []);
   return (
     <Document>
       {Object.keys(data).map((semestreKey, semestreIndex) => (
-        <Page size="A4" style={styles.page} key={semestreIndex}>
+        <Page size={{ width: 760, height: 400 }} style={styles.page} key={semestreIndex}>
           <View style={styles.section}>
-            <Text style={{ marginBottom: 10 }}>Semestre {semestreIndex + 1}</Text>
+            <Text style={{ marginBottom: 5 }}> BSI Sistema de Informação -  {semestreIndex + 1}° Semestre</Text>
+            {dateRange.start && dateRange.end && (
+              <Text style={{ marginBottom: 10 }}>
+                <Text>
+                  {" "}Período letivo: {dateRange.start.format('DD/MM/YYYY')} - {dateRange.end.format('DD/MM/YYYY')}
+                </Text>
+              </Text>
+            )}
+
             <View style={styles.table}>
               <View style={styles.tableRow}>
                 <View style={[styles.tableCell, styles.headerCell]}></View>
@@ -81,12 +88,12 @@ const MyDocument = ({ data }) => {
                     <Text>{aula.horario}</Text>
                   </View>
                   {data[semestreKey].map((dia, diaIndex) => (
-                    <View key={diaIndex} style={styles.tableCell}>
+                    <View key={diaIndex} style={[styles.tableCell, { backgroundColor: diaIndex % 2 === 0 && "#87c677" }]}>
                       {dia.aulas[aulaIndex] &&
-                        <>
-                          <Text>{dia.aulas[aulaIndex].name}</Text>
+                        <View>
+                          <Text style={styles.nome} >{dia.aulas[aulaIndex].name}</Text>
                           <Text style={styles.disciplina}>{dia.aulas[aulaIndex].disciplina}</Text>
-                        </>
+                        </View>
                       }
                     </View>
                   ))}
