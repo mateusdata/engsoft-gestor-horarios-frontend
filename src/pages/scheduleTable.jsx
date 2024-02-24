@@ -105,7 +105,7 @@ const ScheduleTable = () => {
                     <p class="text-sm text-gray-600 dark:text-gray-400">
                     {dateRange.start && dateRange.end && (
                         <p>
-                            Período selecionado: {dateRange.start.format('DD/MM/YYYY')} - {dateRange.end.format('DD/MM/YYYY')}
+                            Período letivo: {dateRange.start.format('DD/MM/YYYY')} - {dateRange.end.format('DD/MM/YYYY')}
                         </p>
                     )}
                     </p>
