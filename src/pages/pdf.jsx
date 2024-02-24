@@ -5,6 +5,24 @@ import axiosInstance from '../components/config/axiosInstance';
 
 // Create styles
 const styles = StyleSheet.create({
+  /* page: {
+    flexDirection: 'column',
+    padding: 30,
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    border: '1px solid black',
+  },
+  day: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  lesson: {
+    fontSize: 14,
+    marginBottom: 5,
+  }, */
+
   page: {
     flexDirection: 'row',
     backgroundColor: '#E4E4E4',
@@ -18,20 +36,17 @@ const styles = StyleSheet.create({
   table: {
     display: 'table',
     width: '100%',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: '#000',
-    fontSize: 12,
+    fontSize: '12px',
   },
   tableRow: {
     flexDirection: 'row',
   },
   tableCell: {
     width: '20%',
-    padding: 2,
     borderStyle: 'solid',
     borderWidth: 1,
     borderColor: '#000',
+    padding: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -40,52 +55,50 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   disciplina: {
-    fontSize: 8,
-  },
+    fontSize: '8px'
+  }
 });
 
-// Create Document Component
 const MyDocument = ({ data }) => {
-  const horarios = data[0].aulas.map(aula => aula.horario);
-  const diasSemana = data.map(item => item.dia);
-
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <View style={styles.table}>
-            <View style={styles.tableRow}>
-              <View style={[styles.tableCell, styles.headerCell]}></View>
-              {diasSemana.map((dia, index) => (
-                <View key={index} style={[styles.tableCell, styles.headerCell]}>
-                  <Text>{dia}</Text>
-                </View>
-              ))}
-            </View>
-            {horarios.map((hora, index) => (
-              <View key={index} style={styles.tableRow}>
-                <View style={[styles.tableCell, styles.headerCell]}>
-                  <Text>{hora}</Text>
-                </View>
-                {data.map((item, itemIndex) => (
-                  <View key={itemIndex} style={styles.tableCell}>
-                    {item.aulas[index] &&
-                      <>
-                        <Text>{item.aulas[index].name}</Text>
-                        <Text style={styles.disciplina}>{item.aulas[index].disciplina}</Text>
-                      </>
-                    }
+      {Object.keys(data).map((semestreKey, semestreIndex) => (
+        <Page size="A4" style={styles.page} key={semestreIndex}>
+          <View style={styles.section}>
+            <Text style={{ marginBottom: 10 }}>Semestre {semestreIndex + 1}</Text>
+            <View style={styles.table}>
+              <View style={styles.tableRow}>
+                <View style={[styles.tableCell, styles.headerCell]}></View>
+                {data[semestreKey].map((dia, index) => (
+                  <View key={index} style={[styles.tableCell, styles.headerCell]}>
+                    <Text>{dia.dia}</Text>
                   </View>
                 ))}
               </View>
-            ))}
+              {data[semestreKey][0]?.aulas.map((aula, aulaIndex) => (
+                <View key={aulaIndex} style={styles.tableRow}>
+                  <View style={[styles.tableCell, styles.headerCell]}>
+                    <Text>{aula.horario}</Text>
+                  </View>
+                  {data[semestreKey].map((dia, diaIndex) => (
+                    <View key={diaIndex} style={styles.tableCell}>
+                      {dia.aulas[aulaIndex] &&
+                        <>
+                          <Text>{dia.aulas[aulaIndex].name}</Text>
+                          <Text style={styles.disciplina}>{dia.aulas[aulaIndex].disciplina}</Text>
+                        </>
+                      }
+                    </View>
+                  ))}
+                </View>
+              ))}
+            </View>
           </View>
-        </View>
-      </Page>
+        </Page>
+      ))}
     </Document>
-  );
+  )
 };
-
 function Pdf() {
   const [data, setData] = useState([]);
 
@@ -97,19 +110,23 @@ function Pdf() {
     fetchData();
   }, []);
 
-  const [fileUrl, setFileUrl] = useState(null);
+  const generatePdf = async () => {
+    const semestresData = data.reduce((acc, semestre) => {
+      const semestreKey = Object.keys(semestre)[0];
+      acc[semestreKey] = semestre[semestreKey];
+      return acc;
+    }, {});
 
-  useEffect(() => {
-    const generatePdf = async () => {
-      const blob = await pdf(<MyDocument data={data} />).toBlob();
-      setFileUrl(URL.createObjectURL(blob));
-    };
-    generatePdf();
-  }, [data]);
+    const blob = await pdf(<MyDocument data={semestresData} />).toBlob();
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  };
 
   return (
     <div className="App">
-      {fileUrl && <a href={fileUrl} download="BSI_primeiro_2°_semestre.pdf"><FilePdfOutlined className='text-red-600' style={{ fontSize: '26px' }} /></a>}
+      <button onClick={generatePdf}>
+        <FilePdfOutlined className='text-red-600' style={{ fontSize: '26px' }} />
+      </button>
     </div>
   );
 }

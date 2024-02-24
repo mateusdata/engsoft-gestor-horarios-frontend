@@ -1,10 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, pdf } from '@react-pdf/renderer';
 import { FilePdfOutlined } from '@ant-design/icons';
-import axiosInstance from '../components/config/axiosInstance';
 
 // Create styles
 const styles = StyleSheet.create({
+  /* page: {
+    flexDirection: 'column',
+    padding: 30,
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    border: '1px solid black',
+  },
+  day: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  lesson: {
+    fontSize: 14,
+    marginBottom: 5,
+  }, */
+
   page: {
     flexDirection: 'row',
     backgroundColor: '#E4E4E4',
@@ -19,7 +36,6 @@ const styles = StyleSheet.create({
     display: 'table',
     width: '100%',
     fontSize: '12px',
-    marginBottom: 20,
   },
   tableRow: {
     flexDirection: 'row',
@@ -44,67 +60,87 @@ const styles = StyleSheet.create({
 
 // Create Document Component
 const MyDocument = ({ data }) => {
-  const diasSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
+
+  // Obtendo os horários das aulas
+  const horarios = data[0].aulas.map(aula => aula.hora);
+  // Obtendo os dias da semana
+  const diasSemana = data.map(item => item.dia);
 
   return (
     <Document>
-      {diasSemana.map((dia, index) => {
-        const aulasDia = data.filter(item => item.dia.toLowerCase() === dia.toLowerCase())[0]?.aulas || [];
-        
-        return (
-          <Page key={index} size="A4" style={styles.page}>
-            <View style={styles.section}>
-              <Text style={{ marginBottom: 10 }}>{dia}</Text>
-              <View style={styles.table}>
-                <View style={styles.tableRow}>
-                  <View style={[styles.tableCell, styles.headerCell]}></View>
-                  <View style={[styles.tableCell, styles.headerCell]}>
-                    <Text>Horário</Text>
-                  </View>
-                  <View style={[styles.tableCell, styles.headerCell]}>
-                    <Text>Nome</Text>
-                  </View>
-                  <View style={[styles.tableCell, styles.headerCell]}>
-                    <Text>Disciplina</Text>
-                  </View>
+    {/* <Page size="A4" style={styles.page}>     
+      {data.map((item, index) => (
+        <View key={index} style={styles.section}>
+          <Text style={styles.day}>{item.dia}</Text>
+          {item.aulas.map((aula, aulaIndex) => (
+            <Text key={aulaIndex} style={styles.lesson}>
+              {`${aula.hora} - ${aula.name} - ${aula.disciplina}`}
+            </Text>
+          ))}
+        </View>
+      ))}
+    </Page> */}
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <View style={styles.table}>
+            {/* Cabeçalho da tabela */}
+            <View style={styles.tableRow}>
+              <View style={[styles.tableCell, styles.headerCell]}></View>
+              {diasSemana.map((dia, index) => (
+                <View key={index} style={[styles.tableCell, styles.headerCell]}>
+                  <Text>{dia}</Text>
                 </View>
-                {aulasDia.map((aula, aulaIndex) => (
-                  <View key={aulaIndex} style={styles.tableRow}>
-                    <View style={[styles.tableCell, styles.headerCell]}>
-                      <Text>{aula.horario}</Text>
-                    </View>
-                    <View style={[styles.tableCell]}>
-                      <Text>{aula.name}</Text>
-                    </View>
-                    <View style={[styles.tableCell]}>
-                      <Text>{aula.disciplina}</Text>
-                    </View>
+              ))}
+            </View>
+            {/* Conteúdo da tabela */}
+            {horarios.map((hora, index) => (
+              <View key={index} style={styles.tableRow}>
+                <View style={[styles.tableCell, styles.headerCell]}>
+                  <Text>{hora}</Text>
+                </View>
+                {data.map((item, itemIndex) => (
+                  <View key={itemIndex} style={styles.tableCell}>
+                    {item.aulas[index] &&
+                      <>
+                        <Text>{item.aulas[index].name}</Text>
+                        <Text style={styles.disciplina}>{item.aulas[index].disciplina}</Text>
+                      </>
+                    }
                   </View>
                 ))}
               </View>
-            </View>
-          </Page>
-        );
-      })}
+            ))}
+          </View>
+        </View>
+      </Page>
     </Document>
-  );
+  )
 };
 
 function Pdf() {
-  const [data, setData] = useState([]);
+    const data = [
+        { dia: 'Segunda', aulas: [{ name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Alessa", disciplina: "Programação Mobile", hora: "13:20 - 14:50" }, { name: "Moises", disciplina: "Programação Web", hora: "14:30 - 13:50" }] },
+        { dia: 'Terça', aulas: [{ name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Jonas", disciplina: "Inteligência Artificial", hora: "11:30 -20:00" }] },
+        { dia: 'Quarta', aulas: [{ name: "Pedro", disciplina: "Banco de Dados", hora: "15:40 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Paulo", disciplina: "Estrutura de Dados", hora: "16:50 -50" }] },
+        { dia: 'Quinta', aulas: [{ name: "Lucas", disciplina: "Redes de Computadores", hora: "09:10 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "João", disciplina: "Sistemas Operacionais", hora: "10:20 -50" }] },
+        { dia: 'Sexta', aulas: [{ name: "Patricia", disciplina: "Engenharia de Software", hora: "14:00 - 15:50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Maria", disciplina: "Ciência de Dados", hora: "10:00  - 15: 50" }, { name: "Mateus", disciplina: "Compiladores", hora: "15:10 -50 " }] },
+      ];
+
+  const [fileUrl, setFileUrl] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axiosInstance.get('/show-all-schedules');
-      setData(response.data);
+    const generatePdf = async () => {
+      const blob = await pdf(<MyDocument data={data} />).toBlob();
+      setFileUrl(URL.createObjectURL(blob));
     };
-    fetchData();
+    generatePdf();
   }, []);
 
   return (
     <div className="App">
-      {data.length > 0 && <MyDocument data={data} />}
-    </div>
+    {fileUrl && <a href={fileUrl} download="BSI primeiro 2° semestre.pdf"> <FilePdfOutlined className='text-red-600'  style={{ fontSize: '26px',  }}   /></a>}
+  </div>
   );
 }
 
